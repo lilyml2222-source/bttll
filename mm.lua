@@ -1,114 +1,75 @@
---// Smooth Walk Recorder by F4
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local LP = Players.LocalPlayer
-local Char = LP.Character or LP.CharacterAdded:Wait()
-local HRP = Char:WaitForChild("HumanoidRootPart")
-local Hum = Char:WaitForChild("Humanoid")
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local recorded = {}
-local isRecording = false
-local isPlaying = false
-local index = 1
+local Window = Rayfield:CreateWindow({
+   Name = "SERENA",
+   LoadingTitle = "SERENA Autowalk",
+   LoadingSubtitle = "SERENA",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "SERENA", 
+      FileName = "SERENA"
+   },
+   KeySystem = false,
+})
 
--- UI ----
-local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-local Frame = Instance.new("Frame", ScreenGui)
-Frame.Size = UDim2.new(0, 220, 0, 210)
-Frame.Position = UDim2.new(0.05, 0, 0.3, 0)
-Frame.Active = true
-Frame.Draggable = true
-Frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+local AutoWalkTab = Window:CreateTab("AUTO WALK", 4483345998)
 
-local function Btn(text,y)
-    local b = Instance.new("TextButton", Frame)
-    b.Size = UDim2.new(1,-20,0,30)
-    b.Position = UDim2.new(0,10,0,y)
-    b.BackgroundColor3 = Color3.fromRGB(40,40,40)
-    b.TextColor3 = Color3.new(1,1,1)
-    b.Text = text
-    return b
+-- 1. DAFTAR LINK SCRIPT (Isi link RAW GitHub kamu di sini)
+-- Format: ["Nama Map di Dropdown"] = "Link Raw Github"
+local MapScripts = {
+    ["MT BOTOL"]      = "https://raw.githubusercontent.com/lilyml2222-source/bttll/refs/heads/main/botol.lua",
+    ["MT TALI"]         = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_Tali.lua",
+    ["MT ZORA"]         = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_Zora.lua",
+    ["MT ANEH PRO"]     = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_AnehPro.lua",
+    ["MT LONELY"]       = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_Lonely.lua",
+    ["MT ENTAH APA"]    = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_EntahApa.lua",
+    ["MT ARUNIKA"]      = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_Arunika.lua",
+    ["MT DAY ONE"]      = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_DayOne.lua",
+    ["MT PENGANGGURAN"] = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_Pengangguran.lua",
+    ["MT LEMBAYANA"]    = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_Lembayana.lua",
+    ["MT NETIZEN"]      = "https://raw.githubusercontent.com/UsernameMu/Repo/main/Script_Netizen.lua",
+    -- Tambahkan map lainnya sesuai kebutuhan...
+}
+
+-- 2. MENGAMBIL LIST NAMA MAP DARI TABLE DI ATAS
+local MapList = {}
+for Name, Link in pairs(MapScripts) do
+    table.insert(MapList, Name)
 end
+-- (Opsional) Mengurutkan nama map sesuai abjad agar rapi
+table.sort(MapList)
 
-local RecBtn = Btn("Start Record",10)
-local PlayBtn = Btn("Play",50)
-local BackBtn = Btn("<< Back",90)
-local ForBtn = Btn("Forward >>",130)
-local SaveBtn = Btn("Save Clipboard",170)
+-- 3. MEMBUAT DROPDOWN
+AutoWalkTab:CreateDropdown({
+   Name = "Pilih Map",
+   Options = MapList, -- Ini otomatis mengambil nama-nama dari daftar di atas
+   CurrentOption = {"--"},
+   MultipleOptions = false,
+   Flag = "MapDropdown",
+   Callback = function(Option)
+       -- Option[1] adalah nama map yang dipilih user (contoh: "MT FOREVER")
+       local SelectedMap = Option[1] 
+       local ScriptLink = MapScripts[SelectedMap] -- Mengambil link yang sesuai
 
--- RECORD ----
-RecBtn.MouseButton1Click:Connect(function()
-    isRecording = not isRecording
-    
-    if isRecording then
-        recorded = {}
-        RecBtn.Text = "Recording..."
-        
-        while isRecording do
-            table.insert(recorded, HRP.CFrame)
-            task.wait(0.1)
-        end
-        
-        RecBtn.Text = "Start Record"
-    end
-end)
+       if ScriptLink then
+           Rayfield:Notify({
+               Title = "Injecting Script",
+               Content = "Sedang memuat script: " .. SelectedMap,
+               Duration = 3,
+               Image = 4483345998,
+           })
 
--- 🔥 PLAYBACK DENGAN ANIMASI BERJALAN
-local function MoveHumanTo(cf)
-    local pos = cf.Position
-    Hum:MoveTo(pos)
-    Hum.MoveToFinished:Wait()
-end
-
-PlayBtn.MouseButton1Click:Connect(function()
-    if isPlaying or #recorded == 0 then return end
-    
-    isPlaying = true
-    
-    for i = 1, #recorded do
-        index = i
-        
-        -- Rotasi diarahkan dengan tween agar smooth
-        TweenService:Create(HRP,TweenInfo.new(0.1),
-            {CFrame = CFrame.new(HRP.Position, recorded[i].Position)}
-        ):Play()
-        
-        MoveHumanTo(recorded[i])
-    end
-    
-    Hum:MoveTo(HRP.Position) -- stop
-    isPlaying = false
-end)
-
--- BACK ----
-BackBtn.MouseButton1Click:Connect(function()
-    if index > 1 then
-        index -= 1
-        MoveHumanTo(recorded[index])
-    end
-end)
-
--- FORWARD ----
-ForBtn.MouseButton1Click:Connect(function()
-    if index < #recorded then
-        index += 1
-        MoveHumanTo(recorded[index])
-    end
-end)
-
--- SAVE ----
-SaveBtn.MouseButton1Click:Connect(function()
-    if #recorded == 0 then return end
-    
-    local str = "return {\n"
-    for _,cf in ipairs(recorded) do
-        str = str.."    CFrame.new("..tostring(cf).."),\n"
-    end
-    str = str.."}"
-    
-    setclipboard(str)
-    SaveBtn.Text = "Saved!"
-    task.delay(1, function()
-        SaveBtn.Text = "Save Clipboard"
-    end)
-end)
+           -- EKSEKUSI SCRIPT DARI GITHUB
+           loadstring(game:HttpGet(ScriptLink))()
+           
+           print("Berhasil load script untuk: " .. SelectedMap)
+       else
+           Rayfield:Notify({
+               Title = "Error",
+               Content = "Link script untuk map ini belum diisi!",
+               Duration = 3,
+               Image = 4483345998,
+           })
+       end
+   end,
+})
