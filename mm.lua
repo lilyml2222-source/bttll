@@ -1,126 +1,117 @@
--- SIMPLE CFRAME RECORDER + SMOOTH MOVEMENT (by F4)
+--// Smooth CFrame Recorder by F4
+--// UI Simple + Tween Playback
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
-local player = Players.LocalPlayer
-local HRP = player.Character:WaitForChild("HumanoidRootPart")
+local HttpService = game:GetService("HttpService")
+local LP = Players.LocalPlayer
+local Char = LP.Character or LP.CharacterAdded:Wait()
+local HRP = Char:WaitForChild("HumanoidRootPart")
 
-local Path = {}        
-local Recording = false
-local Index = 1        
+local recorded = {}
+local index = 1
+local isRecording = false
+local isPlaying = false
 
--- GUI
-local gui = Instance.new("ScreenGui", game.CoreGui)
-gui.ResetOnSpawn = false
+--// UI ---------------------------------------------------------
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+local Frame = Instance.new("Frame", ScreenGui)
+Frame.Size = UDim2.new(0, 220, 0, 180)
+Frame.Position = UDim2.new(0.05, 0, 0.3, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.Active = true
+Frame.Draggable = true
 
-local function MakeButton(text, pos)
-    local b = Instance.new("TextButton", gui)
-    b.Size = UDim2.new(0, 100, 0, 35)
-    b.Position = UDim2.new(pos, -50, 0.85, 0)
-    b.BackgroundColor3 = Color3.fromRGB(20,20,20)
-    b.TextColor3 = Color3.new(1,1,1)
-    b.Text = text
-    b.BorderSizePixel = 0
-    b.Font = Enum.Font.GothamBold
-    b.TextSize = 14
-    return b
+local function NewBtn(text, posY)
+    local btn = Instance.new("TextButton", Frame)
+    btn.Size = UDim2.new(1, -20, 0, 30)
+    btn.Position = UDim2.new(0, 10, 0, posY)
+    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Text = text
+    return btn
 end
 
-local recordBtn    = MakeButton("Record",   0.18)
-local stopBtn      = MakeButton("Stop",     0.30)
-local backBtn      = MakeButton("◀ Back",   0.45)
-local nextBtn      = MakeButton("Next ▶",   0.60)
-local playBackBtn  = MakeButton("◀◀ Play",  0.75)
-local playNextBtn  = MakeButton("Play ▶▶",  0.90)
+local RecBtn = NewBtn("Start Record", 10)
+local PlayBtn = NewBtn("Play", 50)
+local BackBtn = NewBtn("<< Backward", 90)
+local ForwardBtn = NewBtn("Forward >>", 130)
+local SaveBtn = NewBtn("Save to Clipboard", 170)
 
+Frame.Size = UDim2.new(0, 220, 0, 210)
 
----------------------------------------------------------------------
--- SMOOTH MOVE FUNCTION (Tween)
----------------------------------------------------------------------
-local function SmoothTo(cf, time)
-    local tweenInfo = TweenInfo.new(time or 0.12, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-    local tween = TweenService:Create(HRP, tweenInfo, {CFrame = cf})
+--// RECORDING --------------------------------------------------
+
+RecBtn.MouseButton1Click:Connect(function()
+    isRecording = not isRecording
+    if isRecording then
+        recorded = {}
+        RecBtn.Text = "Recording..."
+        task.spawn(function()
+            while isRecording do
+                table.insert(recorded, HRP.CFrame)
+                task.wait(0.05) -- 20 FPS recorder
+            end
+        end)
+    else
+        RecBtn.Text = "Start Record"
+    end
+end)
+
+--// PLAYBACK (smooth) ------------------------------------------
+
+local function TweenTo(cf)
+    local tween = TweenService:Create(
+        HRP,
+        TweenInfo.new(0.05, Enum.EasingStyle.Linear),
+        {CFrame = cf}
+    )
     tween:Play()
     tween.Completed:Wait()
 end
 
+PlayBtn.MouseButton1Click:Connect(function()
+    if isPlaying or #recorded == 0 then return end
+    isPlaying = true
+    for i = 1, #recorded do
+        TweenTo(recorded[i])
+        index = i
+    end
+    isPlaying = false
+end)
 
----------------------------------------------------------------------
--- RECORD
----------------------------------------------------------------------
-recordBtn.MouseButton1Click:Connect(function()
-    if Recording then return end
-    Recording = true
-    print("Recording started")
+--// BACKWARD ----------------------------------------------------
 
-    while Recording do
-        table.insert(Path, HRP.CFrame)
-        Index = #Path
-        task.wait(0.1) -- interval, bisa dibuat 0.05 untuk lebih smooth
+BackBtn.MouseButton1Click:Connect(function()
+    if index > 1 then
+        index -= 1
+        TweenTo(recorded[index])
     end
 end)
 
+--// FORWARD -----------------------------------------------------
 
----------------------------------------------------------------------
--- STOP
----------------------------------------------------------------------
-stopBtn.MouseButton1Click:Connect(function()
-    Recording = false
-    print("Recording stopped")
-
-    -- Copy ke clipboard
-    if setclipboard then
-        local data = ""
-        for _, cf in ipairs(Path) do
-            data = data .. "CFrame.new(" .. tostring(cf) .. "),\n"
-        end
-        setclipboard(data)
-        print("Copied to clipboard!")
+ForwardBtn.MouseButton1Click:Connect(function()
+    if index < #recorded then
+        index += 1
+        TweenTo(recorded[index])
     end
 end)
 
+--// SAVE TO CLIPBOARD ------------------------------------------
 
----------------------------------------------------------------------
--- STEP BACK
----------------------------------------------------------------------
-backBtn.MouseButton1Click:Connect(function()
-    if #Path == 0 then return end
-    Index = math.clamp(Index - 1, 1, #Path)
-    SmoothTo(Path[Index])
-    print("Step Back:", Index)
-end)
+SaveBtn.MouseButton1Click:Connect(function()
+    if #recorded == 0 then return end
 
-
----------------------------------------------------------------------
--- STEP NEXT
----------------------------------------------------------------------
-nextBtn.MouseButton1Click:Connect(function()
-    if #Path == 0 then return end
-    Index = math.clamp(Index + 1, 1, #Path)
-    SmoothTo(Path[Index])
-    print("Step Next:", Index)
-end)
-
-
----------------------------------------------------------------------
--- PLAY BACKWARD (SMOOTH)
----------------------------------------------------------------------
-playBackBtn.MouseButton1Click:Connect(function()
-    if #Path == 0 then return end
-    for i = Index, 1, -1 do
-        Index = i
-        SmoothTo(Path[Index])
+    local str = "return {\n"
+    for _, cf in ipairs(recorded) do
+        str = str .. "    CFrame.new(" .. tostring(cf) .. "),\n"
     end
-end)
+    str = str .. "}"
 
-
----------------------------------------------------------------------
--- PLAY FORWARD (SMOOTH)
----------------------------------------------------------------------
-playNextBtn.MouseButton1Click:Connect(function()
-    if #Path == 0 then return end
-    for i = Index, #Path do
-        Index = i
-        SmoothTo(Path[Index])
-    end
+    setclipboard(str)
+    SaveBtn.Text = "Saved!"
+    task.delay(1.2, function()
+        SaveBtn.Text = "Save to Clipboard"
+    end)
 end)
