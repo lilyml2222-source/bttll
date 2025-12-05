@@ -1,5 +1,7 @@
 -- 1. LOAD RAYFIELD DULUAN (WAJIB PALING ATAS)
-https://sirius.menu/rayfieldlocal Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+-- 2. SCRIPT OBFUSCATED (Menu & Link GitHub)
 local obf_stringchar = string.char;
 local obf_stringbyte = string.byte;
 local obf_stringsub = string.sub;
