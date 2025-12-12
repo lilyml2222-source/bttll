@@ -41,7 +41,7 @@ local CONFIG = {
         NAME = "Exc V1",
         VERSION = "1.0.0",
         BUILD = "Premium",
-        DEVELOPER = "Expert Dev Team",
+        DEVELOPER = "Exc",
         DISCORD = "https://discord.gg/your-premium-server",
     },
     
