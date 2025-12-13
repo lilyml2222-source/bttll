@@ -77,13 +77,13 @@ local MAP_DATABASE = {
         icon = "🏔️"
     },
     ["Mount Gemi"] = {
-        url = "LINK_SCRIPT_GEMI",
+        url = "https://raw.githubusercontent.com/exc2222/gemi/main/gemi.lua",
         description = "Gem-filled mountain adventure",
         difficulty = "Medium",
         icon = "💎"
     },
     ["Mount Freestyle"] = {
-        url = "LINK_SCRIPT_FREESTYLE",
+        url = "https://raw.githubusercontent.com/exc2222/freestyle/main/freestyle.lua",
         description = "Ultimate freestyle parkour",
         difficulty = "Hard",
         icon = "🎪"
@@ -95,13 +95,13 @@ local MAP_DATABASE = {
         icon = "⚡"
     },
     ["Mount Age"] = {
-        url = "LINK_SCRIPT_AGE",
+        url = "https://raw.githubusercontent.com/exc2222/age/main/age.lua",
         description = "Ancient mountain mysteries",
         difficulty = "Easy",
         icon = "🏛️"
     },
     ["Mount Bagendah"] = {
-        url = "LINK_SCRIPT_BAGENDAH",
+        url = "https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua",
         description = "Traditional climbing routes",
         difficulty = "Medium",
         icon = "🎋"
@@ -113,13 +113,13 @@ local MAP_DATABASE = {
         icon = "❄️"
     },
     ["Mount Yahayuk"] = {
-        url = "LINK_SCRIPT_YAHAYUK",
+        url = "https://raw.githubusercontent.com/exc2222/yahayuk/main/yahayuk.lua",
         description = "Fun and exciting challenges",
         difficulty = "Easy",
         icon = "🎉"
     },
     ["Mount Funny"] = {
-        url = "LINK_SCRIPT_FUNNY",
+        url = "https://raw.githubusercontent.com/exc2222/funny/main/funny.lua",
         description = "Comedy-themed obstacles",
         difficulty = "Easy",
         icon = "😄"
@@ -155,7 +155,7 @@ local MAP_DATABASE = {
         icon = "🐉"
     },
     ["Mount YNKTS"] = {
-        url = "LINK_SCRIPT_YNKTS",
+        url = "https://raw.githubusercontent.com/exc2222/YNTKS/main/YNTKS.lua",
         description = "Mysterious underground caves",
         difficulty = "Expert",
         icon = "🕳️"
