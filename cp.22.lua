@@ -71,7 +71,7 @@ local CONFIG = {
 -- Map Script Database (REPLACE WITH YOUR RAW GITHUB LINKS)
 local MAP_DATABASE = {
     ["Mount Aetheria"] = {
-        url = "LINK_SCRIPT_AETHERIA",
+        url = "https://raw.githubusercontent.com/crystalknight-svg/aetheria/main/Aetheria.lua",
         description = "Advanced mountain climbing experience",
         difficulty = "Easy",
         icon = "🏔️"
