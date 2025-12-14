@@ -46,7 +46,7 @@ local UserKey = ""
 local function GetAuthKey()
     -- Memberi notifikasi sedang mengecek database
     local hint = Instance.new("Hint", Workspace)
-    hint.Text = "Menghubungi Server Google untuk verifikasi..."
+    hint.Text = "verifikasi..."
     
     local success, response = pcall(function()
         -- Mengirim Nama Player ke Google untuk dicek (?username=Nama)
