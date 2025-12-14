@@ -71,99 +71,83 @@ local CONFIG = {
 -- Map Script Database (REPLACE WITH YOUR RAW GITHUB LINKS)
 local MAP_DATABASE = {
     ["Mount Aetheria"] = {
-        url = "https://raw.githubusercontent.com/crystalknight-svg/aetheria/main/Aetheria.lua",
+        url = "https://raw.githubusercontent.com/exc2222/aetheria/main/aetheria.lua",
         description = "Advanced mountain climbing experience",
-        difficulty = "Easy",
         icon = "🏔️"
     },
     ["Mount Gemi"] = {
         url = "https://raw.githubusercontent.com/exc2222/gemi/main/gemi.lua",
         description = "Gem-filled mountain adventure",
-        difficulty = "Medium",
         icon = "💎"
     },
     ["Mount Freestyle"] = {
         url = "https://raw.githubusercontent.com/exc2222/freestyle/main/freestyle.lua",
         description = "Ultimate freestyle parkour",
-        difficulty = "Hard",
         icon = "🎪"
     },
     ["Mount Velora"] = {
-        url = "LINK_SCRIPT_VELORA",
+        url = "https://raw.githubusercontent.com/exc2222/velora/main/velora.lua",
         description = "Velocity-based challenges",
-        difficulty = "Medium",
         icon = "⚡"
     },
     ["Mount Age"] = {
         url = "https://raw.githubusercontent.com/exc2222/age/main/age.lua",
         description = "Ancient mountain mysteries",
-        difficulty = "Easy",
         icon = "🏛️"
     },
     ["Mount Bagendah"] = {
         url = "https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua",
         description = "Traditional climbing routes",
-        difficulty = "Medium",
         icon = "🎋"
     },
     ["Mount Antartika"] = {
-        url = "LINK_SCRIPT_ANTARTIKA",
+        url = "https://raw.githubusercontent.com/exc2222/antartika/main/antartika.lua",
         description = "Frozen tundra exploration",
-        difficulty = "Hard",
         icon = "❄️"
     },
     ["Mount Yahayuk"] = {
         url = "https://raw.githubusercontent.com/exc2222/yahayuk/main/yahayuk.lua",
         description = "Fun and exciting challenges",
-        difficulty = "Easy",
         icon = "🎉"
     },
     ["Mount Funny"] = {
         url = "https://raw.githubusercontent.com/exc2222/funny/main/funny.lua",
         description = "Comedy-themed obstacles",
-        difficulty = "Easy",
         icon = "😄"
     },
     ["Mount Runia"] = {
-        url = "LINK_SCRIPT_RUNIA",
+        url = "https://raw.githubusercontent.com/exc2222/runia/main/runia.lua",
         description = "Runic powered ascension",
-        difficulty = "Medium",
         icon = "🔮"
     },
     ["Mount Wasabi"] = {
-        url = "LINK_SCRIPT_WASABI",
+        url = "https://raw.githubusercontent.com/exc2222/wasabi/main/wasabi.lua",
         description = "Spicy difficulty spike",
-        difficulty = "Hard",
         icon = "🌶️"
     },
     ["Mount Arunika"] = {
-        url = "LINK_SCRIPT_ARUNIKA",
+        url = "https://raw.githubusercontent.com/exc2222/arunika/main/arunika.lua",
         description = "Aurora-lit pathways",
-        difficulty = "Medium",
         icon = "🌌"
     },
     ["Mount Molti"] = {
-        url = "LINK_SCRIPT_MOLTI",
+        url = "https://raw.githubusercontent.com/exc2222/moltiy/main/molti.lua",
         description = "Multi-path adventure",
-        difficulty = "Hard",
         icon = "🗺️"
     },
     ["Mount Ragon"] = {
-        url = "LINK_SCRIPT_RAGON",
+        url = "https://raw.githubusercontent.com/exc2222/ragon/main/ragon.lua",
         description = "Dragon-themed challenges",
-        difficulty = "Expert",
         icon = "🐉"
     },
     ["Mount YNKTS"] = {
         url = "https://raw.githubusercontent.com/exc2222/YNTKS/main/YNTKS.lua",
         description = "Mysterious underground caves",
-        difficulty = "Expert",
         icon = "🕳️"
     },
     ["Mount Kota Bukan Gunung"] = {
-        url = "LINK_SCRIPT_KOTA",
+        url = "https://raw.githubusercontent.com/exc2222/kotabukangunung/main/kotabukangunung.lua",
         description = "Urban parkour experience",
-        difficulty = "Hard",
         icon = "🏙️"
     },
 }
