@@ -1,1153 +1,314 @@
 --[[
-    ╔═══════════════════════════════════════════════════════════════╗
-    ║                     EXC V1 - PREMIUM EDITION                  ║
-    ║                   Advanced Roblox Script Suite                ║
-    ║                                                               ║
-    ║  Author: Expert Roblox Luau Developer                        ║
-    ║  Version: 1.0.0 Premium                                      ║
-    ║  Last Updated: 2025                                          ║
-    ║  Framework: Rayfield Interface Suite                         ║
-    ║  Theme: Amethyst (Premium Purple)                            ║
-    ╚═══════════════════════════════════════════════════════════════╝
-    
-    [PREMIUM FEATURES]
-    ✓ Advanced Key System with Encryption
-    ✓ Real-time Database Sync
-    ✓ Anti-Detection System
-    ✓ Performance Optimizer
-    ✓ Smart Error Recovery
-    ✓ Auto-Update System
-    ✓ Advanced Player Detection
-    ✓ Memory Management
-    ✓ Secure Script Injection
-    ✓ Professional UI/UX
+    PREMIUM RAYFIELD HUB - PURPLE EDITION
+    Developed by: Exc
+    Version: 3.3 (Fixed Missing Tabs & Links)
 ]]
 
--- ═══════════════════════════════════════════════════════════════
--- SECTION 1: CONFIGURATION & CONSTANTS
--- ═══════════════════════════════════════════════════════════════
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
+local VirtualUser = game:GetService("VirtualUser")
+local LocalPlayer = Players.LocalPlayer
 
-local CONFIG = {
-    -- Database Configuration
-    DATABASE = {
-        URL = "https://raw.githubusercontent.com/lilyml2222-source/L/main/wl.json",
-        CACHE_DURATION = 0, -- No cache for real-time updates
-        RETRY_ATTEMPTS = 3,
-        RETRY_DELAY = 2,
-    },
-    
-    -- Script Information
-    INFO = {
-        NAME = "Exc V1",
-        VERSION = "1.0.0",
-        BUILD = "Premium",
-        DEVELOPER = "Exc",
-        DISCORD = "https://discord.gg/your-premium-server",
-    },
-    
-    -- Security Settings
-    SECURITY = {
-        ANTI_TAMPER = true,
-        ANTI_DECOMPILE = true,
-        SECURE_MODE = true,
-        CHECK_EXECUTOR = true,
-    },
-    
-    -- Performance Settings
-    PERFORMANCE = {
-        AUTO_OPTIMIZE = true,
-        MEMORY_THRESHOLD = 1000000, -- 1MB
-        FPS_TARGET = 60,
-    },
-    
-    -- Admin Detection List (UserID)
-    ADMIN_LIST = {
-        123456789,
-        987654321,
-        -- Add more admin UserIDs here
-    },
+--------------------------------------------------------------------------------
+-- [1] CONFIGURATION
+--------------------------------------------------------------------------------
+
+-- Link RAW JSON Auth
+local AuthURL = "https://raw.githubusercontent.com/lilyml2222-source/L/main/ww.json" 
+
+-- SEMUA LINK MAP (Format: github/exc2222/nama/main/nama.lua)
+local ScriptLinks = {
+    -- Map Lama
+    ["Mount Funny"]     = "https://raw.githubusercontent.com/exc2222/funny/main/funny.lua",
+    ["Mount Ragon"]     = "https://raw.githubusercontent.com/exc2222/ragon/main/ragon.lua",
+    ["Mount Molti"]     = "https://raw.githubusercontent.com/exc2222/molti/main/molti.lua",
+    ["Mount Wasabi"]    = "https://raw.githubusercontent.com/exc2222/wasabi/main/wasabi.lua",
+    ["Mount Freestyle"] = "https://raw.githubusercontent.com/exc2222/freestyle/main/freestyle.lua",
+    ["Mount Gemi"]      = "https://raw.githubusercontent.com/exc2222/gemi/main/gemi.lua",
+    ["Mount Aethria"]   = "https://raw.githubusercontent.com/exc2222/aethria/main/aethria.lua",
+    ["Mount Velora"]    = "https://raw.githubusercontent.com/exc2222/velora/main/velora.lua",
+    ["Mount Age"]       = "https://raw.githubusercontent.com/exc2222/age/main/age.lua",
+    ["Mount Runia"]     = "https://raw.githubusercontent.com/exc2222/runia/main/runia.lua",
+    ["Mount Tali"]      = "https://raw.githubusercontent.com/exc2222/tali/main/tali.lua",
+
+    -- Map Baru
+    ["Mount Yahayuk"]   = "https://raw.githubusercontent.com/exc2222/yahayuk/main/yahayuk.lua",
+    ["Mount Antartika"] = "https://raw.githubusercontent.com/exc2222/antartika/main/antartika.lua",
+    ["Mount Fells"]     = "https://raw.githubusercontent.com/exc2222/fells/main/fells.lua",
+    ["Mount Bagendah"]  = "https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua"
 }
 
--- Map Script Database (REPLACE WITH YOUR RAW GITHUB LINKS)
-local MAP_DATABASE = {
-    ["Mount Aetheria"] = {
-        url = "https://raw.githubusercontent.com/exc2222/aetheria/main/aetheria.lua",
-        description = "Advanced mountain climbing experience",
-        icon = "🏔️"
-    },
-    ["Mount Gemi"] = {
-        url = "https://raw.githubusercontent.com/exc2222/gemi/main/gemi.lua",
-        description = "Gem-filled mountain adventure",
-        icon = "💎"
-    },
-    ["Mount Freestyle"] = {
-        url = "https://raw.githubusercontent.com/exc2222/freestyle/main/freestyle.lua",
-        description = "Ultimate freestyle parkour",
-        icon = "🎪"
-    },
-    ["Mount Velora"] = {
-        url = "https://raw.githubusercontent.com/exc2222/velora/main/velora.lua",
-        description = "Velocity-based challenges",
-        icon = "⚡"
-    },
-    ["Mount Age"] = {
-        url = "https://raw.githubusercontent.com/exc2222/age/main/age.lua",
-        description = "Ancient mountain mysteries",
-        icon = "🏛️"
-    },
-    ["Mount Bagendah"] = {
-        url = "https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua",
-        description = "Traditional climbing routes",
-        icon = "🎋"
-    },
-    ["Mount Antartika"] = {
-        url = "https://raw.githubusercontent.com/exc2222/antartika/main/antartika.lua",
-        description = "Frozen tundra exploration",
-        icon = "❄️"
-    },
-    ["Mount Yahayuk"] = {
-        url = "https://raw.githubusercontent.com/exc2222/yahayuk/main/yahayuk.lua",
-        description = "Fun and exciting challenges",
-        icon = "🎉"
-    },
-    ["Mount Funny"] = {
-        url = "https://raw.githubusercontent.com/exc2222/funny/main/funny.lua",
-        description = "Comedy-themed obstacles",
-        icon = "😄"
-    },
-    ["Mount Runia"] = {
-        url = "https://raw.githubusercontent.com/exc2222/runia/main/runia.lua",
-        description = "Runic powered ascension",
-        icon = "🔮"
-    },
-    ["Mount Wasabi"] = {
-        url = "https://raw.githubusercontent.com/exc2222/wasabi/main/wasabi.lua",
-        description = "Spicy difficulty spike",
-        icon = "🌶️"
-    },
-    ["Mount Arunika"] = {
-        url = "https://raw.githubusercontent.com/exc2222/arunika/main/arunika.lua",
-        description = "Aurora-lit pathways",
-        icon = "🌌"
-    },
-    ["Mount Molti"] = {
-        url = "https://raw.githubusercontent.com/exc2222/moltiy/main/molti.lua",
-        description = "Multi-path adventure",
-        icon = "🗺️"
-    },
-    ["Mount Ragon"] = {
-        url = "https://raw.githubusercontent.com/exc2222/ragon/main/ragon.lua",
-        description = "Dragon-themed challenges",
-        icon = "🐉"
-    },
-    ["Mount YNKTS"] = {
-        url = "https://raw.githubusercontent.com/exc2222/YNTKS/main/YNTKS.lua",
-        description = "Mysterious underground caves",
-        icon = "🕳️"
-    },
-    ["Mount Kota Bukan Gunung"] = {
-        url = "https://raw.githubusercontent.com/exc2222/kotabukangunung/main/kotabukangunung.lua",
-        description = "Urban parkour experience",
-        icon = "🏙️"
-    },
-}
+--------------------------------------------------------------------------------
+-- [2] AUTHENTICATION LOGIC (ANTI-DELAY)
+--------------------------------------------------------------------------------
+local UserKey = ""
 
--- ═══════════════════════════════════════════════════════════════
--- SECTION 2: CORE SERVICES & UTILITIES
--- ═══════════════════════════════════════════════════════════════
-
-local Services = {
-    Players = game:GetService("Players"),
-    RunService = game:GetService("RunService"),
-    TeleportService = game:GetService("TeleportService"),
-    HttpService = game:GetService("HttpService"),
-    Lighting = game:GetService("Lighting"),
-    UserInputService = game:GetService("UserInputService"),
-    StarterGui = game:GetService("StarterGui"),
-    ReplicatedStorage = game:GetService("ReplicatedStorage"),
-    Workspace = game:GetService("Workspace"),
-    CoreGui = game:GetService("CoreGui"),
-}
-
-local Player = Services.Players.LocalPlayer
-local Character = Player.Character or Player.CharacterAdded:Wait()
-local Humanoid = Character:WaitForChild("Humanoid")
-local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-
--- ═══════════════════════════════════════════════════════════════
--- SECTION 3: UTILITY FUNCTIONS
--- ═══════════════════════════════════════════════════════════════
-
-local Utils = {}
-
--- Advanced HTTP Request with Retry Logic
-function Utils.SecureHttpGet(url, retries)
-    retries = retries or CONFIG.DATABASE.RETRY_ATTEMPTS
-    
-    for attempt = 1, retries do
-        local success, result = pcall(function()
-            local cacheBuster = "?v=" .. tostring(tick()) .. "&r=" .. tostring(math.random(1000, 9999))
-            return game:HttpGet(url .. cacheBuster, true)
-        end)
-        
-        if success then
-            return result
-        else
-            if attempt < retries then
-                task.wait(CONFIG.DATABASE.RETRY_DELAY)
-            end
-        end
-    end
-    
-    return nil
-end
-
--- Secure JSON Decode with Error Handling
-function Utils.SafeJSONDecode(data)
-    local success, result = pcall(function()
-        return Services.HttpService:JSONDecode(data)
+local function GetAuthKey()
+    local success, response = pcall(function()
+        -- Anti-Cache (Update Realtime)
+        return game:HttpGet(AuthURL .. "?v=" .. tostring(math.random(1, 999999)))
     end)
-    
-    if success then
-        return result
+
+    if not success then
+        LocalPlayer:Kick("Connection Error: Gagal menghubungi Database.")
+        return nil
+    end
+
+    local data = HttpService:JSONDecode(response)
+
+    if data.users and data.users[LocalPlayer.Name] then
+        UserKey = data.users[LocalPlayer.Name]
+        return UserKey
     else
+        LocalPlayer:Kick("Access Denied: Akun '" .. LocalPlayer.Name .. "' tidak terdaftar.")
         return nil
     end
 end
 
--- Advanced Notification System
-function Utils.Notify(title, content, duration, notifType)
-    duration = duration or 5
-    notifType = notifType or "info" -- info, success, warning, error
-    
-    local icons = {
-        info = 4483362458,
-        success = 4483362458,
-        warning = 4483362458,
-        error = 4483362458,
-    }
-    
-    if Rayfield then
-        Rayfield:Notify({
-            Title = title,
-            Content = content,
-            Duration = duration,
-            Image = icons[notifType],
-        })
-    end
-end
+local ValidKey = GetAuthKey()
+if not ValidKey then return end 
 
--- Safe Script Execution
-function Utils.ExecuteScript(url, mapName)
-    local startTime = tick()
-    
-    Utils.Notify("🔄 Loading", "Initializing " .. mapName .. "...", 2, "info")
-    
-    local scriptContent = Utils.SecureHttpGet(url)
-    
-    if not scriptContent then
-        Utils.Notify("❌ Error", "Failed to load " .. mapName .. ". Check connection.", 5, "error")
-        return false
-    end
-    
-    local success, err = pcall(function()
-        loadstring(scriptContent)()
-    end)
-    
-    if success then
-        local loadTime = math.floor((tick() - startTime) * 1000)
-        Utils.Notify("✅ Success", mapName .. " loaded in " .. loadTime .. "ms", 3, "success")
-        return true
-    else
-        Utils.Notify("❌ Script Error", "Map may be outdated or incompatible.", 5, "error")
-        return false
-    end
-end
-
--- Memory Management
-function Utils.CleanMemory()
-    local startMem = collectgarbage("count")
-    collectgarbage("collect")
-    local endMem = collectgarbage("count")
-    local saved = math.floor(startMem - endMem)
-    
-    Utils.Notify("🧹 Memory Cleaned", "Freed " .. saved .. " KB of memory", 3, "success")
-end
-
--- Get Player Statistics
-function Utils.GetPlayerStats()
-    local stats = {
-        Username = Player.Name,
-        DisplayName = Player.DisplayName,
-        UserID = Player.UserId,
-        AccountAge = Player.AccountAge .. " days",
-        Ping = math.floor(Player:GetNetworkPing() * 1000) .. "ms",
-        FPS = math.floor(1 / Services.RunService.RenderStepped:Wait()),
-    }
-    return stats
-end
-
--- ═══════════════════════════════════════════════════════════════
--- SECTION 4: ADVANCED KEY SYSTEM
--- ═══════════════════════════════════════════════════════════════
-
-local KeySystem = {}
-
-function KeySystem.Initialize()
-    Utils.Notify("🔐 Authenticating", "Connecting to secure database...", 3, "info")
-    
-    local databaseContent = Utils.SecureHttpGet(CONFIG.DATABASE.URL)
-    
-    if not databaseContent then
-        Player:Kick("❌ AUTHENTICATION FAILED\n\nCannot connect to authentication server.\n\nPlease check:\n• Your internet connection\n• GitHub server status\n• Database URL validity\n\nContact support if issue persists.")
-        return false
-    end
-    
-    local database = Utils.SafeJSONDecode(databaseContent)
-    
-    if not database then
-        Player:Kick("❌ DATABASE ERROR\n\nFailed to parse authentication database.\n\nThe database format may be corrupted.\nContact administrator immediately.")
-        return false
-    end
-    
-    local username = Player.Name
-    
-    if not database[username] then
-        Player:Kick("❌ ACCESS DENIED\n\nUsername: " .. username .. "\n\nYour account is not whitelisted.\n\nTo get access:\n1. Join our Discord server\n2. Contact an administrator\n3. Provide your Roblox username\n\nDiscord: " .. CONFIG.INFO.DISCORD)
-        return false
-    end
-    
-    -- Additional Security Checks
-    task.wait(0.5) -- Anti-spam delay
-    
-    Utils.Notify("✅ Authenticated", "Welcome, " .. username .. "!", 3, "success")
-    return true
-end
-
--- ═══════════════════════════════════════════════════════════════
--- SECTION 5: ANTI-DETECTION & SECURITY
--- ═══════════════════════════════════════════════════════════════
-
-local Security = {}
-
--- Admin Detection System
-function Security.InitializeAdminKick(enabled)
-    if not enabled then return end
-    
-    -- Check existing players
-    for _, player in pairs(Services.Players:GetPlayers()) do
-        for _, adminId in pairs(CONFIG.ADMIN_LIST) do
-            if player.UserId == adminId then
-                task.wait(0.1)
-                Player:Kick("⚠️ ADMIN DETECTED\n\nAn administrator was found in this server.\n\nAdmin: " .. player.Name .. "\nUserID: " .. player.UserId .. "\n\nAuto-kicked for safety.")
-                return
-            end
-        end
-    end
-    
-    -- Monitor new players
-    Services.Players.PlayerAdded:Connect(function(player)
-        for _, adminId in pairs(CONFIG.ADMIN_LIST) do
-            if player.UserId == adminId then
-                task.wait(0.1)
-                Player:Kick("⚠️ ADMIN JOINED\n\nAn administrator joined the server.\n\nAdmin: " .. player.Name .. "\nUserID: " .. player.UserId .. "\n\nAuto-kicked for safety.")
-                return
-            end
-        end
-    end)
-    
-    Utils.Notify("🛡️ Protection Active", "Admin detection is now monitoring server.", 3, "success")
-end
-
--- Anti-AFK System
-function Security.AntiAFK()
-    local VirtualUser = game:GetService("VirtualUser")
-    
-    Services.Players.LocalPlayer.Idled:Connect(function()
-        VirtualUser:CaptureController()
-        VirtualUser:ClickButton2(Vector2.new())
-    end)
-end
-
--- Initialize Security
-Security.AntiAFK()
-
--- ═══════════════════════════════════════════════════════════════
--- SECTION 6: PERFORMANCE OPTIMIZER
--- ═══════════════════════════════════════════════════════════════
-
-local Performance = {}
-
-function Performance.ApplyBoost(level)
-    local boostSettings = {
-        Medium = function()
-            -- Remove particles and trails
-            for _, obj in pairs(Services.Workspace:GetDescendants()) do
-                if obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
-                    obj.Enabled = false
-                end
-            end
-            Utils.Notify("⚡ Medium Boost", "Particles and trails disabled", 2, "success")
-        end,
-        
-        Hard = function()
-            -- Medium + Texture optimization
-            for _, obj in pairs(Services.Workspace:GetDescendants()) do
-                if obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
-                    obj.Enabled = false
-                end
-                
-                if obj:IsA("Texture") or obj:IsA("Decal") then
-                    obj.Transparency = 1
-                end
-                
-                if obj:IsA("Fire") or obj:IsA("Smoke") or obj:IsA("Sparkles") then
-                    obj.Enabled = false
-                end
-            end
-            Utils.Notify("⚡ Hard Boost", "Advanced optimizations applied", 2, "success")
-        end,
-        
-        Ultra = function()
-            -- Maximum optimization
-            local optimizations = 0
-            
-            for _, obj in pairs(Services.Workspace:GetDescendants()) do
-                -- Remove visual effects
-                if obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Beam") then
-                    obj:Destroy()
-                    optimizations = optimizations + 1
-                end
-                
-                -- Remove GUI elements
-                if obj:IsA("BillboardGui") or obj:IsA("SurfaceGui") then
-                    obj:Destroy()
-                    optimizations = optimizations + 1
-                end
-                
-                -- Optimize textures
-                if obj:IsA("Texture") or obj:IsA("Decal") then
-                    obj:Destroy()
-                    optimizations = optimizations + 1
-                end
-                
-                -- Remove effects
-                if obj:IsA("Fire") or obj:IsA("Smoke") or obj:IsA("Sparkles") then
-                    obj:Destroy()
-                    optimizations = optimizations + 1
-                end
-                
-                -- Disable sounds
-                if obj:IsA("Sound") then
-                    obj:Stop()
-                    obj.Volume = 0
-                    optimizations = optimizations + 1
-                end
-                
-                -- Optimize materials
-                if obj:IsA("BasePart") then
-                    obj.Material = Enum.Material.SmoothPlastic
-                    obj.CastShadow = false
-                    obj.Reflectance = 0
-                    optimizations = optimizations + 1
-                end
-            end
-            
-            -- Optimize lighting
-            Services.Lighting.GlobalShadows = false
-            Services.Lighting.FogEnd = 9e9
-            
-            -- Disable blur and bloom
-            for _, effect in pairs(Services.Lighting:GetChildren()) do
-                if effect:IsA("BlurEffect") or effect:IsA("BloomEffect") or effect:IsA("SunRaysEffect") then
-                    effect.Enabled = false
-                end
-            end
-            
-            -- Force garbage collection
-            collectgarbage("collect")
-            
-            Utils.Notify("⚡ Ultra Boost", optimizations .. " objects optimized!", 3, "success")
-        end,
-    }
-    
-    if boostSettings[level] then
-        boostSettings[level]()
-    end
-end
-
-function Performance.ToggleFullBright(enabled)
-    if enabled then
-        Services.Lighting.Brightness = 2
-        Services.Lighting.ClockTime = 14
-        Services.Lighting.FogEnd = 100000
-        Services.Lighting.GlobalShadows = false
-        Services.Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
-        Services.Lighting.Ambient = Color3.fromRGB(255, 255, 255)
-        
-        Utils.Notify("💡 Full Bright", "Full brightness enabled", 2, "success")
-    else
-        Services.Lighting.Brightness = 1
-        Services.Lighting.ClockTime = 14
-        Services.Lighting.FogEnd = 100000
-        Services.Lighting.GlobalShadows = true
-        Services.Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-        Services.Lighting.Ambient = Color3.fromRGB(128, 128, 128)
-        
-        Utils.Notify("💡 Full Bright", "Default lighting restored", 2, "info")
-    end
-end
-
--- ═══════════════════════════════════════════════════════════════
--- SECTION 7: PLAYER ENHANCEMENT SYSTEMS
--- ═══════════════════════════════════════════════════════════════
-
-local PlayerSystems = {}
-
--- State Management
-PlayerSystems.State = {
-    InfiniteJump = false,
-    Noclip = false,
-    AutoKickAdmin = false,
-    WalkSpeed = 16,
-    JumpPower = 50,
-}
-
--- Infinite Jump System
-function PlayerSystems.ToggleInfiniteJump(enabled)
-    PlayerSystems.State.InfiniteJump = enabled
-    
-    if enabled then
-        Utils.Notify("🦘 Infinite Jump", "Infinite jump activated", 2, "success")
-    else
-        Utils.Notify("🦘 Infinite Jump", "Infinite jump deactivated", 2, "info")
-    end
-end
-
-Services.UserInputService.JumpRequest:Connect(function()
-    if PlayerSystems.State.InfiniteJump and Humanoid then
-        Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    end
-end)
-
--- Noclip System
-function PlayerSystems.ToggleNoclip(enabled)
-    PlayerSystems.State.Noclip = enabled
-    
-    if enabled then
-        Utils.Notify("👻 Noclip", "Noclip activated - Walk through walls", 2, "success")
-    else
-        Utils.Notify("👻 Noclip", "Noclip deactivated", 2, "info")
-    end
-end
-
-Services.RunService.Stepped:Connect(function()
-    if PlayerSystems.State.Noclip then
-        for _, part in pairs(Character:GetDescendants()) do
-            if part:IsA("BasePart") then
-                part.CanCollide = false
-            end
-        end
-    end
-end)
-
--- Character Respawn Handler
-Player.CharacterAdded:Connect(function(newChar)
-    Character = newChar
-    Humanoid = newChar:WaitForChild("Humanoid")
-    HumanoidRootPart = newChar:WaitForChild("HumanoidRootPart")
-    
-    -- Restore settings
-    task.wait(0.5)
-    Humanoid.WalkSpeed = PlayerSystems.State.WalkSpeed
-    Humanoid.JumpPower = PlayerSystems.State.JumpPower
-end)
-
--- Animation System
-PlayerSystems.Animations = {
-    Run = "",
-    Jump = "",
-    Idle = "",
-}
-
-function PlayerSystems.ApplyAnimations()
-    local animate = Character:FindFirstChild("Animate")
-    if not animate then
-        Utils.Notify("❌ Error", "Animate script not found", 3, "error")
-        return
-    end
-    
-    local applied = 0
-    
-    if PlayerSystems.Animations.Run ~= "" then
-        local runAnim = animate:FindFirstChild("run") and animate.run:FindFirstChild("RunAnim")
-        if runAnim then
-            runAnim.AnimationId = "rbxassetid://" .. PlayerSystems.Animations.Run
-            applied = applied + 1
-        end
-    end
-    
-    if PlayerSystems.Animations.Jump ~= "" then
-        local jumpAnim = animate:FindFirstChild("jump") and animate.jump:FindFirstChild("JumpAnim")
-        if jumpAnim then
-            jumpAnim.AnimationId = "rbxassetid://" .. PlayerSystems.Animations.Jump
-            applied = applied + 1
-        end
-    end
-    
-    if PlayerSystems.Animations.Idle ~= "" then
-        local idleAnim = animate:FindFirstChild("idle") and animate.idle:FindFirstChild("Animation1")
-        if idleAnim then
-            idleAnim.AnimationId = "rbxassetid://" .. PlayerSystems.Animations.Idle
-            applied = applied + 1
-        end
-    end
-    
-    if applied > 0 then
-        Utils.Notify("🎭 Animations", applied .. " animation(s) applied successfully", 3, "success")
-    else
-        Utils.Notify("⚠️ Warning", "No animations were applied", 3, "warning")
-    end
-end
-
--- Server Utilities
-function PlayerSystems.ServerHop()
-    Utils.Notify("🔄 Server Hop", "Finding new server...", 2, "info")
-    
-    local success, servers = pcall(function()
-        local url = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
-        return Services.HttpService:JSONDecode(game:HttpGet(url))
-    end)
-    
-    if success and servers and servers.data then
-        for _, server in pairs(servers.data) do
-            if server.id ~= game.JobId and server.playing < server.maxPlayers then
-                Services.TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, Player)
-                return
-            end
-        end
-        Utils.Notify("⚠️ Warning", "No available servers found", 3, "warning")
-    else
-        Utils.Notify("❌ Error", "Failed to fetch server list", 3, "error")
-    end
-end
-
-function PlayerSystems.Rejoin()
-    Utils.Notify("🔄 Rejoining", "Reconnecting to current server...", 2, "info")
-    Services.TeleportService:Teleport(game.PlaceId, Player)
-end
-
--- ═══════════════════════════════════════════════════════════════
--- SECTION 8: AUTHENTICATION & UI INITIALIZATION
--- ═══════════════════════════════════════════════════════════════
-
--- Run Key System
-if not KeySystem.Initialize() then
-    return
-end
-
--- Load Rayfield Library
+--------------------------------------------------------------------------------
+-- [3] RAYFIELD UI SETUP
+--------------------------------------------------------------------------------
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
--- ═══════════════════════════════════════════════════════════════
--- SECTION 9: UI CREATION - MAIN WINDOW
--- ═══════════════════════════════════════════════════════════════
-
 local Window = Rayfield:CreateWindow({
-    Name = "💎 " .. CONFIG.INFO.NAME .. " - " .. CONFIG.INFO.BUILD,
-    LoadingTitle = CONFIG.INFO.NAME .. " Premium Edition",
-    LoadingSubtitle = "Developed by " .. CONFIG.INFO.DEVELOPER,
+    Name = "EXC V1 | " .. LocalPlayer.DisplayName,
+    LoadingTitle = "Verifying...",
+    LoadingSubtitle = "Welcome to Exc Hub",
     ConfigurationSaving = {
         Enabled = true,
-        FolderName = "ExcV1Premium",
-        FileName = "ExcV1Config"
+        FolderName = "ExcHub",
+        FileName = "Config"
     },
     Discord = {
-        Enabled = true,
-        Invite = "your-invite",
-        RememberJoins = true
+        Enabled = false, 
+        Invite = "noinvitelink", 
+        RememberJoins = true 
     },
-    KeySystem = false,
+    KeySystem = true, 
+    KeySettings = {
+        Title = "Security System",
+        Subtitle = "Database Check",
+        Note = "Hubungi Admin untuk Key",
+        FileName = "ExcKeyAuth", 
+        SaveKey = true,
+        GrabKeyFromSite = false,
+        Key = { ValidKey } 
+    }
 })
 
--- ═══════════════════════════════════════════════════════════════
--- TAB 1: PREMIUM DASHBOARD
--- ═══════════════════════════════════════════════════════════════
+Rayfield.Theme = "Amethyst" 
 
-local DashboardTab = Window:CreateTab("🏠 Dashboard", 4483362458)
+--------------------------------------------------------------------------------
+-- [4] TABS & FEATURES
+--------------------------------------------------------------------------------
 
-local stats = Utils.GetPlayerStats()
+-- == DASHBOARD ==
+local TabDashboard = Window:CreateTab("Dashboard", 4483362458)
+TabDashboard:CreateSection("User Info")
+TabDashboard:CreateParagraph({Title = "Display Name", Content = LocalPlayer.DisplayName})
+TabDashboard:CreateParagraph({Title = "Username", Content = LocalPlayer.Name})
+TabDashboard:CreateParagraph({Title = "Roblox ID", Content = tostring(LocalPlayer.UserId)})
+TabDashboard:CreateParagraph({Title = "Account Age", Content = tostring(LocalPlayer.AccountAge) .. " Days"})
+TabDashboard:CreateParagraph({Title = "Status", Content = "Premium Active"})
 
-DashboardTab:CreateSection("Welcome Back!")
+-- == AUTO WALK (ALL MAPS) ==
+local TabMounts = Window:CreateTab("Auto Walk", 4483362458)
+TabMounts:CreateSection("Select Mount")
 
-DashboardTab:CreateParagraph({
-    Title = "👋 Hello, " .. stats.DisplayName,
-    Content = string.format(
-        "Username: %s\nUser ID: %d\nAccount Age: %s\n\n✅ Status: Premium Active\n🔐 Security: Maximum\n⚡ Performance: Optimized",
-        stats.Username,
-        stats.UserID,
-        stats.AccountAge
-    )
-})
+local SelectedMount = "Mount Yahayuk" -- Default
 
-DashboardTab:CreateSection("System Information")
-
-DashboardTab:CreateLabel("📊 Current Statistics:")
-DashboardTab:CreateLabel("• Ping: " .. stats.Ping)
-DashboardTab:CreateLabel("• FPS: " .. stats.FPS)
-DashboardTab:CreateLabel("• Version: " .. CONFIG.INFO.VERSION)
-DashboardTab:CreateLabel("• Build: " .. CONFIG.INFO.BUILD)
-
-DashboardTab:CreateSection("Quick Actions")
-
-DashboardTab:CreateButton({
-    Name = "💬 Join Discord Community",
-    Callback = function()
-        setclipboard(CONFIG.INFO.DISCORD)
-        Utils.Notify("📋 Copied", "Discord link copied to clipboard!", 3, "success")
-    end,
-})
-
-DashboardTab:CreateButton({
-    Name = "🧹 Clean Memory",
-    Callback = function()
-        Utils.CleanMemory()
-    end,
-})
-
-DashboardTab:CreateButton({
-    Name = "🔄 Refresh Stats",
-    Callback = function()
-        stats = Utils.GetPlayerStats()
-        Utils.Notify("✅ Refreshed", "Player statistics updated", 2, "success")
-    end,
-})
-
--- ═══════════════════════════════════════════════════════════════
--- TAB 2: MAP INJECTOR (PREMIUM)
--- ═══════════════════════════════════════════════════════════════
-
-local MapTab = Window:CreateTab("🗺️ Map Injector", 4483362458)
-
-MapTab:CreateSection("Auto Walk System")
-
-MapTab:CreateParagraph({
-    Title = "ℹ️ Map Injector Info",
-    Content = "Select a map from the dropdown below to inject its script. Each map has unique features and difficulty levels. Loading time depends on your connection speed."
-})
-
--- Create map list with icons
-local mapList = {}
-for mapName, mapData in pairs(MAP_DATABASE) do
-    table.insert(mapList, mapData.icon .. " " .. mapName .. " (" .. mapData.difficulty .. ")")
-end
-table.sort(mapList)
-
-MapTab:CreateDropdown({
-    Name = "Select Map to Inject",
-    Options = mapList,
-    CurrentOption = {"Select a map..."},
+TabMounts:CreateDropdown({
+    Name = "Mount Location",
+    Options = {
+        "Mount Funny", "Mount Ragon", "Mount Molti", "Mount Wasabi", 
+        "Mount Freestyle", "Mount Gemi", "Mount Aethria", "Mount Velora", 
+        "Mount Age", "Mount Runia", "Mount Tali",
+        "Mount Yahayuk", "Mount Antartika", "Mount Fells", "Mount Bagendah"
+    },
+    CurrentOption = {"Mount Yahayuk"},
     MultipleOptions = false,
-    Flag = "MapDropdown",
+    Flag = "MountSelect",
     Callback = function(Option)
-        local selectedOption = Option[1]
+        SelectedMount = Option[1]
+    end,
+})
+
+TabMounts:CreateButton({
+    Name = "Inject Script",
+    Callback = function()
+        local targetURL = ScriptLinks[SelectedMount]
         
-        -- Extract map name from option (remove icon and difficulty)
-        local mapName = selectedOption:match("🗺️ (.+) %(.+%)") or 
-                       selectedOption:match("💎 (.+) %(.+%)") or
-                       selectedOption:match("🏔️ (.+) %(.+%)") or
-                       selectedOption:match("⚡ (.+) %(.+%)") or
-                       selectedOption:match("🏛️ (.+) %(.+%)") or
-                       selectedOption:match("🎋 (.+) %(.+%)") or
-                       selectedOption:match("❄️ (.+) %(.+%)") or
-                       selectedOption:match("🎉 (.+) %(.+%)") or
-                       selectedOption:match("😄 (.+) %(.+%)") or
-                       selectedOption:match("🔮 (.+) %(.+%)") or
-                       selectedOption:match("🌶️ (.+) %(.+%)") or
-                       selectedOption:match("🌌 (.+) %(.+%)") or
-                       selectedOption:match("🐉 (.+) %(.+%)") or
-                       selectedOption:match("🕳️ (.+) %(.+%)") or
-                       selectedOption:match("🏙️ (.+) %(.+%)") or
-                       selectedOption:match("🎪 (.+) %(.+%)")
-        
-        if mapName and MAP_DATABASE[mapName] then
-            local mapData = MAP_DATABASE[mapName]
-            Utils.ExecuteScript(mapData.url, mapName)
+        if targetURL then
+            Rayfield:Notify({
+                Title = "Injecting...",
+                Content = "Loading " .. SelectedMount,
+                Duration = 2,
+                Image = 4483362458,
+            })
+            
+            task.wait(1) 
+            
+            local success, err = pcall(function()
+                loadstring(game:HttpGet(targetURL))()
+            end)
+            
+            if success then
+                Rayfield:Notify({Title = "Success", Content = "Script Loaded!", Duration = 3})
+            else
+                Rayfield:Notify({Title = "Error", Content = "Script Not Found (404)", Duration = 3})
+            end
+        else
+            Rayfield:Notify({Title = "Error", Content = "Link Config Missing", Duration = 3})
         end
     end,
 })
 
-MapTab:CreateSection("Map Information")
-
-MapTab:CreateLabel("📌 Total Maps Available: " .. #mapList)
-MapTab:CreateLabel("🔄 Auto-Update: Enabled")
-MapTab:CreateLabel("⚡ Fast Loading: Optimized")
-
--- ═══════════════════════════════════════════════════════════════
--- TAB 3: PLAYER ENHANCEMENT (PREMIUM)
--- ═══════════════════════════════════════════════════════════════
-
-local PlayerTab = Window:CreateTab("👤 Player Menu", 4483362458)
-
-PlayerTab:CreateSection("Movement Controls")
-
-PlayerTab:CreateSlider({
-    Name = "🏃 Walk Speed",
-    Range = {16, 500},
+-- == PLAYER MENU ==
+local TabPlayer = Window:CreateTab("Player", 4483362458)
+TabPlayer:CreateSlider({
+    Name = "WalkSpeed",
+    Range = {16, 300},
     Increment = 1,
-    Suffix = " studs/s",
+    Suffix = "Studs",
     CurrentValue = 16,
-    Flag = "WalkSpeedSlider",
     Callback = function(Value)
-        PlayerSystems.State.WalkSpeed = Value
-        if Humanoid then
-            Humanoid.WalkSpeed = Value
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            LocalPlayer.Character.Humanoid.WalkSpeed = Value
         end
     end,
 })
-
-PlayerTab:CreateSlider({
-    Name = "🦘 Jump Power",
-    Range = {50, 500},
-    Increment = 5,
-    Suffix = " power",
-    CurrentValue = 50,
-    Flag = "JumpPowerSlider",
-    Callback = function(Value)
-        PlayerSystems.State.JumpPower = Value
-        if Humanoid then
-            Humanoid.JumpPower = Value
-        end
-    end,
-})
-
-PlayerTab:CreateSection("Advanced Abilities")
-
-PlayerTab:CreateToggle({
-    Name = "♾️ Infinite Jump",
+TabPlayer:CreateToggle({
+    Name = "Infinity Jump",
     CurrentValue = false,
-    Flag = "InfiniteJumpToggle",
-    Callback = function(Value)
-        PlayerSystems.ToggleInfiniteJump(Value)
-    end,
+    Callback = function(Value) _G.InfJump = Value end,
 })
-
-PlayerTab:CreateToggle({
-    Name = "👻 Noclip (Walk Through Walls)",
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if _G.InfJump and LocalPlayer.Character then LocalPlayer.Character.Humanoid:ChangeState("Jumping") end
+end)
+TabPlayer:CreateToggle({
+    Name = "Noclip",
     CurrentValue = false,
-    Flag = "NoclipToggle",
-    Callback = function(Value)
-        PlayerSystems.ToggleNoclip(Value)
-    end,
+    Callback = function(Value) _G.Noclip = Value end,
 })
-
-PlayerTab:CreateSection("Character Info")
-
-PlayerTab:CreateLabel("Current Speed: " .. Humanoid.WalkSpeed)
-PlayerTab:CreateLabel("Current Jump: " .. Humanoid.JumpPower)
-PlayerTab:CreateLabel("Health: " .. Humanoid.Health .. "/" .. Humanoid.MaxHealth)
-
-PlayerTab:CreateButton({
-    Name = "🔄 Reset Character",
-    Callback = function()
-        if Character then
-            Character:BreakJoints()
-            Utils.Notify("🔄 Reset", "Character reset successfully", 2, "info")
-        end
-    end,
-})
-
--- ═══════════════════════════════════════════════════════════════
--- TAB 4: MISCELLANEOUS (PREMIUM)
--- ═══════════════════════════════════════════════════════════════
-
-local MiscTab = Window:CreateTab("⚙️ Misc", 4483362458)
-
-MiscTab:CreateSection("Server Controls")
-
-MiscTab:CreateButton({
-    Name = "🔄 Server Hop",
-    Callback = function()
-        PlayerSystems.ServerHop()
-    end,
-})
-
-MiscTab:CreateButton({
-    Name = "🔁 Rejoin Current Server",
-    Callback = function()
-        PlayerSystems.Rejoin()
-    end,
-})
-
-MiscTab:CreateSection("Security Features")
-
-MiscTab:CreateToggle({
-    Name = "🛡️ Auto Kick Admin",
-    CurrentValue = false,
-    Flag = "AutoKickAdminToggle",
-    Callback = function(Value)
-        PlayerSystems.State.AutoKickAdmin = Value
-        Security.InitializeAdminKick(Value)
-    end,
-})
-
-MiscTab:CreateParagraph({
-    Title = "ℹ️ Admin Protection Info",
-    Content = "When enabled, you will be automatically kicked if an administrator from the whitelist joins the server. This protects you from potential detection."
-})
-
-MiscTab:CreateSection("Clipboard Utilities")
-
-MiscTab:CreateButton({
-    Name = "📋 Copy Game ID",
-    Callback = function()
-        setclipboard(tostring(game.PlaceId))
-        Utils.Notify("📋 Copied", "Game ID copied to clipboard", 2, "success")
-    end,
-})
-
-MiscTab:CreateButton({
-    Name = "📋 Copy Job ID",
-    Callback = function()
-        setclipboard(tostring(game.JobId))
-        Utils.Notify("📋 Copied", "Job ID copied to clipboard", 2, "success")
-    end,
-})
-
-MiscTab:CreateButton({
-    Name = "📋 Copy Your User ID",
-    Callback = function()
-        setclipboard(tostring(Player.UserId))
-        Utils.Notify("📋 Copied", "User ID copied to clipboard", 2, "success")
-    end,
-})
-
--- ═══════════════════════════════════════════════════════════════
--- TAB 5: PERFORMANCE OPTIMIZER (PREMIUM)
--- ═══════════════════════════════════════════════════════════════
-
-local PerformanceTab = Window:CreateTab("⚡ Performance", 4483362458)
-
-PerformanceTab:CreateSection("FPS Boost System")
-
-PerformanceTab:CreateParagraph({
-    Title = "📊 Performance Optimizer",
-    Content = "Choose optimization level based on your device:\n\n• Medium: Basic optimization (Recommended)\n• Hard: Advanced optimization\n• Ultra: Maximum performance (Low-end devices)"
-})
-
-PerformanceTab:CreateDropdown({
-    Name = "Select FPS Boost Level",
-    Options = {"Medium", "Hard", "Ultra"},
-    CurrentOption = {"Select Level"},
-    MultipleOptions = false,
-    Flag = "FPSBoostDropdown",
-    Callback = function(Option)
-        local level = Option[1]
-        Performance.ApplyBoost(level)
-    end,
-})
-
-PerformanceTab:CreateSection("Visual Enhancements")
-
-PerformanceTab:CreateToggle({
-    Name = "💡 Full Bright",
-    CurrentValue = false,
-    Flag = "FullBrightToggle",
-    Callback = function(Value)
-        Performance.ToggleFullBright(Value)
-    end,
-})
-
-PerformanceTab:CreateSection("System Maintenance")
-
-PerformanceTab:CreateButton({
-    Name = "🧹 Clean Memory (Garbage Collection)",
-    Callback = function()
-        Utils.CleanMemory()
-    end,
-})
-
-PerformanceTab:CreateButton({
-    Name = "📊 Show Current FPS",
-    Callback = function()
-        local fps = math.floor(1 / Services.RunService.RenderStepped:Wait())
-        Utils.Notify("📊 FPS Info", "Current FPS: " .. fps, 3, "info")
-    end,
-})
-
-PerformanceTab:CreateLabel("💡 Tip: Use Ultra mode if FPS is below 30")
-PerformanceTab:CreateLabel("⚠️ Warning: Ultra mode removes many visual elements")
-
--- ═══════════════════════════════════════════════════════════════
--- TAB 6: ANIMATION CUSTOMIZER (PREMIUM)
--- ═══════════════════════════════════════════════════════════════
-
-local AnimationTab = Window:CreateTab("🎭 Animation", 4483362458)
-
-AnimationTab:CreateSection("Custom Animation IDs")
-
-AnimationTab:CreateParagraph({
-    Title = "ℹ️ How to Use",
-    Content = "Enter Roblox Animation IDs below and click 'Apply' to change your character's animations. You can find animation IDs on the Roblox website or catalog."
-})
-
-AnimationTab:CreateInput({
-    Name = "🏃 Run Animation ID",
-    PlaceholderText = "Enter animation ID (numbers only)",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(Text)
-        PlayerSystems.Animations.Run = Text
-    end,
-})
-
-AnimationTab:CreateInput({
-    Name = "🦘 Jump Animation ID",
-    PlaceholderText = "Enter animation ID (numbers only)",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(Text)
-        PlayerSystems.Animations.Jump = Text
-    end,
-})
-
-AnimationTab:CreateInput({
-    Name = "🧍 Idle Animation ID",
-    PlaceholderText = "Enter animation ID (numbers only)",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(Text)
-        PlayerSystems.Animations.Idle = Text
-    end,
-})
-
-AnimationTab:CreateSection("Apply Settings")
-
-AnimationTab:CreateButton({
-    Name = "✅ Apply All Animations",
-    Callback = function()
-        PlayerSystems.ApplyAnimations()
-    end,
-})
-
-AnimationTab:CreateButton({
-    Name = "🔄 Reset to Default Animations",
-    Callback = function()
-        PlayerSystems.Animations.Run = ""
-        PlayerSystems.Animations.Jump = ""
-        PlayerSystems.Animations.Idle = ""
-        
-        if Character then
-            Character:BreakJoints()
-        end
-        
-        Utils.Notify("🔄 Reset", "Animations reset to default", 2, "info")
-    end,
-})
-
-AnimationTab:CreateSection("Popular Animation IDs")
-
-AnimationTab:CreateLabel("🎮 Popular Animations:")
-AnimationTab:CreateLabel("• Ninja Run: 656118852")
-AnimationTab:CreateLabel("• Superhero: 782841498")
-AnimationTab:CreateLabel("• Zombie: 616158929")
-AnimationTab:CreateLabel("• Knight: 616156210")
-
-AnimationTab:CreateButton({
-    Name = "📋 Copy Example: Ninja Run",
-    Callback = function()
-        setclipboard("656118852")
-        Utils.Notify("📋 Copied", "Ninja animation ID copied", 2, "success")
-    end,
-})
-
--- ═══════════════════════════════════════════════════════════════
--- TAB 7: SETTINGS & INFO (PREMIUM)
--- ═══════════════════════════════════════════════════════════════
-
-local SettingsTab = Window:CreateTab("⚙️ Settings", 4483362458)
-
-SettingsTab:CreateSection("Script Information")
-
-SettingsTab:CreateParagraph({
-    Title = "📜 About Exc V1 Premium",
-    Content = string.format(
-        "Version: %s\nBuild: %s\nDeveloper: %s\n\nThis is a premium edition with advanced features, enhanced security, and optimized performance.",
-        CONFIG.INFO.VERSION,
-        CONFIG.INFO.BUILD,
-        CONFIG.INFO.DEVELOPER
-    )
-})
-
-SettingsTab:CreateSection("Configuration")
-
-SettingsTab:CreateButton({
-    Name = "💾 Save Configuration",
-    Callback = function()
-        Utils.Notify("💾 Saved", "Configuration saved successfully", 2, "success")
-    end,
-})
-
-SettingsTab:CreateButton({
-    Name = "🔄 Reset Configuration",
-    Callback = function()
-        Utils.Notify("🔄 Reset", "Configuration reset to default", 2, "info")
-    end,
-})
-
-SettingsTab:CreateSection("Support & Community")
-
-SettingsTab:CreateButton({
-    Name = "💬 Join Discord Server",
-    Callback = function()
-        setclipboard(CONFIG.INFO.DISCORD)
-        Utils.Notify("📋 Copied", "Discord link copied to clipboard", 3, "success")
-    end,
-})
-
-SettingsTab:CreateButton({
-    Name = "📝 Report Bug",
-    Callback = function()
-        setclipboard(CONFIG.INFO.DISCORD)
-        Utils.Notify("📝 Report Bug", "Join Discord to report bugs", 3, "info")
-    end,
-})
-
-SettingsTab:CreateSection("Advanced Options")
-
-SettingsTab:CreateButton({
-    Name = "🗑️ Destroy UI",
-    Callback = function()
-        Rayfield:Destroy()
-        Utils.Notify("👋 Goodbye", "UI destroyed successfully", 2, "info")
-    end,
-})
-
--- ═══════════════════════════════════════════════════════════════
--- SECTION 10: FINALIZATION & STARTUP
--- ═══════════════════════════════════════════════════════════════
-
--- Success notification
-task.wait(0.5)
-Utils.Notify(
-    "✅ Script Loaded",
-    string.format("Welcome %s! Exc V1 Premium is ready.", Player.DisplayName),
-    5,
-    "success"
-)
-
--- Background tasks
-task.spawn(function()
-    while task.wait(60) do
-        if CONFIG.PERFORMANCE.AUTO_OPTIMIZE then
-            collectgarbage("collect")
+RunService.Stepped:Connect(function()
+    if _G.Noclip and LocalPlayer.Character then
+        for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
+            if v:IsA("BasePart") and v.CanCollide then v.CanCollide = false end
         end
     end
 end)
 
--- Console log
-print("╔═══════════════════════════════════════╗")
-print("║    EXC V1 PREMIUM - LOADED SUCCESS   ║")
-print("║                                       ║")
-print("║  User: " .. Player.Name .. string.rep(" ", 30 - #Player.Name) .. "║")
-print("║  Version: " .. CONFIG.INFO.VERSION .. string.rep(" ", 26 - #CONFIG.INFO.VERSION) .. "║")
-print("║  Build: " .. CONFIG.INFO.BUILD .. string.rep(" ", 28 - #CONFIG.INFO.BUILD) .. "║")
-print("╚═══════════════════════════════════════╝")
+-- == ANIMATION ==
+local TabAnim = Window:CreateTab("Animation", 4483362458)
+local AnimData = {Run = "", Jump = "", Idle = ""}
+TabAnim:CreateInput({Name = "Run ID", PlaceholderText = "ID...", Callback = function(Text) AnimData.Run = Text end})
+TabAnim:CreateInput({Name = "Jump ID", PlaceholderText = "ID...", Callback = function(Text) AnimData.Jump = Text end})
+TabAnim:CreateInput({Name = "Idle ID", PlaceholderText = "ID...", Callback = function(Text) AnimData.Idle = Text end})
+TabAnim:CreateButton({
+    Name = "Apply Anim",
+    Callback = function()
+        local Char = LocalPlayer.Character
+        if Char and Char:FindFirstChild("Animate") then
+            pcall(function() 
+                if AnimData.Run ~= "" then Char.Animate.run.RunAnim.AnimationId = "rbxassetid://"..AnimData.Run end
+                if AnimData.Jump ~= "" then Char.Animate.jump.JumpAnim.AnimationId = "rbxassetid://"..AnimData.Jump end
+                if AnimData.Idle ~= "" then 
+                    Char.Animate.idle.Animation1.AnimationId = "rbxassetid://"..AnimData.Idle 
+                    Char.Animate.idle.Animation2.AnimationId = "rbxassetid://"..AnimData.Idle 
+                end
+            end)
+            Rayfield:Notify({Title = "Done", Content = "Animation Applied", Duration = 2})
+        end
+    end,
+})
+
+-- == FPS BOOSTER ==
+local TabPerf = Window:CreateTab("Performance", 4483362458)
+local function Optimize(Level)
+    for _, v in pairs(Workspace:GetDescendants()) do
+        if Level >= 1 and (v:IsA("Decal") or v:IsA("Texture") or v:IsA("ParticleEmitter")) then 
+            if v:IsA("ParticleEmitter") then v.Enabled = false else v:Destroy() end
+        end
+        if Level >= 2 and v:IsA("BasePart") and not v:IsA("MeshPart") then
+            v.Material = Enum.Material.SmoothPlastic
+            v.Reflectance = 0
+            Lighting.GlobalShadows = false
+        end
+        if Level >= 3 and v:IsA("BasePart") then
+            v.Color = Color3.new(1, 1, 1)
+            v.Material = Enum.Material.SmoothPlastic
+            v.CastShadow = false
+        end
+    end
+end
+TabPerf:CreateButton({Name = "Medium (No Textures)", Callback = function() Optimize(1) end})
+TabPerf:CreateButton({Name = "Hard (Smooth Plastic)", Callback = function() Optimize(2) end})
+TabPerf:CreateButton({Name = "Expert (White Mode)", Callback = function() Optimize(3) end})
+
+-- == MISC ==
+local TabMisc = Window:CreateTab("Misc", 4483362458)
+TabMisc:CreateToggle({
+    Name = "Anti-AFK",
+    CurrentValue = false,
+    Callback = function(Value)
+        _G.AntiAFK = Value
+        if Value then
+            LocalPlayer.Idled:Connect(function()
+                if _G.AntiAFK then
+                    VirtualUser:CaptureController()
+                    VirtualUser:ClickButton2(Vector2.new())
+                end
+            end)
+        end
+    end,
+})
+TabMisc:CreateToggle({
+    Name = "Auto Kick Admin",
+    CurrentValue = false,
+    Callback = function(Value) _G.AutoKick = Value end,
+})
+Players.PlayerAdded:Connect(function(plr)
+    if _G.AutoKick and plr:GetRankInGroup(00000) > 2 then -- Ganti 00000 dengan ID Group
+        LocalPlayer:Kick("Admin Detected")
+    end
+end)
+TabMisc:CreateButton({
+    Name = "Server Hop",
+    Callback = function()
+        local success, servers = pcall(function()
+            return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
+        end)
+        if success and servers.data then
+            for _, Server in pairs(servers.data) do
+                if Server.playing < Server.maxPlayers and Server.id ~= game.JobId then
+                    TeleportService:TeleportToPlaceInstance(game.PlaceId, Server.id, LocalPlayer)
+                    break
+                end
+            end
+        end
+    end,
+})
+TabMisc:CreateButton({Name = "Rejoin", Callback = function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end})
+
+-- == ABOUT (SAYA KEMBALIKAN BAGIAN INI) ==
+local TabAbout = Window:CreateTab("About", 4483362458)
+TabAbout:CreateLabel("Premium Script Hub v1")
+TabAbout:CreateParagraph({Title = "Credits", Content = "Developed by Exc"})
+TabAbout:CreateButton({
+    Name = "Copy Discord Link",
+    Callback = function()
+        -- Ganti link discord di bawah ini
+        setclipboard("https://discord.gg/GANTI_DENGAN_LINK_MU")
+        Rayfield:Notify({Title = "Success", Content = "Discord Link Copied!", Duration = 2})
+    end,
+})
+
+Rayfield:LoadConfiguration()
 
