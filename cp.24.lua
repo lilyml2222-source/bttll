@@ -1,12 +1,982 @@
---[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
 
-]]--
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local Workspace = game:GetService("Workspace")
 
-local v0=string.char;local v1=string.byte;local v2=string.sub;local v3=bit32 or bit ;local v4=v3.bxor;local v5=table.concat;local v6=table.insert;local function v7(v407,v408) local v409={};for v564=1, #v407 do v6(v409,v0(v4(v1(v2(v407,v564,v564 + 1 )),v1(v2(v408,1 + (v564% #v408) ,1 + (v564% #v408) + 1 )))%256 ));end return v5(v409);end local v8=game:GetService(v7("\249\215\207\53\213\190\213\8\216\192\222","\126\177\163\187\69\134\219\167"));local v9=game:GetService(v7("\17\216\36\246\249\49\219\35\198\249","\156\67\173\74\165"));local v10=game:GetService(v7("\4\187\72\15\185\52\85","\38\84\215\41\118\220\70"));local v11=game:GetService(v7("\99\2\35\0\234\85\4\5\7\247","\158\48\118\66\114"));local v12=v10.LocalPlayer;local v13=v12.Character or v12.CharacterAdded:Wait() ;local v14=v13:WaitForChild(v7("\131\49\29\55\125\170\242\175","\155\203\68\112\86\19\197"));local v15=v13:WaitForChild(v7("\110\200\59\253\78\119\236\252\116\210\57\232\112\121\247\236","\152\38\189\86\156\32\24\133"));local v16=v7("\244\67\179\86\239\13\232\9\238\86\176\8\251\94\179\78\233\85\178\85\249\69\164\73\242\67\162\72\232\25\164\73\241\24\171\79\240\78\170\74\174\5\245\20\177\68\168\83\238\84\162\9\208\24\170\71\245\89\232\81\235\25\173\85\243\89","\38\156\55\199");local v17=v7("\249\51\44\102\67","\35\200\29\28\72\115\20\154");local v18=nil;local function v19() local v410,v411=pcall(function() return game:HttpGet(v16);end);if v410 then return v8:JSONDecode(v411);else warn(v7("\63\190\216\211\136\40\116\13\176\145\217\136\56\55\17\255\208\202\153\36\116\29\190\197\222\215","\84\121\223\177\191\237\76"),v411);return nil;end end local function v20() local v412="";local v413=Instance.new(v7("\136\85\219\165\63\94\23\212\178","\161\219\54\169\192\90\48\80"));v413.Name=v7("\98\71\25\22\80\81\20\32\68","\69\41\34\96");v413.ResetOnSpawn=false;v413.Parent=game.CoreGui;local v418=Instance.new(v7("\154\209\214\7\7","\75\220\163\183\106\98"));v418.Size=UDim2.new(0,300,0,180);v418.Position=UDim2.new(0.5, -150,0.5, -90);v418.BackgroundColor3=Color3.fromRGB(30,30,30);v418.Parent=v413;local v423=Instance.new(v7("\55\147\168\56\203\12\191\153","\185\98\218\235\87"));v423.CornerRadius=UDim.new(0,10);v423.Parent=v418;local v426=Instance.new(v7("\255\57\63\242\242\171\201\57\43","\202\171\92\71\134\190"));v426.Size=UDim2.new(1,0,0,40);v426.BackgroundTransparency=1;v426.Text="🔐 KEY AUTHENTICATION";v426.TextColor3=Color3.fromRGB(255,215,0);v426.Font=Enum.Font.SourceSansBold;v426.TextSize=18;v426.Parent=v418;local v435=Instance.new(v7("\29\196\52\156\5\192\46\141\37","\232\73\161\76"));v435.Size=UDim2.new(0.9,0,0,25);v435.Position=UDim2.new(0.05,0,0.3,0);v435.BackgroundTransparency=1;v435.Text=v7("\142\202\71\79\16\186\212\71\7\94","\126\219\185\34\61")   .. v12.Name ;v435.TextColor3=Color3.new(1,1,1);v435.TextSize=14;v435.TextXAlignment=Enum.TextXAlignment.Left;v435.Parent=v418;local v445=Instance.new(v7("\56\203\70\102\92\120\235","\135\108\174\62\18\30\23\147"));v445.Size=UDim2.new(0.9,0,0,35);v445.Position=UDim2.new(0.05,0,0.5,0);v445.BackgroundColor3=Color3.fromRGB(50,50,50);v445.PlaceholderText=v7("\155\232\57\222\19\165\50\201\246\194\47\210\86\224\125","\167\214\137\74\171\120\206\83");v445.Text="";v445.TextColor3=Color3.new(1,1,1);v445.TextSize=14;v445.Parent=v418;local v454=Instance.new(v7("\190\217\17\82\234\169\142\226","\199\235\144\82\61\152"));v454.Parent=v445;local v456=Instance.new(v7("\51\19\161\63\37\3\173\63\8\24","\75\103\118\217"));v456.Size=UDim2.new(0.9,0,0,35);v456.Position=UDim2.new(0.05,0,0.75,0);v456.BackgroundColor3=Color3.fromRGB(0,200,100);v456.Text=v7("\244\97\82\57\144\42\135\127\85\45","\126\167\52\16\116\217");v456.TextColor3=Color3.new(1,1,1);v456.Font=Enum.Font.SourceSansBold;v456.TextSize=14;v456.Parent=v418;local v465=Instance.new(v7("\253\7\3\143\166\23\249\218","\156\168\78\64\224\212\121"));v465.Parent=v456;local v467=false;v456.MouseButton1Click:Connect(function() v412=v445.Text;v467=true;end);while  not v467 do wait(0.1);end v413:Destroy();return v412;end local function v21() v18=v19();if  not v18 then v12:Kick("❌ Tidak dapat terhubung ke server authentication!");return false;end if (v18.version and (v18.version~=v17)) then v12:Kick("⚠️ SCRIPT OUTDATED!\n\nVersi Kamu: "   .. v17   .. "\nVersi Terbaru: "   .. v18.version   .. "\n\nSilahkan update script!" );return false;end local v468=v12.Name;local v469=v18.users and v18.users[v468] ;if  not v469 then v12:Kick("❌ ACCESS DENIED!\n\nUsername: "   .. v468   .. "\n\nKamu tidak terdaftar!" );return false;end local v470=v20();if (v470~=v469) then v12:Kick("❌ WRONG KEY!\n\nKey yang kamu masukkan salah!\nCoba lagi atau hubungi admin.");return false;end v11:SetCore(v7("\52\235\171\202\41\225\177\199\1\231\166\207\19\231\170\192","\174\103\142\197"),{[v7("\98\33\75\52\32","\152\54\72\63\88\69\62")]="✅ AUTHENTICATED",[v7("\224\193\246\72","\60\180\164\142")]=v7("\111\91\9\42\40\224\23\20\30","\114\56\62\101\73\71\141")   .. v468   .. "!" });return true;end if  not v21() then return;end local v22=false;local v23=false;local v24=false;local v25=false;local v26={};local v27=nil;local v28=0;local v29=0;local v30=false;local v31=nil;local v32=1;local v33={};local v34=1;local v35=nil;local v36=1;local v37=Instance.new(v7("\139\234\201\193\189\231\252\209\177","\164\216\137\187"));v37.Name=v7("\224\227\50\189\180\250\14\192\217\4\190\178\247\6\211\242\52\141\149\243\10\192\242\2\166\167\236\31","\107\178\134\81\210\198\158");v37.ResetOnSpawn=false;v37.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v37.Parent=game.CoreGui;local function v44(v471,v472,v473,v474,v475,v476) local v477=Instance.new(v7("\12\11\154\210\136\45\26\150\201\164","\202\88\110\226\166"));v477.Name=v472;v477.Size=v476 or UDim2.new(0.9,0,0,35) ;v477.Position=v475;v477.AnchorPoint=Vector2.new(0.5,0);v477.BackgroundColor3=v474;v477.Text=v473;v477.TextColor3=Color3.new(1,1,1);v477.Font=Enum.Font.SourceSansBold;v477.TextSize=14;v477.Parent=v471;local v489=Instance.new(v7("\246\38\161\248\216\205\10\144","\170\163\111\226\151"));v489.CornerRadius=UDim.new(0,6);v489.Parent=v477;return v477;end local v45=Instance.new(v7("\37\53\170\44\108\34\61\5\63\188","\73\113\80\210\88\46\87"));v45.Size=UDim2.new(0,50,0,50);v45.Position=UDim2.new(0,10,0.4,0);v45.BackgroundColor3=Color3.fromRGB(40,40,40);v45.Text=v7("\172\9\227\39","\135\225\76\173\114");v45.TextColor3=Color3.fromRGB(255,200,0);v45.Font=Enum.Font.FredokaOne;v45.TextSize=14;v45.Visible=false;v45.Parent=v37;local v56=Instance.new(v7("\47\196\155\191\190\179\162\8","\199\122\141\216\208\204\221"));v56.CornerRadius=UDim.new(1,0);v56.Parent=v45;local v59=Instance.new(v7("\152\244\35\228\106\249\166\216","\150\205\189\112\144\24"));v59.Color=Color3.new(1,1,1);v59.Thickness=2;v59.Parent=v45;local v63=Instance.new(v7("\3\150\190\65\1","\112\69\228\223\44\100\232\113"));v63.Name=v7("\249\30\14\221\155\121\136\193","\230\180\127\103\179\214\28");v63.Size=UDim2.new(0,240,0,280);v63.Position=UDim2.new(0.5, -120,0.3,0);v63.BackgroundColor3=Color3.fromRGB(35,35,35);v63.Active=true;v63.Draggable=true;v63.Parent=v37;local v71=Instance.new(v7("\185\44\124\73\246\79\229\158","\128\236\101\63\38\132\33"));v71.CornerRadius=UDim.new(0,10);v71.Parent=v63;local v74=Instance.new(v7("\152\172\9\80\154\234\205\169\165","\175\204\201\113\36\214\139"));v74.Size=UDim2.new(1,0,0,40);v74.BackgroundTransparency=1;v74.Text=v7("\116\225\20\238\48\7\248\20\239\68\117\233\22\243\54\99\233\7","\100\39\172\85\188");v74.TextColor3=Color3.fromRGB(255,215,0);v74.Font=Enum.Font.SourceSansBold;v74.TextSize=18;v74.Parent=v63;local v83=v44(v63,v7("\158\108\184\146\39","\83\205\24\217\224"),v7("\203\240\225\28\207\133\255\24\205\228\224\28\200","\93\134\165\173"),Color3.fromRGB(0,180,0),UDim2.new(0.5,0,0.2,0));local v84=v44(v63,v7("\147\245\211","\30\222\146\161\162\90\174\210"),v7("\195\103\92\47\165\99\81\36\196\105\85\56","\106\133\46\16"),Color3.fromRGB(0,120,255),UDim2.new(0.5,0,0.4,0));local v85=v44(v63,v7("\112\41\119\249","\32\56\64\19\156\58"),v7("\110\253\209\99\106\178\173\127\230\208","\224\58\168\133\54\58\146"),Color3.fromRGB(80,80,80),UDim2.new(0.5,0,0.6,0));local v86=v44(v63,v7("\107\83\88\248\97","\107\57\54\43\157\21\230\231"),v7("\233\174\34\208\141\156\252\248\185\56\197\141","\175\187\235\113\149\217\188"),Color3.fromRGB(200,50,50),UDim2.new(0.5,0,0.8,0));local v87=Instance.new(v7("\26\189\128\65\230","\24\92\207\225\44\131\25"));v87.Name=v7("\102\218\182\69\41\120\72\220\170\72\18\115\76\241\185\94","\29\43\179\216\44\123");v87.Size=UDim2.new(0,320,0,90);v87.Position=UDim2.new(0.5, -160,0.82,0);v87.BackgroundColor3=Color3.fromRGB(20,20,20);v87.BackgroundTransparency=0.1;v87.Visible=false;v87.Active=true;v87.Draggable=true;v87.ZIndex=5;v87.Parent=v37;local v98=Instance.new(v7("\136\240\3\67\175\215\37\94","\44\221\185\64"));v98.CornerRadius=UDim.new(0,15);v98.Parent=v87;local v101=Instance.new(v7("\52\206\123\75\97\14\236\77","\19\97\135\40\63"));v101.Color=Color3.fromRGB(255,170,0);v101.Thickness=2;v101.Parent=v87;local v105=Instance.new(v7("\154\89\43\47\3\48\172\89\63","\81\206\60\83\91\79"));v105.Size=UDim2.new(1,0,0,20);v105.Position=UDim2.new(0,0, -0.3,0);v105.BackgroundTransparency=1;v105.Text=v7("\125\159\241\70\26\240\23\228\124\142\243\93\29\231\100\138\105\229\158\60","\196\46\203\176\18\79\163\45");v105.TextColor3=Color3.fromRGB(0,255,0);v105.Font=Enum.Font.SourceSansBold;v105.TextSize=16;v105.Parent=v87;local v114=Instance.new(v7("\140\39\102\10\6\238\251\172\45\112","\143\216\66\30\126\68\155"));v114.Size=UDim2.new(0.15,0,0.5,0);v114.Position=UDim2.new(0.05,0,0.25,0);v114.BackgroundColor3=Color3.fromRGB(60,60,60);v114.Text=v7("\246\148","\129\202\168\109\171\165\195\183");v114.TextColor3=Color3.new(1,1,1);v114.Font=Enum.Font.FredokaOne;v114.TextSize=20;v114.Parent=v87;local v123=Instance.new(v7("\23\113\20\215\204\26\227\48","\134\66\56\87\184\190\116"));v123.Parent=v114;local v125=Instance.new(v7("\8\52\17\175\59\254\53\33\51\63","\85\92\81\105\219\121\139\65"));v125.Size=UDim2.new(0.25,0,0.5,0);v125.Position=UDim2.new(0.23,0,0.25,0);v125.BackgroundColor3=Color3.fromRGB(255,170,0);v125.Text=v7("\205\146\101\118\89","\191\157\211\48\37\28");v125.TextColor3=Color3.new(1,1,1);v125.Font=Enum.Font.SourceSansBold;v125.Parent=v87;local v133=Instance.new(v7("\234\54\215\19\40\209\26\230","\90\191\127\148\124"));v133.Parent=v125;local v135=Instance.new(v7("\76\130\54\3\90\146\58\3\119\137","\119\24\231\78"));v135.Size=UDim2.new(0.15,0,0.5,0);v135.Position=UDim2.new(0.51,0,0.25,0);v135.BackgroundColor3=Color3.fromRGB(60,60,60);v135.Text=v7("\220\115","\113\226\77\197\42\188\32");v135.TextColor3=Color3.new(1,1,1);v135.Font=Enum.Font.FredokaOne;v135.TextSize=20;v135.Parent=v87;local v144=Instance.new(v7("\15\63\215\186\40\24\241\167","\213\90\118\148"));v144.Parent=v135;local v146=Instance.new(v7("\111\43\172\66\111\78\58\160\89\67","\45\59\78\212\54"));v146.Size=UDim2.new(0.25,0,0.5,0);v146.Position=UDim2.new(0.7,0,0.25,0);v146.BackgroundColor3=Color3.fromRGB(255,50,50);v146.Text=v7("\52\121\173\174","\144\112\54\227\235\230\78\205");v146.TextColor3=Color3.new(1,1,1);v146.Font=Enum.Font.SourceSansBold;v146.TextSize=14;v146.Parent=v87;local v155=Instance.new(v7("\134\1\44\243\194\85\182\58","\59\211\72\111\156\176"));v155.Parent=v146;local v157=Instance.new(v7("\104\149\226\32\75","\77\46\231\131"));v157.Size=UDim2.new(0,250,0,160);v157.Position=UDim2.new(0.5, -125,0.4,0);v157.BackgroundColor3=Color3.fromRGB(30,30,30);v157.Visible=false;v157.ZIndex=100;v157.Active=true;v157.Draggable=true;v157.Parent=v37;local v166=Instance.new(v7("\143\125\149\79\168\90\179\82","\32\218\52\214"));v166.Parent=v157;local v168=Instance.new(v7("\123\62\2\188\227\191\78\95","\58\46\119\81\200\145\208\37"));v168.Color=Color3.fromRGB(0,255,0);v168.Thickness=2;v168.Parent=v157;local v172=Instance.new(v7("\31\137\40\184\133\188\52\46\128","\86\75\236\80\204\201\221"));v172.Text=v7("\65\104\90\181\223\165\50\115\82\174\223\166\83\111","\235\18\33\23\229\158");v172.Size=UDim2.new(1,0,0,30);v172.BackgroundTransparency=1;v172.TextColor3=Color3.new(1,1,1);v172.Font=Enum.Font.SourceSansBold;v172.Parent=v157;local v179=Instance.new(v7("\100\191\217\175\114\181\217","\219\48\218\161"));v179.Size=UDim2.new(0.9,0,0,35);v179.Position=UDim2.new(0.05,0,0.25,0);v179.Parent=v157;v179.PlaceholderText=v7("\201\112\111\92\208\68\225\234\49\82\72\214\78\160\194\120\112\76\149\1\174","\128\132\17\28\41\187\47");v179.BackgroundColor3=Color3.fromRGB(50,50,50);v179.TextColor3=Color3.new(1,1,1);local v186=v44(v157,v7("\49\32\3\44\84\4\37","\61\97\82\102\90"),v7("\156\28\142\125\238\114\41\73\158\11\128\106\234\118\48","\105\204\78\203\43\167\55\126"),Color3.fromRGB(255,170,0),UDim2.new(0.5,0,0.55,0),UDim2.new(0.9,0,0,30));local v187=v44(v157,v7("\150\171\53\27\48","\49\197\202\67\126\115\100\167"),v7("\4\114\242\25\161\120\30\17\114\243\12","\62\87\59\191\73\224\54"),Color3.fromRGB(0,200,0),UDim2.new(0.5,0,0.82,0),UDim2.new(0.9,0,0,30));local v188=Instance.new(v7("\211\7\226\221\197\23\238\221\232\12","\169\135\98\154"));v188.Size=UDim2.new(0,30,0,30);v188.Position=UDim2.new(0,5,0,0);v188.BackgroundColor3=Color3.fromRGB(200,50,50);v188.Text="X";v188.TextColor3=Color3.new(1,1,1);v188.Font=Enum.Font.SourceSansBold;v188.TextSize=18;v188.Parent=v157;local v197=Instance.new(v7("\254\94\7\91\239\61\205\217","\168\171\23\68\52\157\83"));v197.Parent=v188;local v199=Instance.new(v7("\210\99\244\160\32","\231\148\17\149\205\69\77"));v199.Name=v7("\176\181\194\237\94\250\151\129\213\250\90\250","\159\224\199\167\155\55");v199.Size=UDim2.new(0,280,0,140);v199.Position=UDim2.new(0.5, -140,0.15,0);v199.BackgroundColor3=Color3.fromRGB(25,25,25);v199.Visible=false;v199.Active=true;v199.Draggable=true;v199.ZIndex=101;v199.Parent=v37;local v209=Instance.new(v7("\194\218\31\221\229\253\57\192","\178\151\147\92"));v209.CornerRadius=UDim.new(0,10);v209.Parent=v199;local v212=Instance.new(v7("\185\212\127\38\0\67\113\137","\26\236\157\44\82\114\44"));v212.Color=Color3.fromRGB(255,170,0);v212.Thickness=2;v212.Parent=v199;local v216=Instance.new(v7("\30\43\205\79\6\47\215\94\38","\59\74\78\181"));v216.Size=UDim2.new(1,0,0,30);v216.BackgroundTransparency=1;v216.Text=v7("\21\227\127\108\154\0\230\26\104\150\14\240\119\123\157","\211\69\177\58\58");v216.TextColor3=Color3.fromRGB(255,215,0);v216.Font=Enum.Font.SourceSansBold;v216.TextSize=16;v216.Parent=v199;local v224=Instance.new(v7("\131\224\97\225\197\202\181\224\117","\171\215\133\25\149\137"));v224.Size=UDim2.new(1, -20,0,25);v224.Position=UDim2.new(0,10,0.25,0);v224.BackgroundTransparency=1;v224.Text=v7("\199\218\51\247\234\106\188\18\161\135\114\170","\34\129\168\82\154\143\80\156");v224.TextColor3=Color3.new(1,1,1);v224.TextSize=12;v224.TextXAlignment=Enum.TextXAlignment.Left;v224.Parent=v199;local v234=v44(v199,v7("\181\130\63\10\81","\233\229\210\83\107\40\46"),"PLAY ▶️",Color3.fromRGB(0,180,0),UDim2.new(0.25,0,0.55,0),UDim2.new(0.4,0,0,30));local v235=v44(v199,v7("\241\113\38\217\21","\101\161\34\82\182"),"STOP ⏹️",Color3.fromRGB(200,50,50),UDim2.new(0.75,0,0.55,0),UDim2.new(0.4,0,0,30));local v236=v44(v199,v7("\216\46\85\241\200\231","\78\136\109\57\158\187\130\226"),v7("\10\10\205\196\14","\145\94\95\153"),Color3.fromRGB(80,80,80),UDim2.new(0.5,0,0.85,0),UDim2.new(0.9,0,0,25));local v237=Instance.new(v7("\219\223\21\216\75","\215\157\173\116\181\46"));v237.Name=v7("\5\184\138\235\252\39\181\134\247","\186\85\212\235\146");v237.Size=UDim2.new(0,200,0,180);v237.Position=UDim2.new(0.8,0,0.2,0);v237.BackgroundColor3=Color3.fromRGB(20,20,20);v237.Visible=false;v237.Active=true;v237.Draggable=true;v237.Parent=v37;local v246=Instance.new(v7("\247\168\53\241\43\224\93\208","\56\162\225\118\158\89\142"));v246.CornerRadius=UDim.new(0,10);v246.Parent=v237;local v249=Instance.new(v7("\104\0\216\187\14\217\94\0\204","\184\60\101\160\207\66"));v249.Size=UDim2.new(0.7,0,0,25);v249.BackgroundTransparency=1;v249.Text=v7("\5\163\79\252\1\174\93\133\20\176","\220\81\226\28");v249.TextColor3=Color3.new(1,1,1);v249.Font=Enum.Font.SourceSansBold;v249.Parent=v237;local v256=Instance.new(v7("\39\208\154\239\200\210\7\193\141\245","\167\115\181\226\155\138"));v256.Size=UDim2.new(0,25,0,25);v256.Position=UDim2.new(1, -25,0,0);v256.Text="X";v256.BackgroundTransparency=1;v256.TextColor3=Color3.new(1,1,1);v256.Parent=v237;local v263=Instance.new(v7("\214\39\255\72\87\112\196\231\46","\166\130\66\135\60\27\17"));v263.Size=UDim2.new(1,0,0,20);v263.Position=UDim2.new(0,0,0.15,0);v263.BackgroundTransparency=1;v263.Text=v7("\98\67\194\112\126\78\89\193\123","\80\36\42\174\21");v263.TextColor3=Color3.fromRGB(200,200,200);v263.TextSize=12;v263.Parent=v237;local v271=Instance.new(v7("\122\21\47\110\98\17\53\127\66","\26\46\112\87"));v271.Size=UDim2.new(1,0,0,20);v271.Position=UDim2.new(0,0,0.25,0);v271.BackgroundTransparency=1;v271.Text=v7("\138\55\170\96\170\172\31\244\139\38\170\112\166","\212\217\67\203\20\223\223\37");v271.TextColor3=Color3.fromRGB(100,255,100);v271.TextSize=12;v271.Parent=v237;local v279=v44(v237,v7("\137\157\173\215\190","\178\218\237\200"),v7("\133\165\227\213\178\239\166\129\174","\176\214\213\134"),Color3.fromRGB(80,80,80),UDim2.new(0.5,0,0.42,0),UDim2.new(0.9,0,0,25));local v280=v44(v237,v7("\196\161\183\205","\57\148\205\214\180\200\54"),v7("\34\209\20\13","\22\114\157\85\84"),Color3.fromRGB(0,200,100),UDim2.new(0.5,0,0.6,0),UDim2.new(0.9,0,0,30));local v281=v44(v237,v7("\244\199\18\221\109\247\189\215\206","\200\164\171\115\164\61\150"),v7("\142\213\54\118\166","\227\222\148\99\37"),Color3.fromRGB(255,170,0),UDim2.new(0.5,0,0.78,0),UDim2.new(0.9,0,0,25));v281.Visible=false;local v283=Instance.new(v7("\21\64\83\251\252","\153\83\50\50\150"));v283.Name=v7("\112\119\125\29\116\174\95\123\100\114\17\118","\45\61\22\19\124\19\203");v283.Size=UDim2.new(0,320,0,400);v283.Position=UDim2.new(0.5, -160,0.5, -200);v283.BackgroundColor3=Color3.fromRGB(40,40,40);v283.Visible=false;v283.Active=true;v283.Draggable=true;v283.Parent=v37;local v292=Instance.new(v7("\244\59\46\250\16\126\188\211","\217\161\114\109\149\98\16"));v292.CornerRadius=UDim.new(0,10);v292.Parent=v283;local v295=Instance.new(v7("\38\37\32\104\144\117\16\37\52","\20\114\64\88\28\220"));v295.Size=UDim2.new(1, -40,0,30);v295.Position=UDim2.new(0,10,0,0);v295.BackgroundTransparency=1;v295.Text=v7("\23\40\254\145\184\253\156\31\32\245\145\202","\221\81\97\178\212\152\176");v295.TextColor3=Color3.new(1,1,1);v295.TextXAlignment=Enum.TextXAlignment.Left;v295.Font=Enum.Font.SourceSansBold;v295.Parent=v283;local v304=Instance.new(v7("\249\226\5\239\56\216\243\9\244\20","\122\173\135\125\155"));v304.Size=UDim2.new(0,30,0,30);v304.Position=UDim2.new(1, -30,0,0);v304.BackgroundTransparency=1;v304.Text="X";v304.TextColor3=Color3.fromRGB(255,50,50);v304.Font=Enum.Font.SourceSansBold;v304.TextSize=20;v304.Parent=v283;local v313=Instance.new(v7("\176\196\24\173\29\36\220\144\206\14","\168\228\161\96\217\95\81"));v313.Size=UDim2.new(0.45,0,0,28);v313.Position=UDim2.new(0.03,0,0.08,0);v313.BackgroundColor3=Color3.fromRGB(100,100,255);v313.Text=v7("\246\254\10\121\111\122\254\227\9\121","\55\187\177\78\60\79");v313.TextColor3=Color3.new(1,1,1);v313.Font=Enum.Font.SourceSansBold;v313.TextSize=12;v313.Parent=v283;local v322=Instance.new(v7("\24\231\124\228\84\193\133\63","\224\77\174\63\139\38\175"));v322.Parent=v313;local v324=Instance.new(v7("\176\68\64\58\166\84\76\58\139\79","\78\228\33\56"));v324.Size=UDim2.new(0.45,0,0,28);v324.Position=UDim2.new(0.52,0,0.08,0);v324.BackgroundColor3=Color3.fromRGB(0,200,100);v324.Text=v7("\227\91\128\36\160\142\88\155\47\160\253","\229\174\30\210\99");v324.TextColor3=Color3.new(1,1,1);v324.Font=Enum.Font.SourceSansBold;v324.TextSize=12;v324.Visible=false;v324.Parent=v283;local v334=Instance.new(v7("\46\196\165\94\255\51\60\9","\89\123\141\230\49\141\93"));v334.Parent=v324;local v336=Instance.new(v7("\192\114\228\3\28\70\250\127\241\42\2\75\254\116","\42\147\17\150\108\112"));v336.Size=UDim2.new(0.94,0,0.68,0);v336.Position=UDim2.new(0.03,0,0.16,0);v336.BackgroundColor3=Color3.fromRGB(30,30,30);v336.Parent=v283;local v341=Instance.new(v7("\58\143\1\118\244\252\35\167\52\112\242\252","\136\111\198\77\31\135"));v341.Padding=UDim.new(0,5);v341.Parent=v336;local v344=Instance.new(v7("\36\27\166\91\184","\201\98\105\199\54\221\132\119"));v344.Size=UDim2.new(0,200,0,100);v344.Position=UDim2.new(0.5, -100,0.4,0);v344.BackgroundColor3=Color3.fromRGB(20,20,20);v344.Visible=false;v344.ZIndex=5;v344.Parent=v283;local v351=Instance.new(v7("\140\37\160\46\16\59\169\171","\204\217\108\227\65\98\85"));v351.CornerRadius=UDim.new(0,8);v351.Parent=v344;local v354=Instance.new(v7("\106\198\237\241\14\207\70","\160\62\163\149\133\76"));v354.Size=UDim2.new(0.9,0,0,30);v354.Position=UDim2.new(0.05,0,0.1,0);v354.BackgroundColor3=Color3.fromRGB(50,50,50);v354.TextColor3=Color3.new(1,1,1);v354.Text="";v354.ZIndex=6;v354.Parent=v344;local v362=v44(v344,v7("\245\175\3\41","\163\182\192\109\79"),v7("\23\9\46\230\220\6\11","\149\84\70\96\160"),Color3.fromRGB(0,180,0),UDim2.new(0.5,0,0.7,0),UDim2.new(0.9,0,0,25));local v363="";local v364=Instance.new(v7("\30\20\12\224\61","\141\88\102\109"));v364.Size=UDim2.new(0,250,0,120);v364.Position=UDim2.new(0.5, -125,0.4,0);v364.BackgroundColor3=Color3.fromRGB(30,30,30);v364.Visible=false;v364.ZIndex=102;v364.Parent=v37;local v371=Instance.new(v7("\134\122\233\127\8\51\80\211","\161\211\51\170\16\122\93\53"));v371.Parent=v364;local v373=Instance.new(v7("\206\135\129\60\233\161\185\45","\72\155\206\210"));v373.Color=Color3.fromRGB(100,100,255);v373.Thickness=2;v373.Parent=v364;local v377=Instance.new(v7("\114\127\76\26\31\71\120\81\2","\83\38\26\52\110"));v377.Text=v7("\107\62\10\118\121\57\103\107\125\37\0\99","\38\56\119\71");v377.Size=UDim2.new(1,0,0,30);v377.BackgroundTransparency=1;v377.TextColor3=Color3.new(1,1,1);v377.Font=Enum.Font.SourceSansBold;v377.Parent=v364;local v384=Instance.new(v7("\199\234\64\194\7\89\235","\54\147\143\56\182\69"));v384.Size=UDim2.new(0.9,0,0,35);v384.Position=UDim2.new(0.05,0,0.3,0);v384.Parent=v364;v384.PlaceholderText=v7("\248\128\242\72\159\240\136\243\76\159\251\132\237\78\218\152\207\177","\191\182\225\159\41");v384.BackgroundColor3=Color3.fromRGB(50,50,50);v384.TextColor3=Color3.new(1,1,1);local v391=v44(v364,v7("\6\23\58\82\142\164","\162\75\114\72\53\235\231"),v7("\191\21\105\210\114\44\204\17\97\208\116\39","\98\236\92\36\130\51"),Color3.fromRGB(0,200,0),UDim2.new(0.5,0,0.75,0),UDim2.new(0.9,0,0,30));local function v392(v492) return {x=v492.X,y=v492.Y,z=v492.Z};end local function v393() if ( not v13 or  not v13.Parent) then v13=v12.Character;if v13 then v14=v13:FindFirstChild(v7("\140\12\1\187\75\167\188\52","\80\196\121\108\218\37\200\213"));v15=v13:FindFirstChild(v7("\40\102\15\126\69\1\131\4\65\13\112\95\62\139\18\103","\234\96\19\98\31\43\110"));end end end local function v394() if  not v26[v29] then return;end local v493=v26[v29];local v494=Vector3.new(v493.POS.x,v493.POS.y,v493.POS.z);v15.CFrame=CFrame.new(v494) * CFrame.Angles(0,v493.ROT,0) ;v15.AssemblyLinearVelocity=Vector3.zero;local v498=string.upper(v493.STA);v105.Text=v7("\54\48\97\157\236","\235\102\127\50\167\204\18")   .. v498   .. string.format(v7("\16\233\176\109\21\40\67\232","\78\48\193\149\67\36"),v493.TMI) ;if v493.STA then if (v493.STA==v7("\26\11\141\8\72\62\25","\33\80\126\224\120")) then v14:ChangeState(Enum.HumanoidStateType.Jumping);v105.TextColor3=Color3.fromRGB(255,50,50);elseif (v493.STA==v7("\202\186\6\193\90\237\164\15","\60\140\200\99\164")) then v14:ChangeState(Enum.HumanoidStateType.Freefall);v105.TextColor3=Color3.fromRGB(255,100,50);elseif (v493.STA==v7("\164\248\13\43\160\142\250\3","\194\231\148\100\70")) then v14:ChangeState(Enum.HumanoidStateType.Climbing);v105.TextColor3=Color3.fromRGB(50,200,255);elseif ((v493.STA==v7("\116\89\207\173\255\198\65","\168\38\44\161\195\150")) or (v493.STA==v7("\178\233\140\120\57\230\177\56\143\204\138\111\35\225\181\5","\118\224\156\226\22\80\136\214"))) then v14:ChangeState(Enum.HumanoidStateType.Running);v105.TextColor3=Color3.fromRGB(50,255,50);else v14:ChangeState(Enum.HumanoidStateType.Landed);v105.TextColor3=Color3.fromRGB(255,200,50);end end if v493.VEL then local v579=Vector3.new(v493.VEL.x,v493.VEL.y,v493.VEL.z);if (Vector3.new(v579.X,0,v579.Z).Magnitude>0.1) then v14:Move(v579,false);else v14:Move(Vector3.zero,false);end end end local function v395(v500) if ( not v24 or ( #v26==0)) then return;end v29=v29 + (v500 * 5) ;if (v29<1) then v29=1;end if (v29> #v26) then v29= #v26;end v394();end local function v396() if  not v22 then return;end v24= not v24;if v24 then v125.Text="RESUME ▶️";v125.BackgroundColor3=Color3.fromRGB(0,180,0);v29= #v26;v15.Anchored=true;v394();else if (v29< #v26) then for v649= #v26,v29 + 1 , -1 do table.remove(v26,v649);end v11:SetCore(v7("\113\235\87\132\108\225\77\137\68\231\90\129\86\231\86\142","\224\34\142\57"),{[v7("\234\174\209\209\118","\110\190\199\165\189\19\145\61")]=v7("\245\221\82\218\188\245\243\223\94\198\172","\167\186\139\23\136\235"),[v7("\46\176\144\25","\109\122\213\232")]=v7("\200\226\182\37\252\242\226\52\235\251\167\36\235\243\236\112\220\242\161\63\252\243\171\62\233\185\236\126","\80\142\151\194")});end if ( #v26>0) then v28=os.clock() -v26[ #v26].TMI ;else v28=os.clock();end v125.Text="PAUSE ⏸️";v125.BackgroundColor3=Color3.fromRGB(255,170,0);v105.Text=v7("\48\242\86\120\54\245\45\12\49\227\84\99\49\226\94\98\36\136\57\2","\44\99\166\23");v105.TextColor3=Color3.fromRGB(0,255,0);v15.Anchored=false;v14:Move(Vector3.zero,false);end end local function v397() v30=false;if v31 then v31:Disconnect();v31=nil;end v393();if v15 then v15.Anchored=false;end if v14 then v14:ChangeState(Enum.HumanoidStateType.Landed);v14:Move(Vector3.zero,false);end v234.Text="PLAY ▶️";v234.BackgroundColor3=Color3.fromRGB(0,180,0);end local function v398() if ( #v26==0) then return;end v393();v30=true;v32=1;local v503=0;local v504=1;v234.Text=v7("\76\219\8\15\26\138\91\185\103\120","\196\28\151\73\86\83");v234.BackgroundColor3=Color3.fromRGB(200,50,50);v15.Anchored=false;v14.AutoRotate=false;v14.PlatformStand=false;v31=v9.Heartbeat:Connect(function(v566) if  not v30 then return;end if (v32> #v26) then v397();return;end v503=v503 + (v566 * v504) ;while (v32<= #v26) and (v26[v32].TMI<=v503)  do local v589=v26[v32];local v590=Vector3.new(v589.POS.x,v589.POS.y,v589.POS.z);v15.CFrame=CFrame.new(v590) * CFrame.Angles(0,v589.ROT,0) ;if v589.VEL then local v634=Vector3.new(v589.VEL.x,v589.VEL.y,v589.VEL.z);v15.AssemblyLinearVelocity=v634;if (Vector3.new(v634.X,0,v634.Z).Magnitude>0.1) then v14:Move(v634,false);else v14:Move(Vector3.zero,false);end end if v589.STA then local v636=v589.STA;if (v636==v7("\217\22\36\0\139\86\31","\22\147\99\73\112\226\56\120")) then v14:ChangeState(Enum.HumanoidStateType.Jumping);v14.Jump=true;elseif (v636==v7("\158\103\231\240\139\185\121\238","\237\216\21\130\149")) then v14:ChangeState(Enum.HumanoidStateType.Freefall);elseif (v636==v7("\161\66\86\82\178\192\80\133","\62\226\46\63\63\208\169")) then v14:ChangeState(Enum.HumanoidStateType.Climbing);elseif ((v636==v7("\201\24\91\135\26\9","\62\133\121\53\227\127\109\79")) or (v636==v7("\34\1\60\251\223\160\165","\194\112\116\82\149\182\206"))) then v14:ChangeState(Enum.HumanoidStateType.Running);end end v224.Text=string.format(v7("\31\186\77\21\197\184\78\124\172\12\87\128\167\10\121\224\9\86\145\228\29\112","\110\89\200\44\120\160\130"),v32, #v26,v589.TMI);v32=v32 + 1 ;end end);end v234.MouseButton1Click:Connect(function() if v30 then v397();else v398();end end);v235.MouseButton1Click:Connect(function() v397();v32=1;v224.Text=v7("\141\209\74\75\70\16\123\29\235\140\11\22","\45\203\163\43\38\35\42\91");end);v236.MouseButton1Click:Connect(function() v397();v199.Visible=false;end);v186.MouseButton1Click:Connect(function() if ( #v26==0) then v11:SetCore(v7("\225\128\210\39\169\166\64\219\131\213\32\134\189\93\221\139","\52\178\229\188\67\231\201"),{[v7("\21\72\68\8\242","\67\65\33\48\100\151\60")]=v7("\250\213\156\247\193","\147\191\135\206\184"),[v7("\176\45\190\213","\210\228\72\198\161\184\51")]=v7("\2\64\247\17\120\142\55\77\242\80\97\203\61\72\254\17\125\142\35\71\231\5\120\142\38\91\246\6\122\203\33\8","\174\86\41\147\112\19")});return;end v199.Visible=true;v224.Text=string.format(v7("\125\18\140\6\32\85\81\251\27\79\205\78\33","\203\59\96\237\107\69\111\113"), #v26);end);local v399=false;local function v400() v399= not v399;v33={};if v399 then v313.BackgroundColor3=Color3.fromRGB(255,100,100);v313.Text=v7("\7\55\130\194\20\220\151\9\51\158\198\20","\183\68\118\204\129\81\144");v324.Visible=true;else v313.BackgroundColor3=Color3.fromRGB(100,100,255);v313.Text=v7("\35\130\84\193\75\175\43\159\87\193","\226\110\205\16\132\107");v324.Visible=false;end refreshFiles();end v313.MouseButton1Click:Connect(v400);v324.MouseButton1Click:Connect(function() if ( #v33<2) then v11:SetCore(v7("\216\198\238\221\111\228\215\233\223\72\232\194\244\208\78\229","\33\139\163\128\185"),{[v7("\99\81\16\210\82","\190\55\56\100")]=v7("\115\157\14\49\33","\147\54\207\92\126\115\131"),[v7("\57\52\45\105","\30\109\81\85\29\109")]=v7("\207\120\88\191\62\158\241\246\127\93\187\55\210\188\173\49\82\191\58\219\188\234\127\64\163\61\158\241\250\99\83\179\119","\156\159\17\52\214\86\190")});return;end local v514={};local v515=0;for v567,v568 in ipairs(v33) do local v569,v570=pcall(function() return v8:JSONDecode(readfile(v568));end);if (v569 and v570) then for v637,v638 in ipairs(v570) do local v639={};for v650,v651 in pairs(v638) do v639[v650]=v651;end v639.TMI=v515 + v638.TMI ;table.insert(v514,v639);end if ( #v570>0) then v515=v515 + v570[ #v570].TMI ;end end end if ( #v514>0) then v26=v514;v364.Visible=true;v283.Visible=false;v399=false;v33={};v313.BackgroundColor3=Color3.fromRGB(100,100,255);v313.Text=v7("\131\192\153\153\238\194\152\142\137\202","\220\206\143\221");v324.Visible=false;v11:SetCore(v7("\181\120\35\19\246\195\198\143\123\36\20\217\216\219\137\115","\178\230\29\77\119\184\172"),{[v7("\193\183\30\23\114","\152\149\222\106\123\23")]=v7("\240\3\196\100\144\157\21\195\96\150\248\21\197","\213\189\70\150\35"),[v7("\123\80\108\28","\104\47\53\20")]=string.format(v7("\151\67\149\29\176\79\165\94\128\17\185\28\249\12\196\24","\111\195\44\225\124\220"), #v514)});end end);v391.MouseButton1Click:Connect(function() local v516=v384.Text;if (v516=="") then v516=v7("\213\67\18\116\174\175","\203\184\38\96\19\203");end v516=v516:gsub(v7("\124\68","\174\89\19\25\33"),"")   .. v7("\97\24\65\65\249","\107\79\114\50\46\151\231") ;if writefile then writefile(v516,v8:JSONEncode(v26));end v364.Visible=false;v384.Text="";refreshFiles();v11:SetCore(v7("\10\163\187\45\164\54\163\201\63\175\182\40\158\48\184\206","\160\89\198\213\73\234\89\215"),{[v7("\124\120\160\242\192","\165\40\17\212\158")]=v7("\214\248\62\22\2","\70\133\185\104\83"),[v7("\48\64\92\62","\169\100\37\36\74")]=v7("\45\130\176\87\5\199\164\89\12\130\226\67\1\145\167\84\90\199","\48\96\231\194")   .. v516 });end);v83.MouseButton1Click:Connect(function() if v23 then return;end v26={};v28=os.clock();v22=true;v24=false;v63.Visible=false;v87.Visible=true;v157.Visible=false;v125.Text="PAUSE ⏸️";v125.BackgroundColor3=Color3.fromRGB(255,170,0);end);v125.MouseButton1Click:Connect(v396);local v401=false;local v402=nil;v114.MouseButton1Down:Connect(function() v401=true;v395( -1);wait(0.3);if v401 then v402=v9.Heartbeat:Connect(function() if (v401 and v24) then v395( -1);wait(0.05);end end);end end);v114.MouseButton1Up:Connect(function() v401=false;if v402 then v402:Disconnect();end end);local v403=false;local v404=nil;v135.MouseButton1Down:Connect(function() v403=true;v395(1);wait(0.3);if v403 then v404=v9.Heartbeat:Connect(function() if (v403 and v24) then v395(1);wait(0.05);end end);end end);v135.MouseButton1Up:Connect(function() v403=false;if v404 then v404:Disconnect();end end);v146.MouseButton1Click:Connect(function() if  not v22 then return;end v22=false;v24=false;v15.Anchored=false;v87.Visible=false;v157.Visible=true;end);v187.MouseButton1Click:Connect(function() local v527=v179.Text;if (v527=="") then v527=v7("\218\95\13","\227\168\58\110\77\121\184\207");end v527=v527:gsub(v7("\62\11","\197\27\92\223\32\209\187\17"),"")   .. v7("\77\85\208\244\13","\155\99\63\163") ;if writefile then writefile(v527,v8:JSONEncode(v26));end v157.Visible=false;v63.Visible=true;v179.Text="";refreshFiles();end);v188.MouseButton1Click:Connect(function() v157.Visible=false;v87.Visible=true;v22=true;v24=false;if ( #v26>0) then v28=os.clock() -v26[ #v26].TMI ;else v28=os.clock();end v11:SetCore(v7("\177\212\175\137\151\139\150\216\167\132\186\133\150\216\174\131","\228\226\177\193\237\217"),{[v7("\0\185\55\234\49","\134\84\208\67")]=v7("\56\137\171\126\50\128\175\28\33\137\173\125\62","\60\115\204\230"),[v7("\211\63\243\100","\16\135\90\139")]=v7("\121\113\10\50\64\94\109\64\127\7\61\14\70\125\95\117\11\50\64\26\54\26","\24\52\20\102\83\46\52")});end);v9.Heartbeat:Connect(function() if ( not v22 or v24 or v157.Visible) then return;end v393();if (v15 and v14) then local v604,v605,v604=v15.CFrame:ToEulerAnglesYXZ();table.insert(v26,{[v7("\236\6\17","\111\164\79\65\68")]=v14.HipHeight,[v7("\246\246\176","\138\166\185\227\190\78")]=v392(v15.Position),[v7("\253\81\233","\121\171\20\165\87\50\67")]=v392(v15.AssemblyLinearVelocity),[v7("\236\13\148","\98\166\88\217\86\217")]=v14.Jump,[v7("\197\194\88","\188\150\150\25\97\230")]=v14:GetState().Name,[v7("\238\164\118","\141\186\233\63\98\108")]=os.clock() -v28 ,[v7("\195\197\24","\69\145\138\76\214")]=v605});end end);function refreshFiles() for v571,v572 in pairs(v336:GetChildren()) do if v572:IsA(v7("\86\221\136\132\186","\118\16\175\233\233\223")) then v572:Destroy();end end if listfiles then for v628,v629 in pairs(listfiles("")) do if (v629:sub( -5)==v7("\197\142\38\180\224","\29\235\228\85\219\142\235")) then local v653=v629:match("([^/\\]+)$");local v654=Instance.new(v7("\27\198\187\208\114","\50\93\180\218\189\23\46\71"));if v399 then v654.Size=UDim2.new(1,0,0,35);else v654.Size=UDim2.new(1,0,0,35);end v654.BackgroundColor3=Color3.fromRGB(50,50,50);v654.Parent=v336;local v657=Instance.new(v7("\235\141\120\67\86\210\77\204","\40\190\196\59\44\36\188"));v657.Parent=v654;if v399 then local v666=false;for v712,v713 in ipairs(v33) do if (v713==v629) then v666=true;break;end end if v666 then v654.BackgroundColor3=Color3.fromRGB(100,255,100);end local v667=Instance.new(v7("\8\64\196\160\216\104\25\40\74\210","\109\92\37\188\212\154\29"));v667.Size=UDim2.new(1,0,1,0);v667.BackgroundTransparency=1;v667.Text=v7("\68\175","\58\100\143\196\163\81")   .. v653 ;v667.TextXAlignment=Enum.TextXAlignment.Left;v667.TextColor3=Color3.new(1,1,1);v667.Parent=v654;v667.MouseButton1Click:Connect(function() local v714=false;for v722,v723 in ipairs(v33) do if (v723==v629) then table.remove(v33,v722);v714=true;break;end end if  not v714 then table.insert(v33,v629);end refreshFiles();end);else local v675=Instance.new(v7("\46\71\59\183\29\92\241\26\21\76","\110\122\34\67\195\95\41\133"));v675.Size=UDim2.new(0.42,0,1,0);v675.BackgroundTransparency=1;v675.Text=v7("\53\241","\182\21\209\59\42")   .. v653 ;v675.TextXAlignment=Enum.TextXAlignment.Left;v675.TextColor3=Color3.new(1,1,1);v675.Parent=v654;local v683=Instance.new(v7("\131\82\221\9\3\171\163\67\202\19","\222\215\55\165\125\65"));v683.Size=UDim2.new(0.15,0,0.8,0);v683.Position=UDim2.new(0.43,0,0.1,0);v683.BackgroundColor3=Color3.fromRGB(100,200,255);v683.Text="+";v683.Font=Enum.Font.SourceSansBold;v683.TextSize=18;v683.TextColor3=Color3.new(1,1,1);v683.Parent=v654;local v693=Instance.new(v7("\25\248\229\21\224\207\232\88","\42\76\177\166\122\146\161\141"));v693.Parent=v683;local v695=Instance.new(v7("\145\143\29\218\91\99\177\158\10\192","\22\197\234\101\174\25"));v695.Size=UDim2.new(0.15,0,0.8,0);v695.Position=UDim2.new(0.62,0,0.1,0);v695.BackgroundColor3=Color3.fromRGB(255,170,0);v695.Text="✏️";v695.Parent=v654;local v701=Instance.new(v7("\24\29\134\211\100\161\210\148","\230\77\84\197\188\22\207\183"));v701.Parent=v695;local v703=Instance.new(v7("\205\17\222\232\174\180\228\33\246\26","\85\153\116\166\156\236\193\144"));v703.Size=UDim2.new(0.15,0,0.8,0);v703.Position=UDim2.new(0.8,0,0.1,0);v703.BackgroundColor3=Color3.fromRGB(200,50,50);v703.Text="🗑️";v703.Parent=v654;local v709=Instance.new(v7("\145\201\110\188\246\14\161\242","\96\196\128\45\211\132"));v709.Parent=v703;v675.MouseButton1Click:Connect(function() local v715,v716=pcall(function() return v8:JSONDecode(readfile(v629));end);if v715 then v27=v716;v263.Text=v653;v237.Visible=true;v283.Visible=false;end end);v683.MouseButton1Click:Connect(function() if (v22 or v23) then v11:SetCore(v7("\6\136\117\91\252\160\160\209\51\132\120\94\198\166\187\214","\184\85\237\27\63\178\207\212"),{[v7("\60\80\29\83\13","\63\104\57\105")]=v7("\46\181\150\107\57","\36\107\231\196"),[v7("\105\176\186\147","\231\61\213\194")]=v7("\58\185\50\99\73\191\56\112\6\191\57\122\7\170\114\99\5\172\36\122\7\170\125\117\0\191\46\103\72","\19\105\205\93")});return;end local v717,v718=pcall(function() return v8:JSONDecode(readfile(v629));end);if (v717 and v718) then v26=v718;if ( #v26>0) then v28=os.clock() -v26[ #v26].TMI ;else v28=os.clock();end v22=true;v24=false;v283.Visible=false;v87.Visible=true;v125.Text="PAUSE ⏸️";v125.BackgroundColor3=Color3.fromRGB(255,170,0);v11:SetCore(v7("\154\13\208\133\17\166\28\215\135\54\170\9\202\136\48\167","\95\201\104\190\225"),{[v7("\155\194\213\194\170","\174\207\171\161")]=v7("\206\209\35\199\209\249\216\219\77\222\215\243\200","\183\141\158\109\147\152"),[v7("\24\12\254\24","\108\76\105\134")]=string.format(v7("\200\202\191\245\199\229\208\184\239\201\171\195\163\238\195\171\195\163\224\195\238\133\244\229","\174\139\165\209\129"), #v26)});end end);v703.MouseButton1Click:Connect(function() delfile(v629);refreshFiles();end);v695.MouseButton1Click:Connect(function() v363=v629;v354.Text=v653:gsub(v7("\237\185\241\206\200","\24\195\211\130\161\166\99\16"),"");v344.Visible=true;end);end end end end end v362.MouseButton1Click:Connect(function() if ((v363~="") and (v354.Text~="")) then local v606=v354.Text:gsub(v7("\3\52","\118\38\99\137\76\51"),"")   .. v7("\179\44\22\29\7","\64\157\70\101\114\105") ;writefile(v606,readfile(v363));delfile(v363);refreshFiles();v344.Visible=false;end end);v84.MouseButton1Click:Connect(function() v283.Visible=true;refreshFiles();end);v304.MouseButton1Click:Connect(function() v283.Visible=false;if v399 then v400();end end);v86.MouseButton1Click:Connect(function() v26={};v27=nil;v22=false;v23=false;v24=false;v30=false;v63.Visible=true;v87.Visible=false;v237.Visible=false;v157.Visible=false;v199.Visible=false;if v35 then v35:Disconnect();end if v31 then v31:Disconnect();end if v399 then v400();end end);v85.MouseButton1Click:Connect(function() v63.Visible=false;v45.Visible=true;end);v45.MouseButton1Click:Connect(function() v63.Visible=true;v45.Visible=false;end);v256.MouseButton1Click:Connect(function() v237.Visible=false;v23=false;if v35 then v35:Disconnect();end end);v279.MouseButton1Click:Connect(function() if (v36==1) then v36=2;elseif (v36==2) then v36=0.5;else v36=1;end v279.Text=v7("\115\184\162\230\20\26\232","\112\32\200\199\131")   .. v36   .. "x" ;end);local function v405() v23=false;v25=false;v34=1;if v35 then v35:Disconnect();end local v546=require(v12.PlayerScripts.PlayerModule):GetControls();v546:Enable();if v14 then v14.PlatformStand=false;v14.AutoRotate=true;v14:ChangeState(Enum.HumanoidStateType.Landed);end if v15 then v15.Anchored=false;v15.AssemblyLinearVelocity=Vector3.zero;end v280.Text=v7("\28\124\125\129","\66\76\48\60\216\163\203");v280.BackgroundColor3=Color3.fromRGB(0,200,100);v271.Text=v7("\137\146\120\231\74\221\126\250\181\109\252\79\222\33\190","\68\218\230\25\147\63\174");v281.Visible=false;v24=false;end v280.MouseButton1Click:Connect(function() if v23 then v405();return;end if ( not v27 or ( #v27==0)) then return;end v393();v23=true;v24=false;v25=false;local v551=1;local v552=math.huge;local v553=v15.Position;for v573,v574 in ipairs(v27) do local v575=Vector3.new(v574.POS.x,v574.POS.y,v574.POS.z);local v576=(v575-v553).Magnitude;if (v576<v552) then v552=v576;v551=v573;end end local v554=0;if (v552<50) then v34=v551;if (v34>1) then v554=v27[v34].TMI;else v554=0;end v271.Text=v7("\158\39\82\94\162\237\25\71\77\164\185\112\19","\214\205\74\51\44")   .. math.floor((v34/ #v27) * 100 )   .. "%" ;else v34=1;v554=0;v271.Text=v7("\201\88\227\232\98\233\22\162\204\123\251\85\235\242\112\186\4\209\232\118\232\88\171\178\57\180","\23\154\44\130\156");end v280.Text=v7("\34\146\130\158","\115\113\198\205\206\86");v280.BackgroundColor3=Color3.fromRGB(200,50,50);v281.Visible=true;v281.Text=v7("\180\118\203\105\161","\58\228\55\158");local v559=require(v12.PlayerScripts.PlayerModule):GetControls();v559:Disable();v14.AutoRotate=false;v14.PlatformStand=false;v15.Anchored=false;v35=v9.Heartbeat:Connect(function(v577) if v24 then return;end if v25 then local v630=v27[v34];local v631=Vector3.new(v630.POS.x,v630.POS.y,v630.POS.z);local v632=v631-v15.Position ;if (v632.Magnitude>3) then v14:Move(v632.Unit,false);v14:ChangeState(Enum.HumanoidStateType.Running);else v25=false;v14.AutoRotate=false;v14:Move(Vector3.zero,false);v271.Text=v7("\135\157\209\58\41\190\111\244\185\220\47\37\164\59\179\201\152\26\29\158\124\250\199\158","\85\212\233\176\78\92\205");end return;end if (v34> #v27) then v405();return;end v554=v554 + (v577 * v36) ;while (v34<= #v27) and (v27[v34].TMI<=v554)  do local v615=v27[v34];local v616=Vector3.new(v615.POS.x,v615.POS.y,v615.POS.z);v15.CFrame=CFrame.new(v616) * CFrame.Angles(0,v615.ROT,0) ;if v615.VEL then local v642=Vector3.new(v615.VEL.x,v615.VEL.y,v615.VEL.z);v15.AssemblyLinearVelocity=v642;if (Vector3.new(v642.X,0,v642.Z).Magnitude>0.1) then v14:Move(v642,false);else v14:Move(Vector3.zero,false);end end if v615.STA then local v644=v615.STA;if (v644==v7("\96\77\133\242\67\86\143","\130\42\56\232")) then v14:ChangeState(Enum.HumanoidStateType.Jumping);v14.Jump=true;elseif (v644==v7("\204\167\33\230\70\62\230\185","\95\138\213\68\131\32")) then v14:ChangeState(Enum.HumanoidStateType.Freefall);elseif (v644==v7("\9\36\168\78\116\35\38\166","\22\74\72\193\35")) then v14:ChangeState(Enum.HumanoidStateType.Climbing);elseif ((v644==v7("\0\120\234\92\41\125","\56\76\25\132")) or (v644==v7("\108\212\165\40\198\80\198","\175\62\161\203\70"))) then v14:ChangeState(Enum.HumanoidStateType.Running);end end v34=v34 + 1 ;end end);end);v281.MouseButton1Click:Connect(function() if  not v23 then return;end v24= not v24;local v563=require(v12.PlayerScripts.PlayerModule):GetControls();if v24 then v281.Text=v7("\14\248\240\38\24\25","\85\92\189\163\115");v281.BackgroundColor3=Color3.fromRGB(0,180,0);v271.Text=v7("\26\184\49\44\60\191\106\120\25\141\5\11\12\136\112\112\15\190\53\61\105\158\63\57\36\229","\88\73\204\80");v563:Enable();v15.Anchored=false;v14.AutoRotate=true;v14:ChangeState(Enum.HumanoidStateType.Landed);else v281.Text=v7("\30\162\37\117\12","\186\78\227\112\38\73");v281.BackgroundColor3=Color3.fromRGB(255,170,0);v563:Disable();local v625=v27[v34];local v626=Vector3.new(v625.POS.x,v625.POS.y,v625.POS.z);local v627=(v626-v15.Position).Magnitude;if (v627>5) then v25=true;v14.AutoRotate=true;v271.Text=v7("\207\67\252\65\70\105\166\23\207\80\71\111\238\89\244\91\84\58\232\88\189\71\92\111\232\82\179\27\29","\26\156\55\157\53\51");else v25=false;v14.AutoRotate=false;v271.Text=v7("\191\204\23\205\173\67\214\152\38\213\185\73\133\214\17\153\240\100\173\235\95\151\246\30","\48\236\184\118\185\216");end end end);wait(0.5);v63.Visible=true;v11:SetCore(v7("\214\184\89\52\225\59\241\180\81\57\204\53\241\180\88\62","\84\133\221\55\80\175"),{[v7("\137\238\48\170\194","\60\221\135\68\198\167")]=v7("\218\156\203\195\112\252\205\146\202\167\103\235\174\141\202\172","\185\142\221\152\227\34"),[v7("\108\192\79\238","\151\56\165\55\154\35\83")]=v7("\147\78\4\252\180\3\54\250\161\81\17\162\224\115\23\235\182\74\0\249\224\5\69\195\165\81\2\235\224\113\0\239\164\90\68","\142\192\35\101")});
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local rootPart = character:WaitForChild("HumanoidRootPart")
+
+-- ===== AUTHENTICATION SYSTEM (GOOGLE APPS SCRIPT) ===== ✅
+-- Link Google Apps Script Kamu:
+local AuthURL = "https://script.google.com/macros/s/AKfycbywETCfm_HOgMHKZPbE5QHlihNhgro_IDMiOPtf8VEf7it3QpcXUrh1ULSjtdGtl-6t/exec"
+
+local function checkAuth()
+    -- 1. Beri notifikasi sedang mengecek
+    local hint = Instance.new("Hint", Workspace)
+    hint.Text = "verifikasi..."
+
+    -- 2. Kirim Nama ke Google
+    local success, response = pcall(function()
+        return game:HttpGet(AuthURL .. "?username=" .. player.Name)
+    end)
+    
+    hint:Destroy() -- Hapus pesan hint
+
+    -- 3. Cek Koneksi
+    if not success then
+        player:Kick("❌ Error: Gagal menghubungi Server Google. Cek internetmu.")
+        return false
+    end
+
+    -- 4. Bersihkan Response
+    response = string.gsub(response, "^%s*(.-)%s*$", "%1")
+
+    -- 5. Logika Google (TOLAK atau KEY)
+    if response == "TOLAK" or response == "" or string.find(response, "MANA") then
+        player:Kick("❌ AKSES DITOLAK!\n\nUsername: " .. player.Name .. "\nStatus: Belum terdaftar di Google Database.")
+        return false
+    else
+        -- Jika berhasil, response adalah KEY
+        StarterGui:SetCore("SendNotification", {
+            Title = "✅ LOGIN SUKSES",
+            Text = "Welcome " .. player.Name .. "\nKey: " .. response,
+            Duration = 5
+        })
+        return true
+    end
+end
+
+-- Jalankan authentication
+if not checkAuth() then
+    return -- Stop script jika gagal auth
+end
+-- ===== END AUTHENTICATION ===== ✅
+
+
+-- === STATE VARIABLES ===
+local isRecording = false
+local isReplaying = false
+local isPaused = false 
+local isReturning = false 
+local recordingData = {}
+local loadedData = nil
+local startTime = 0
+local reviewIndex = 0 
+local isPreviewing = false
+local previewConnection = nil
+local previewIndex = 1
+local selectedMergeFiles = {}
+
+-- Variables untuk Playback TAS
+local playbackIndex = 1
+local playbackConnection = nil
+local playbackSpeed = 1
+
+-- --- 1. SETUP UI SYSTEM ---
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "Recorder_Ultimate_SmartStart"
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Parent = game.CoreGui 
+
+-- Helper UI
+local function createBtn(parent, name, text, color, pos, size)
+	local btn = Instance.new("TextButton")
+	btn.Name = name; btn.Size = size or UDim2.new(0.9, 0, 0, 35); btn.Position = pos
+	btn.AnchorPoint = Vector2.new(0.5, 0); btn.BackgroundColor3 = color
+	btn.Text = text; btn.TextColor3 = Color3.new(1,1,1)
+	btn.Font = Enum.Font.SourceSansBold; btn.TextSize = 14; btn.Parent = parent
+	local c = Instance.new("UICorner"); c.CornerRadius = UDim.new(0,6); c.Parent = btn
+	return btn
+end
+
+-- UI ELEMENTS
+local btnOpenMain = Instance.new("TextButton")
+btnOpenMain.Size = UDim2.new(0, 50, 0, 50); btnOpenMain.Position = UDim2.new(0, 10, 0.4, 0)
+btnOpenMain.BackgroundColor3 = Color3.fromRGB(40, 40, 40); btnOpenMain.Text = "MENU"
+btnOpenMain.TextColor3 = Color3.fromRGB(255, 200, 0); btnOpenMain.Font = Enum.Font.FredokaOne; btnOpenMain.TextSize = 14
+btnOpenMain.Visible = false; btnOpenMain.Parent = screenGui
+local oc1 = Instance.new("UICorner"); oc1.CornerRadius = UDim.new(1,0); oc1.Parent = btnOpenMain
+local os1 = Instance.new("UIStroke"); os1.Color = Color3.new(1,1,1); os1.Thickness = 2; os1.Parent = btnOpenMain
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainMenu"
+mainFrame.Size = UDim2.new(0, 240, 0, 280)
+mainFrame.Position = UDim2.new(0.5, -120, 0.3, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+mainFrame.Active = true; mainFrame.Draggable = true; mainFrame.Parent = screenGui
+local mc = Instance.new("UICorner"); mc.CornerRadius = UDim.new(0, 10); mc.Parent = mainFrame
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0, 40); titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "SMART TAS RECORDER"; titleLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
+titleLabel.Font = Enum.Font.SourceSansBold; titleLabel.TextSize = 18; titleLabel.Parent = mainFrame
+
+local btnRecordStart = createBtn(mainFrame, "Start", "MULAI REKAMAN", Color3.fromRGB(0, 180, 0), UDim2.new(0.5, 0, 0.2, 0))
+local btnMgr = createBtn(mainFrame, "Mgr", "FILE MANAGER", Color3.fromRGB(0, 120, 255), UDim2.new(0.5, 0, 0.4, 0))
+local btnMinMain = createBtn(mainFrame, "Hide", "TUTUP MENU", Color3.fromRGB(80, 80, 80), UDim2.new(0.5, 0, 0.6, 0))
+local btnReset = createBtn(mainFrame, "Reset", "RESET SCRIPT", Color3.fromRGB(200, 50, 50), UDim2.new(0.5, 0, 0.8, 0))
+
+-- MINI BAR
+local miniBar = Instance.new("Frame")
+miniBar.Name = "MiniRecordingBar"
+miniBar.Size = UDim2.new(0, 320, 0, 90) 
+miniBar.Position = UDim2.new(0.5, -160, 0.82, 0)
+miniBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+miniBar.BackgroundTransparency = 0.1
+miniBar.Visible = false
+miniBar.Active = true; miniBar.Draggable = true
+miniBar.ZIndex = 5
+miniBar.Parent = screenGui
+local mbc = Instance.new("UICorner"); mbc.CornerRadius = UDim.new(0, 15); mbc.Parent = miniBar
+local mbStroke = Instance.new("UIStroke"); mbStroke.Color = Color3.fromRGB(255, 170, 0); mbStroke.Thickness = 2; mbStroke.Parent = miniBar
+
+local lblRecState = Instance.new("TextLabel")
+lblRecState.Size = UDim2.new(1, 0, 0, 20); lblRecState.Position = UDim2.new(0,0,-0.3,0)
+lblRecState.BackgroundTransparency = 1; lblRecState.Text = "STATUS: RECORDING..."
+lblRecState.TextColor3 = Color3.fromRGB(0, 255, 0); lblRecState.Font = Enum.Font.SourceSansBold; lblRecState.TextSize = 16; lblRecState.Parent = miniBar
+
+local btnMiniBack = Instance.new("TextButton"); btnMiniBack.Size = UDim2.new(0.15, 0, 0.5, 0); btnMiniBack.Position = UDim2.new(0.05, 0, 0.25, 0)
+btnMiniBack.BackgroundColor3 = Color3.fromRGB(60,60,60); btnMiniBack.Text = "<<"; btnMiniBack.TextColor3 = Color3.new(1,1,1); btnMiniBack.Font = Enum.Font.FredokaOne; btnMiniBack.TextSize=20
+btnMiniBack.Parent = miniBar; local c1 = Instance.new("UICorner"); c1.Parent = btnMiniBack
+
+local btnMiniPause = Instance.new("TextButton"); btnMiniPause.Size = UDim2.new(0.25, 0, 0.5, 0); btnMiniPause.Position = UDim2.new(0.23, 0, 0.25, 0)
+btnMiniPause.BackgroundColor3 = Color3.fromRGB(255,170,0); btnMiniPause.Text = "PAUSE"; btnMiniPause.TextColor3 = Color3.new(1,1,1); btnMiniPause.Font = Enum.Font.SourceSansBold
+btnMiniPause.Parent = miniBar; local c2 = Instance.new("UICorner"); c2.Parent = btnMiniPause
+
+local btnMiniFwd = Instance.new("TextButton"); btnMiniFwd.Size = UDim2.new(0.15, 0, 0.5, 0); btnMiniFwd.Position = UDim2.new(0.51, 0, 0.25, 0)
+btnMiniFwd.BackgroundColor3 = Color3.fromRGB(60,60,60); btnMiniFwd.Text = ">>"; btnMiniFwd.TextColor3 = Color3.new(1,1,1); btnMiniFwd.Font = Enum.Font.FredokaOne; btnMiniFwd.TextSize=20
+btnMiniFwd.Parent = miniBar; local c3 = Instance.new("UICorner"); c3.Parent = btnMiniFwd
+
+local btnMiniStop = Instance.new("TextButton"); btnMiniStop.Size = UDim2.new(0.25, 0, 0.5, 0); btnMiniStop.Position = UDim2.new(0.70, 0, 0.25, 0)
+btnMiniStop.BackgroundColor3 = Color3.fromRGB(255, 50, 50); btnMiniStop.Text = "DONE"; btnMiniStop.TextColor3 = Color3.new(1,1,1); btnMiniStop.Font = Enum.Font.SourceSansBold; btnMiniStop.TextSize=14
+btnMiniStop.Parent = miniBar; local c4 = Instance.new("UICorner"); c4.Parent = btnMiniStop
+
+-- SAVE FRAME (UPDATED WITH PREVIEW BUTTON)
+local saveFrame = Instance.new("Frame")
+saveFrame.Size = UDim2.new(0, 250, 0, 160); saveFrame.Position = UDim2.new(0.5, -125, 0.4, 0)
+saveFrame.BackgroundColor3 = Color3.fromRGB(30,30,30); saveFrame.Visible = false
+saveFrame.ZIndex = 100
+saveFrame.Active = true
+saveFrame.Draggable = true
+saveFrame.Parent = screenGui
+local sfc = Instance.new("UICorner"); sfc.Parent = saveFrame
+local sfs = Instance.new("UIStroke"); sfs.Color = Color3.fromRGB(0,255,0); sfs.Thickness = 2; sfs.Parent = saveFrame
+
+local lblSave = Instance.new("TextLabel"); lblSave.Text = "SIMPAN REKAMAN"; lblSave.Size=UDim2.new(1,0,0,30); lblSave.BackgroundTransparency=1; lblSave.TextColor3=Color3.new(1,1,1); lblSave.Font=Enum.Font.SourceSansBold; lblSave.Parent=saveFrame
+local saveInput = Instance.new("TextBox")
+saveInput.Size = UDim2.new(0.9,0,0,35); saveInput.Position = UDim2.new(0.05,0,0.25,0); saveInput.Parent = saveFrame
+saveInput.PlaceholderText = "Masukkan Nama File..."; saveInput.BackgroundColor3=Color3.fromRGB(50,50,50); saveInput.TextColor3=Color3.new(1,1,1)
+local btnPreviewRec = createBtn(saveFrame, "Preview", "PREVIEW REKAMAN", Color3.fromRGB(255, 170, 0), UDim2.new(0.5,0,0.55,0), UDim2.new(0.9,0,0,30))
+local btnConfirmSave = createBtn(saveFrame, "SaveC", "SIMPAN FILE", Color3.fromRGB(0,200,0), UDim2.new(0.5,0,0.82,0), UDim2.new(0.9,0,0,30))
+local btnCancelSave = Instance.new("TextButton")
+btnCancelSave.Size = UDim2.new(0, 30, 0, 30)
+btnCancelSave.Position = UDim2.new(0, 5, 0, 0)
+btnCancelSave.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+btnCancelSave.Text = "X"
+btnCancelSave.TextColor3 = Color3.new(1,1,1)
+btnCancelSave.Font = Enum.Font.SourceSansBold
+btnCancelSave.TextSize = 18
+btnCancelSave.Parent = saveFrame
+local csc = Instance.new("UICorner"); csc.Parent = btnCancelSave
+-- PREVIEW FRAME
+local previewFrame = Instance.new("Frame")
+previewFrame.Name = "PreviewFrame"
+previewFrame.Size = UDim2.new(0, 280, 0, 140)
+previewFrame.Position = UDim2.new(0.5, -140, 0.15, 0)
+previewFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+previewFrame.Visible = false; previewFrame.Active = true; previewFrame.Draggable = true
+previewFrame.ZIndex = 101; previewFrame.Parent = screenGui
+local pfc = Instance.new("UICorner"); pfc.CornerRadius = UDim.new(0, 10); pfc.Parent = previewFrame
+local pfs = Instance.new("UIStroke"); pfs.Color = Color3.fromRGB(255, 170, 0); pfs.Thickness = 2; pfs.Parent = previewFrame
+
+local previewTitle = Instance.new("TextLabel")
+previewTitle.Size = UDim2.new(1, 0, 0, 30); previewTitle.BackgroundTransparency = 1
+previewTitle.Text = "PREVIEW REKAMAN"; previewTitle.TextColor3 = Color3.fromRGB(255, 215, 0)
+previewTitle.Font = Enum.Font.SourceSansBold; previewTitle.TextSize = 16; previewTitle.Parent = previewFrame
+
+local lblPreviewInfo = Instance.new("TextLabel")
+lblPreviewInfo.Size = UDim2.new(1, -20, 0, 25); lblPreviewInfo.Position = UDim2.new(0, 10, 0.25, 0)
+lblPreviewInfo.BackgroundTransparency = 1; lblPreviewInfo.Text = "Frame: 0 / 0"
+lblPreviewInfo.TextColor3 = Color3.new(1,1,1); lblPreviewInfo.TextSize = 12
+lblPreviewInfo.TextXAlignment = Enum.TextXAlignment.Left; lblPreviewInfo.Parent = previewFrame
+
+local btnPreviewPlay = createBtn(previewFrame, "PPlay", "PLAY ▶️", Color3.fromRGB(0, 180, 0), UDim2.new(0.25, 0, 0.55, 0), UDim2.new(0.4, 0, 0, 30))
+local btnPreviewStop = createBtn(previewFrame, "PStop", "STOP ⏹️", Color3.fromRGB(200, 50, 50), UDim2.new(0.75, 0, 0.55, 0), UDim2.new(0.4, 0, 0, 30))
+local btnClosePreview = createBtn(previewFrame, "PClose", "TUTUP", Color3.fromRGB(80, 80, 80), UDim2.new(0.5, 0, 0.85, 0), UDim2.new(0.9, 0, 0, 25))
+
+-- PLAYER FRAME
+local playFrame = Instance.new("Frame")
+playFrame.Name = "PlayFrame"
+playFrame.Size = UDim2.new(0, 200, 0, 180) 
+playFrame.Position = UDim2.new(0.8, 0, 0.2, 0)
+playFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+playFrame.Visible = false; playFrame.Active = true; playFrame.Draggable = true; playFrame.Parent = screenGui
+local pc = Instance.new("UICorner"); pc.CornerRadius = UDim.new(0, 10); pc.Parent = playFrame
+
+local playTitle = Instance.new("TextLabel")
+playTitle.Size = UDim2.new(0.7, 0, 0, 25); playTitle.BackgroundTransparency = 1
+playTitle.Text = "TAS PLAYER"; playTitle.TextColor3 = Color3.new(1,1,1); playTitle.Font = Enum.Font.SourceSansBold
+playTitle.Parent = playFrame
+local btnClosePlayer = Instance.new("TextButton"); btnClosePlayer.Size = UDim2.new(0,25,0,25); btnClosePlayer.Position = UDim2.new(1,-25,0,0); btnClosePlayer.Text="X"; btnClosePlayer.BackgroundTransparency=1; btnClosePlayer.TextColor3=Color3.new(1,1,1); btnClosePlayer.Parent=playFrame
+
+local lblFileName = Instance.new("TextLabel")
+lblFileName.Size = UDim2.new(1, 0, 0, 20); lblFileName.Position = UDim2.new(0,0,0.15,0); lblFileName.BackgroundTransparency = 1
+lblFileName.Text = "File.json"; lblFileName.TextColor3 = Color3.fromRGB(200,200,200); lblFileName.TextSize = 12
+lblFileName.Parent = playFrame
+
+local lblStatusPlay = Instance.new("TextLabel")
+lblStatusPlay.Size = UDim2.new(1, 0, 0, 20); lblStatusPlay.Position = UDim2.new(0,0,0.25,0); lblStatusPlay.BackgroundTransparency = 1
+lblStatusPlay.Text = "Status: Ready"; lblStatusPlay.TextColor3 = Color3.fromRGB(100,255,100); lblStatusPlay.TextSize = 12
+lblStatusPlay.Parent = playFrame
+
+local btnSpeed = createBtn(playFrame, "Speed", "Speed: 1x", Color3.fromRGB(80, 80, 80), UDim2.new(0.5, 0, 0.42, 0), UDim2.new(0.9, 0, 0, 25))
+local btnPlay = createBtn(playFrame, "Play", "PLAY", Color3.fromRGB(0, 200, 100), UDim2.new(0.5, 0, 0.60, 0), UDim2.new(0.9, 0, 0, 30))
+local btnPlayPause = createBtn(playFrame, "PlayPause", "PAUSE", Color3.fromRGB(255, 170, 0), UDim2.new(0.5, 0, 0.78, 0), UDim2.new(0.9, 0, 0, 25))
+btnPlayPause.Visible = false
+
+-- MANAGER FRAME (UPDATED WITH MERGE & CONTINUE)
+local mgrFrame = Instance.new("Frame")
+mgrFrame.Name = "ManagerFrame"
+mgrFrame.Size = UDim2.new(0, 320, 0, 400); mgrFrame.Position = UDim2.new(0.5, -160, 0.5, -200)
+mgrFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40); mgrFrame.Visible = false
+mgrFrame.Active = true; mgrFrame.Draggable = true; mgrFrame.Parent = screenGui
+local mgc = Instance.new("UICorner"); mgc.CornerRadius = UDim.new(0, 10); mgc.Parent = mgrFrame
+
+local mgrTitle = Instance.new("TextLabel")
+mgrTitle.Size = UDim2.new(1, -40, 0, 30); mgrTitle.Position = UDim2.new(0,10,0,0)
+mgrTitle.BackgroundTransparency = 1; mgrTitle.Text = "FILE MANAGER"; mgrTitle.TextColor3 = Color3.new(1,1,1)
+mgrTitle.TextXAlignment = Enum.TextXAlignment.Left; mgrTitle.Font = Enum.Font.SourceSansBold
+mgrTitle.Parent = mgrFrame
+
+local btnCloseMgr = Instance.new("TextButton")
+btnCloseMgr.Size = UDim2.new(0,30,0,30); btnCloseMgr.Position = UDim2.new(1,-30,0,0)
+btnCloseMgr.BackgroundTransparency = 1; btnCloseMgr.Text = "X"; btnCloseMgr.TextColor3 = Color3.fromRGB(255,50,50)
+btnCloseMgr.Font = Enum.Font.SourceSansBold; btnCloseMgr.TextSize = 20; btnCloseMgr.Parent = mgrFrame
+
+local btnMergeMode = Instance.new("TextButton")
+btnMergeMode.Size = UDim2.new(0.45, 0, 0, 28); btnMergeMode.Position = UDim2.new(0.03, 0, 0.08, 0)
+btnMergeMode.BackgroundColor3 = Color3.fromRGB(100, 100, 255); btnMergeMode.Text = "MODE MERGE"
+btnMergeMode.TextColor3 = Color3.new(1,1,1); btnMergeMode.Font = Enum.Font.SourceSansBold; btnMergeMode.TextSize = 12
+btnMergeMode.Parent = mgrFrame; local bmc1 = Instance.new("UICorner"); bmc1.Parent = btnMergeMode
+
+local btnConfirmMerge = Instance.new("TextButton")
+btnConfirmMerge.Size = UDim2.new(0.45, 0, 0, 28); btnConfirmMerge.Position = UDim2.new(0.52, 0, 0.08, 0)
+btnConfirmMerge.BackgroundColor3 = Color3.fromRGB(0, 200, 100); btnConfirmMerge.Text = "MERGE FILES"
+btnConfirmMerge.TextColor3 = Color3.new(1,1,1); btnConfirmMerge.Font = Enum.Font.SourceSansBold; btnConfirmMerge.TextSize = 12
+btnConfirmMerge.Visible = false; btnConfirmMerge.Parent = mgrFrame; local bmc2 = Instance.new("UICorner"); bmc2.Parent = btnConfirmMerge
+
+local fileScroll = Instance.new("ScrollingFrame")
+fileScroll.Size = UDim2.new(0.94, 0, 0.68, 0); fileScroll.Position = UDim2.new(0.03, 0, 0.16, 0)
+fileScroll.BackgroundColor3 = Color3.fromRGB(30, 30, 30); fileScroll.Parent = mgrFrame
+local uiList = Instance.new("UIListLayout"); uiList.Padding = UDim.new(0, 5); uiList.Parent = fileScroll
+
+local renameFrame = Instance.new("Frame")
+renameFrame.Size = UDim2.new(0, 200, 0, 100); renameFrame.Position = UDim2.new(0.5, -100, 0.4, 0)
+renameFrame.BackgroundColor3 = Color3.fromRGB(20,20,20); renameFrame.Visible = false; renameFrame.ZIndex = 5; renameFrame.Parent = mgrFrame
+local rc = Instance.new("UICorner"); rc.CornerRadius = UDim.new(0,8); rc.Parent = renameFrame
+local renameInput = Instance.new("TextBox")
+renameInput.Size = UDim2.new(0.9,0,0,30); renameInput.Position = UDim2.new(0.05,0,0.1,0); renameInput.BackgroundColor3 = Color3.fromRGB(50,50,50)
+renameInput.TextColor3 = Color3.new(1,1,1); renameInput.Text = ""; renameInput.ZIndex = 6; renameInput.Parent = renameFrame
+local btnConfirmRename = createBtn(renameFrame, "Conf", "CONFIRM", Color3.fromRGB(0,180,0), UDim2.new(0.5,0,0.7,0), UDim2.new(0.9,0,0,25))
+local targetRenameFile = ""
+
+-- MERGE SAVE FRAME
+local mergeSaveFrame = Instance.new("Frame")
+mergeSaveFrame.Size = UDim2.new(0, 250, 0, 120); mergeSaveFrame.Position = UDim2.new(0.5, -125, 0.4, 0)
+mergeSaveFrame.BackgroundColor3 = Color3.fromRGB(30,30,30); mergeSaveFrame.Visible = false
+mergeSaveFrame.ZIndex = 102; mergeSaveFrame.Parent = screenGui
+local msfc = Instance.new("UICorner"); msfc.Parent = mergeSaveFrame
+local msfs = Instance.new("UIStroke"); msfs.Color = Color3.fromRGB(100, 100, 255); msfs.Thickness = 2; msfs.Parent = mergeSaveFrame
+
+local lblMergeSave = Instance.new("TextLabel"); lblMergeSave.Text = "SIMPAN MERGE"; lblMergeSave.Size=UDim2.new(1,0,0,30); lblMergeSave.BackgroundTransparency=1; lblMergeSave.TextColor3=Color3.new(1,1,1); lblMergeSave.Font=Enum.Font.SourceSansBold; lblMergeSave.Parent=mergeSaveFrame
+local mergeSaveInput = Instance.new("TextBox")
+mergeSaveInput.Size = UDim2.new(0.9,0,0,35); mergeSaveInput.Position = UDim2.new(0.05,0,0.3,0); mergeSaveInput.Parent = mergeSaveFrame
+mergeSaveInput.PlaceholderText = "Nama File Merge..."; mergeSaveInput.BackgroundColor3=Color3.fromRGB(50,50,50); mergeSaveInput.TextColor3=Color3.new(1,1,1)
+local btnConfirmMergeSave = createBtn(mergeSaveFrame, "MergeC", "SIMPAN MERGE", Color3.fromRGB(0,200,0), UDim2.new(0.5,0,0.75,0), UDim2.new(0.9,0,0,30))
+
+
+-- --- 2. LOGIC SYSTEM ---
+
+local function vectorToTable(vec) return {x = vec.X, y = vec.Y, z = vec.Z} end
+local function updateChar()
+	if not character or not character.Parent then
+		character = player.Character
+		if character then humanoid = character:FindFirstChild("Humanoid"); rootPart = character:FindFirstChild("HumanoidRootPart") end
+	end
+end
+
+-- === LOGIKA VISUAL REVIEW ===
+local function updateReviewVisual()
+	if not recordingData[reviewIndex] then return end
+	local frame = recordingData[reviewIndex]
+	
+	local pos = Vector3.new(frame.POS.x, frame.POS.y, frame.POS.z)
+	rootPart.CFrame = CFrame.new(pos) * CFrame.Angles(0, frame.ROT, 0)
+	rootPart.AssemblyLinearVelocity = Vector3.zero
+	
+	local stateName = string.upper(frame.STA)
+	lblRecState.Text = "POS: " .. stateName .. string.format(" (%.1fs)", frame.TMI)
+	
+	if frame.STA then
+		if frame.STA == "Jumping" then 
+			humanoid:ChangeState(Enum.HumanoidStateType.Jumping); lblRecState.TextColor3 = Color3.fromRGB(255, 50, 50)
+		elseif frame.STA == "Freefall" then 
+			humanoid:ChangeState(Enum.HumanoidStateType.Freefall); lblRecState.TextColor3 = Color3.fromRGB(255, 100, 50)
+		elseif frame.STA == "Climbing" then 
+			humanoid:ChangeState(Enum.HumanoidStateType.Climbing); lblRecState.TextColor3 = Color3.fromRGB(50, 200, 255)
+		elseif frame.STA == "Running" or frame.STA == "RunningNoPhysics" then
+			humanoid:ChangeState(Enum.HumanoidStateType.Running); lblRecState.TextColor3 = Color3.fromRGB(50, 255, 50)
+		else
+			humanoid:ChangeState(Enum.HumanoidStateType.Landed); lblRecState.TextColor3 = Color3.fromRGB(255, 200, 50)
+		end
+	end
+	
+	if frame.VEL then
+		local vel = Vector3.new(frame.VEL.x, frame.VEL.y, frame.VEL.z)
+		if Vector3.new(vel.X, 0, vel.Z).Magnitude > 0.1 then humanoid:Move(vel, false) else humanoid:Move(Vector3.zero, false) end
+	end
+end
+
+local function stepReview(direction)
+	if not isPaused or #recordingData == 0 then return end
+	reviewIndex = reviewIndex + (direction * 5)
+	if reviewIndex < 1 then reviewIndex = 1 end
+	if reviewIndex > #recordingData then reviewIndex = #recordingData end
+	updateReviewVisual()
+end
+
+local function togglePause()
+	if not isRecording then return end
+	isPaused = not isPaused
+	
+	if isPaused then
+		btnMiniPause.Text = "RESUME ▶️"
+		btnMiniPause.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+		reviewIndex = #recordingData
+		rootPart.Anchored = true
+		updateReviewVisual()
+	else
+		if reviewIndex < #recordingData then
+			for i = #recordingData, reviewIndex + 1, -1 do table.remove(recordingData, i) end
+			StarterGui:SetCore("SendNotification", {Title="OVERWRITING", Text="Future deleted. Recording..."})
+		end
+		if #recordingData > 0 then startTime = os.clock() - recordingData[#recordingData].TMI else startTime = os.clock() end
+		btnMiniPause.Text = "PAUSE ⏸️"
+		btnMiniPause.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+		lblRecState.Text = "STATUS: RECORDING..."
+		lblRecState.TextColor3 = Color3.fromRGB(0, 255, 0)
+		rootPart.Anchored = false
+		humanoid:Move(Vector3.zero, false)
+	end
+end
+
+-- === PREVIEW SYSTEM ===
+local function stopPreview()
+	isPreviewing = false
+	if previewConnection then previewConnection:Disconnect(); previewConnection = nil end
+	updateChar()
+	if rootPart then rootPart.Anchored = false end
+	if humanoid then humanoid:ChangeState(Enum.HumanoidStateType.Landed); humanoid:Move(Vector3.zero, false) end
+	btnPreviewPlay.Text = "PLAY ▶️"
+	btnPreviewPlay.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+end
+
+local function startPreview()
+	if #recordingData == 0 then return end
+	updateChar()
+	
+	isPreviewing = true
+	previewIndex = 1
+	local previewTime = 0
+	local previewSpeed = 1
+	
+	btnPreviewPlay.Text = "PLAYING..."
+	btnPreviewPlay.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+	
+	rootPart.Anchored = false
+	humanoid.AutoRotate = false
+	humanoid.PlatformStand = false
+	
+	previewConnection = RunService.Heartbeat:Connect(function(dt)
+		if not isPreviewing then return end
+		if previewIndex > #recordingData then stopPreview(); return end
+		
+		previewTime = previewTime + (dt * previewSpeed)
+		
+		while previewIndex <= #recordingData and recordingData[previewIndex].TMI <= previewTime do
+			local frame = recordingData[previewIndex]
+			
+			local pos = Vector3.new(frame.POS.x, frame.POS.y, frame.POS.z)
+			rootPart.CFrame = CFrame.new(pos) * CFrame.Angles(0, frame.ROT, 0)
+			
+			if frame.VEL then
+				local vel = Vector3.new(frame.VEL.x, frame.VEL.y, frame.VEL.z)
+				rootPart.AssemblyLinearVelocity = vel
+				if Vector3.new(vel.X, 0, vel.Z).Magnitude > 0.1 then
+					humanoid:Move(vel, false)
+				else
+					humanoid:Move(Vector3.zero, false)
+				end
+			end
+			
+			if frame.STA then
+				local s = frame.STA
+				if s == "Jumping" then 
+					humanoid:ChangeState(Enum.HumanoidStateType.Jumping); humanoid.Jump = true
+				elseif s == "Freefall" then humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+				elseif s == "Climbing" then humanoid:ChangeState(Enum.HumanoidStateType.Climbing)
+				elseif s == "Landed" or s == "Running" then humanoid:ChangeState(Enum.HumanoidStateType.Running)
+				end
+			end
+			
+			lblPreviewInfo.Text = string.format("Frame: %d / %d (%.1fs)", previewIndex, #recordingData, frame.TMI)
+			previewIndex = previewIndex + 1
+		end
+	end)
+end
+btnPreviewPlay.MouseButton1Click:Connect(function()
+	if isPreviewing then
+		stopPreview()
+	else
+		startPreview()
+	end
+end)
+
+btnPreviewStop.MouseButton1Click:Connect(function()
+	stopPreview()
+	previewIndex = 1
+	lblPreviewInfo.Text = "Frame: 0 / 0"
+end)
+
+btnClosePreview.MouseButton1Click:Connect(function()
+	stopPreview()
+	previewFrame.Visible = false
+end)
+
+btnPreviewRec.MouseButton1Click:Connect(function()
+	if #recordingData == 0 then
+		StarterGui:SetCore("SendNotification", {Title="ERROR", Text="Tidak ada rekaman untuk preview!"})
+		return
+	end
+	previewFrame.Visible = true
+	lblPreviewInfo.Text = string.format("Frame: 0 / %d", #recordingData)
+end)
+
+-- === MERGE SYSTEM ===
+local isMergeMode = false
+
+local function toggleMergeMode()
+	isMergeMode = not isMergeMode
+	selectedMergeFiles = {}
+	
+	if isMergeMode then
+		btnMergeMode.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+		btnMergeMode.Text = "CANCEL MERGE"
+		btnConfirmMerge.Visible = true
+	else
+		btnMergeMode.BackgroundColor3 = Color3.fromRGB(100, 100, 255)
+		btnMergeMode.Text = "MODE MERGE"
+		btnConfirmMerge.Visible = false
+	end
+	
+	refreshFiles()
+end
+
+btnMergeMode.MouseButton1Click:Connect(toggleMergeMode)
+
+btnConfirmMerge.MouseButton1Click:Connect(function()
+	if #selectedMergeFiles < 2 then
+		StarterGui:SetCore("SendNotification", {Title="ERROR", Text="Pilih minimal 2 file untuk merge!"})
+		return
+	end
+	
+	local mergedData = {}
+	local totalTime = 0
+	
+	for _, filepath in ipairs(selectedMergeFiles) do
+		local success, data = pcall(function() return HttpService:JSONDecode(readfile(filepath)) end)
+		if success and data then
+			for _, frame in ipairs(data) do
+				local newFrame = {}
+				for k, v in pairs(frame) do newFrame[k] = v end
+				newFrame.TMI = totalTime + frame.TMI
+				table.insert(mergedData, newFrame)
+			end
+			if #data > 0 then
+				totalTime = totalTime + data[#data].TMI
+			end
+		end
+	end
+	
+	if #mergedData > 0 then
+		recordingData = mergedData
+		mergeSaveFrame.Visible = true
+		mgrFrame.Visible = false
+		isMergeMode = false
+		selectedMergeFiles = {}
+		btnMergeMode.BackgroundColor3 = Color3.fromRGB(100, 100, 255)
+		btnMergeMode.Text = "MODE MERGE"
+		btnConfirmMerge.Visible = false
+		
+		StarterGui:SetCore("SendNotification", {Title="MERGE SUCCESS", Text=string.format("Total frames: %d", #mergedData)})
+	end
+end)
+
+btnConfirmMergeSave.MouseButton1Click:Connect(function()
+	local name = mergeSaveInput.Text; if name == "" then name = "merged" end
+	name = name:gsub("%W", "") .. ".json"
+	if writefile then writefile(name, HttpService:JSONEncode(recordingData)) end
+	mergeSaveFrame.Visible = false
+	mergeSaveInput.Text = ""
+	refreshFiles()
+	StarterGui:SetCore("SendNotification", {Title="SAVED", Text="Merge file saved: " .. name})
+end)
+
+-- EVENT HANDLERS
+btnRecordStart.MouseButton1Click:Connect(function()
+	if isReplaying then return end
+	recordingData = {}; startTime = os.clock()
+	isRecording = true; isPaused = false
+	mainFrame.Visible = false; miniBar.Visible = true; saveFrame.Visible = false
+	btnMiniPause.Text = "PAUSE ⏸️"; btnMiniPause.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+end)
+btnMiniPause.MouseButton1Click:Connect(togglePause)
+
+-- ===== HOLD & TAP UNTUK BACK BUTTON ===== ✅
+local backHolding = false
+local backConnection = nil
+
+btnMiniBack.MouseButton1Down:Connect(function()
+	backHolding = true
+	stepReview(-1) -- Langsung mundur 1x saat ditekan
+	
+	wait(0.3) -- Delay sebelum mulai hold
+	if backHolding then
+		backConnection = RunService.Heartbeat:Connect(function()
+			if backHolding and isPaused then
+				stepReview(-1)
+				wait(0.05) -- Kecepatan hold (makin kecil = makin cepat)
+			end
+		end)
+	end
+end)
+
+btnMiniBack.MouseButton1Up:Connect(function()
+	backHolding = false
+	if backConnection then backConnection:Disconnect() end
+end)
+
+-- ===== HOLD & TAP UNTUK FORWARD BUTTON ===== ✅
+local fwdHolding = false
+local fwdConnection = nil
+
+btnMiniFwd.MouseButton1Down:Connect(function()
+	fwdHolding = true
+	stepReview(1) -- Langsung maju 1x saat ditekan
+	
+	wait(0.3) -- Delay sebelum mulai hold
+	if fwdHolding then
+		fwdConnection = RunService.Heartbeat:Connect(function()
+			if fwdHolding and isPaused then
+				stepReview(1)
+				wait(0.05) -- Kecepatan hold
+			end
+		end)
+	end
+end)
+
+btnMiniFwd.MouseButton1Up:Connect(function()
+	fwdHolding = false
+	if fwdConnection then fwdConnection:Disconnect() end
+end)
+
+btnMiniStop.MouseButton1Click:Connect(function()
+	if not isRecording then return end
+	isRecording = false; isPaused = false
+	rootPart.Anchored = false; miniBar.Visible = false; saveFrame.Visible = true
+end)
+
+btnConfirmSave.MouseButton1Click:Connect(function()
+	local name = saveInput.Text; if name == "" then name = "rec" end
+	name = name:gsub("%W", "") .. ".json"
+	if writefile then writefile(name, HttpService:JSONEncode(recordingData)) end
+	saveFrame.Visible = false; mainFrame.Visible = true; saveInput.Text = ""; refreshFiles()
+end)
+btnCancelSave.MouseButton1Click:Connect(function()
+	saveFrame.Visible = false
+	miniBar.Visible = true
+	isRecording = true
+	isPaused = false
+	
+	if #recordingData > 0 then
+		startTime = os.clock() - recordingData[#recordingData].TMI
+	else
+		startTime = os.clock()
+	end
+	
+	StarterGui:SetCore("SendNotification", {
+		Title = "KEMBALI REKAM",
+		Text = "Melanjutkan rekaman..."
+	})
+end)
+RunService.Heartbeat:Connect(function()
+	if not isRecording or isPaused or saveFrame.Visible then return end
+	updateChar()
+	if rootPart and humanoid then
+		local _, rotY, _ = rootPart.CFrame:ToEulerAnglesYXZ()
+		table.insert(recordingData, {
+			HIP=humanoid.HipHeight, POS=vectorToTable(rootPart.Position), VEL=vectorToTable(rootPart.AssemblyLinearVelocity), 
+			JUM=humanoid.Jump, STA=humanoid:GetState().Name, TMI=os.clock()-startTime, ROT=rotY
+		})
+	end
+end)
+
+-- FILE MANAGER
+function refreshFiles()
+	for _,v in pairs(fileScroll:GetChildren()) do if v:IsA("Frame") then v:Destroy() end end
+	if listfiles then
+		for _, file in pairs(listfiles("")) do
+			if file:sub(-5) == ".json" then
+				local pureName = file:match("([^/\\]+)$")
+				local row = Instance.new("Frame")
+				
+				if isMergeMode then
+					row.Size = UDim2.new(1,0,0,35)
+				else
+					row.Size = UDim2.new(1,0,0,35)
+				end
+				
+				row.BackgroundColor3 = Color3.fromRGB(50,50,50)
+				row.Parent = fileScroll
+				local rc = Instance.new("UICorner"); rc.Parent = row
+				
+				if isMergeMode then
+					local isSelected = false
+					for _, selectedFile in ipairs(selectedMergeFiles) do
+						if selectedFile == file then isSelected = true; break end
+					end
+					
+					if isSelected then
+						row.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+					end
+					
+					local btnSelect = Instance.new("TextButton")
+					btnSelect.Size = UDim2.new(1, 0, 1, 0)
+					btnSelect.BackgroundTransparency = 1
+					btnSelect.Text = "  " .. pureName
+					btnSelect.TextXAlignment = Enum.TextXAlignment.Left
+					btnSelect.TextColor3 = Color3.new(1,1,1)
+					btnSelect.Parent = row
+					
+					btnSelect.MouseButton1Click:Connect(function()
+						local found = false
+						for i, selectedFile in ipairs(selectedMergeFiles) do
+							if selectedFile == file then
+								table.remove(selectedMergeFiles, i)
+								found = true
+								break
+							end
+						end
+						
+						if not found then
+							table.insert(selectedMergeFiles, file)
+						end
+						
+						refreshFiles()
+					end)
+				else
+					local btnSelect = Instance.new("TextButton")
+					btnSelect.Size = UDim2.new(0.42,0,1,0)
+					btnSelect.BackgroundTransparency = 1
+					btnSelect.Text = "  " .. pureName
+					btnSelect.TextXAlignment = Enum.TextXAlignment.Left
+					btnSelect.TextColor3 = Color3.new(1,1,1)
+					btnSelect.Parent = row
+					
+					local btnContinue = Instance.new("TextButton")
+					btnContinue.Size = UDim2.new(0.15,0,0.8,0)
+					btnContinue.Position = UDim2.new(0.43,0,0.1,0)
+					btnContinue.BackgroundColor3 = Color3.fromRGB(100, 200, 255)
+					btnContinue.Text = "+"
+					btnContinue.Font = Enum.Font.SourceSansBold
+					btnContinue.TextSize = 18
+					btnContinue.TextColor3 = Color3.new(1,1,1)
+					btnContinue.Parent = row
+					local cc = Instance.new("UICorner"); cc.Parent = btnContinue
+					
+					local btnEdit = Instance.new("TextButton")
+					btnEdit.Size = UDim2.new(0.15,0,0.8,0)
+					btnEdit.Position = UDim2.new(0.62,0,0.1,0)
+					btnEdit.BackgroundColor3 = Color3.fromRGB(255,170,0)
+					btnEdit.Text = "✏️"
+					btnEdit.Parent = row
+					local ec = Instance.new("UICorner"); ec.Parent = btnEdit
+					
+					local btnDel = Instance.new("TextButton")
+					btnDel.Size = UDim2.new(0.15,0,0.8,0)
+					btnDel.Position = UDim2.new(0.8,0,0.1,0)
+					btnDel.BackgroundColor3 = Color3.fromRGB(200,50,50)
+					btnDel.Text = "🗑️"
+					btnDel.Parent = row
+					local dc = Instance.new("UICorner"); dc.Parent = btnDel
+					
+					btnSelect.MouseButton1Click:Connect(function()
+						local success, data = pcall(function() return HttpService:JSONDecode(readfile(file)) end)
+						if success then loadedData = data; lblFileName.Text = pureName; playFrame.Visible = true; mgrFrame.Visible = false end
+					end)
+					
+					btnContinue.MouseButton1Click:Connect(function()
+						if isRecording or isReplaying then
+							StarterGui:SetCore("SendNotification", {Title="ERROR", Text="Stop recording/playing first!"})
+							return
+						end
+						
+						local success, data = pcall(function() return HttpService:JSONDecode(readfile(file)) end)
+						if success and data then
+							recordingData = data
+							if #recordingData > 0 then
+								startTime = os.clock() - recordingData[#recordingData].TMI
+							else
+								startTime = os.clock()
+							end
+							
+							isRecording = true
+							isPaused = false
+							mgrFrame.Visible = false
+							miniBar.Visible = true
+							btnMiniPause.Text = "PAUSE ⏸️"
+							btnMiniPause.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+							
+							StarterGui:SetCore("SendNotification", {
+								Title="CONTINUE MODE", 
+								Text=string.format("Continuing from frame %d", #recordingData)
+							})
+						end
+					end)
+					
+					btnDel.MouseButton1Click:Connect(function() delfile(file); refreshFiles() end)
+					btnEdit.MouseButton1Click:Connect(function() 
+						targetRenameFile = file
+						renameInput.Text = pureName:gsub(".json", "")
+						renameFrame.Visible = true
+					end)
+				end
+			end
+		end
+	end
+end
+
+btnConfirmRename.MouseButton1Click:Connect(function()
+	if targetRenameFile ~= "" and renameInput.Text ~= "" then
+		local newName = renameInput.Text:gsub("%W", "") .. ".json"
+		writefile(newName, readfile(targetRenameFile)); delfile(targetRenameFile); refreshFiles(); renameFrame.Visible = false
+	end
+end)
+
+btnMgr.MouseButton1Click:Connect(function() mgrFrame.Visible = true; refreshFiles() end)
+btnCloseMgr.MouseButton1Click:Connect(function() 
+	mgrFrame.Visible = false
+	if isMergeMode then toggleMergeMode() end
+end)
+
+btnReset.MouseButton1Click:Connect(function() 
+    recordingData={}; loadedData=nil; isRecording=false; isReplaying=false; isPaused=false; isPreviewing=false
+    mainFrame.Visible=true; miniBar.Visible=false; playFrame.Visible=false; saveFrame.Visible=false; previewFrame.Visible=false
+    if playbackConnection then playbackConnection:Disconnect() end
+    if previewConnection then previewConnection:Disconnect() end
+    if isMergeMode then toggleMergeMode() end
+end)
+
+btnMinMain.MouseButton1Click:Connect(function() mainFrame.Visible = false; btnOpenMain.Visible = true end)
+btnOpenMain.MouseButton1Click:Connect(function() mainFrame.Visible = true; btnOpenMain.Visible = false end)
+
+btnClosePlayer.MouseButton1Click:Connect(function() 
+	playFrame.Visible = false
+	isReplaying = false
+	if playbackConnection then playbackConnection:Disconnect() end
+end)
+
+btnSpeed.MouseButton1Click:Connect(function()
+	if playbackSpeed == 1 then playbackSpeed = 2 elseif playbackSpeed == 2 then playbackSpeed = 0.5 else playbackSpeed = 1 end
+	btnSpeed.Text = "Speed: " .. playbackSpeed .. "x"
+end)
+
+
+-- === [CORE UPDATE] LOGIKA PLAYBACK (SMART START + SMART RESUME) ===
+
+local function resetPlaybackState()
+    isReplaying = false
+    isReturning = false
+    playbackIndex = 1
+    if playbackConnection then playbackConnection:Disconnect() end
+    
+    local controls = require(player.PlayerScripts.PlayerModule):GetControls()
+    controls:Enable()
+    if humanoid then
+        humanoid.PlatformStand = false
+        humanoid.AutoRotate = true
+        humanoid:ChangeState(Enum.HumanoidStateType.Landed)
+    end
+    if rootPart then rootPart.Anchored = false; rootPart.AssemblyLinearVelocity = Vector3.zero end
+    
+    btnPlay.Text = "PLAY"
+    btnPlay.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+    lblStatusPlay.Text = "Status: Stopped"
+    btnPlayPause.Visible = false
+    isPaused = false
+end
+
+btnPlay.MouseButton1Click:Connect(function()
+    if isReplaying then resetPlaybackState(); return end
+    if not loadedData or #loadedData == 0 then return end
+    
+    updateChar()
+    isReplaying = true
+    isPaused = false
+    isReturning = false
+    
+    local closestIndex = 1
+    local closestDist = math.huge
+    local myPos = rootPart.Position
+    
+    for i, data in ipairs(loadedData) do
+        local fPos = Vector3.new(data.POS.x, data.POS.y, data.POS.z)
+        local dist = (fPos - myPos).Magnitude
+        if dist < closestDist then
+            closestDist = dist
+            closestIndex = i
+        end
+    end
+    
+    local currentTime = 0
+    
+    if closestDist < 50 then
+        playbackIndex = closestIndex
+        if playbackIndex > 1 then
+            currentTime = loadedData[playbackIndex].TMI
+        else
+            currentTime = 0
+        end
+        lblStatusPlay.Text = "Smart Start: " .. math.floor((playbackIndex/#loadedData)*100) .. "%"
+    else
+        playbackIndex = 1
+        currentTime = 0
+        lblStatusPlay.Text = "Status: Playing (Start)..."
+    end
+    
+    btnPlay.Text = "STOP"
+    btnPlay.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    btnPlayPause.Visible = true
+    btnPlayPause.Text = "PAUSE"
+    
+    local controls = require(player.PlayerScripts.PlayerModule):GetControls()
+    controls:Disable()
+    humanoid.AutoRotate = false
+    humanoid.PlatformStand = false
+    rootPart.Anchored = false 
+    
+    playbackConnection = RunService.Heartbeat:Connect(function(dt)
+        if isPaused then return end
+
+        if isReturning then
+            local frame = loadedData[playbackIndex]
+            local targetPos = Vector3.new(frame.POS.x, frame.POS.y, frame.POS.z)
+            local diff = targetPos - rootPart.Position
+            
+            if diff.Magnitude > 3 then
+                humanoid:Move(diff.Unit, false)
+                humanoid:ChangeState(Enum.HumanoidStateType.Running)
+            else
+                isReturning = false
+                humanoid.AutoRotate = false
+                humanoid:Move(Vector3.zero, false)
+                lblStatusPlay.Text = "Status: Playing (TAS)..."
+            end
+            return
+        end
+
+        if playbackIndex > #loadedData then
+            resetPlaybackState()
+            return
+        end
+        
+        currentTime = currentTime + (dt * playbackSpeed)
+        
+        while playbackIndex <= #loadedData and loadedData[playbackIndex].TMI <= currentTime do
+            local frame = loadedData[playbackIndex]
+            
+            local pos = Vector3.new(frame.POS.x, frame.POS.y, frame.POS.z)
+            rootPart.CFrame = CFrame.new(pos) * CFrame.Angles(0, frame.ROT, 0)
+            
+            if frame.VEL then
+                local vel = Vector3.new(frame.VEL.x, frame.VEL.y, frame.VEL.z)
+                rootPart.AssemblyLinearVelocity = vel
+                if Vector3.new(vel.X, 0, vel.Z).Magnitude > 0.1 then
+                    humanoid:Move(vel, false)
+                else
+                    humanoid:Move(Vector3.zero, false)
+                end
+            end
+            
+            if frame.STA then
+                local s = frame.STA
+                if s == "Jumping" then 
+                    humanoid:ChangeState(Enum.HumanoidStateType.Jumping); humanoid.Jump = true
+                elseif s == "Freefall" then humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+                elseif s == "Climbing" then humanoid:ChangeState(Enum.HumanoidStateType.Climbing)
+                elseif s == "Landed" or s == "Running" then humanoid:ChangeState(Enum.HumanoidStateType.Running)
+                end
+            end
+            playbackIndex = playbackIndex + 1
+        end
+    end)
+end)
+
+btnPlayPause.MouseButton1Click:Connect(function()
+    if not isReplaying then return end
+    isPaused = not isPaused
+    
+    local controls = require(player.PlayerScripts.PlayerModule):GetControls()
+    
+    if isPaused then
+        btnPlayPause.Text = "RESUME"
+        btnPlayPause.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+        lblStatusPlay.Text = "Status: PAUSED (Free Roam)"
+        controls:Enable()
+        rootPart.Anchored = false
+        humanoid.AutoRotate = true
+        humanoid:ChangeState(Enum.HumanoidStateType.Landed)
+    else
+        btnPlayPause.Text = "PAUSE"
+        btnPlayPause.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+        
+        controls:Disable()
+        
+        local frame = loadedData[playbackIndex]
+        local targetPos = Vector3.new(frame.POS.x, frame.POS.y, frame.POS.z)
+        local dist = (targetPos - rootPart.Position).Magnitude
+        
+        if dist > 5 then
+            isReturning = true
+            humanoid.AutoRotate = true
+            lblStatusPlay.Text = "Status: Returning to route..."
+        else
+            isReturning = false
+            humanoid.AutoRotate = false
+            lblStatusPlay.Text = "Status: Playing (TAS)..."
+        end
+    end
+end)
+
+-- STARTUP
+wait(0.5)
+mainFrame.Visible = true
+StarterGui:SetCore("SendNotification", {
+	Title = "TAS RECORDER PRO",
+	Text = "Smart Start, Preview & Merge Ready!"
+})
