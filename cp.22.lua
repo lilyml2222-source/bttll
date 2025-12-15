@@ -147,7 +147,7 @@ TabMounts:CreateDropdown({
 })
 
 TabMounts:CreateButton({
-    Name = "Inject Script",
+    Name = "Load Map",
     Callback = function()
         local targetURL = ScriptLinks[SelectedMount]
         
@@ -253,7 +253,7 @@ TabMisc:CreateButton({Name = "Rejoin Server", Callback = function() TeleportServ
 
 -- == ABOUT ==
 local TabAbout = Window:CreateTab("About", 4483362458)
-TabAbout:CreateLabel("Premium Script Hub v3.5 (Google Auth)")
+TabAbout:CreateLabel("Premium Script Exc")
 TabAbout:CreateParagraph({Title = "Credits", Content = "Developed by Exc"})
 
 Rayfield:LoadConfiguration()
