@@ -1,7 +1,7 @@
 --[[
-    PREMIUM RAYFIELD HUB - GOOGLE AUTH EDITION
+    EXC FREEMIUM HUB
     Developed by: Exc
-    Version: 3.5 (Google Apps Script Integrated)
+    Version: 3.5 (Free Edition)
 ]]
 
 local Players = game:GetService("Players")
@@ -14,11 +14,8 @@ local VirtualUser = game:GetService("VirtualUser")
 local LocalPlayer = Players.LocalPlayer
 
 --------------------------------------------------------------------------------
--- [1] CONFIGURATION (URL BARU KAMU SUDAH DIPASANG DI SINI)
+-- [1] CONFIGURATION
 --------------------------------------------------------------------------------
-
--- Link Google Apps Script kamu yang baru:
-local AuthURL = "https://script.google.com/macros/s/AKfycbywETCfm_HOgMHKZPbE5QHlihNhgro_IDMiOPtf8VEf7it3QpcXUrh1ULSjtdGtl-6t/exec" 
 
 local ScriptLinks = {
     ["Mount Funny"]     = "https://raw.githubusercontent.com/exc2222/funny/main/funny.lua",
@@ -35,49 +32,50 @@ local ScriptLinks = {
     ["Mount Yahayuk"]   = "https://raw.githubusercontent.com/exc2222/yahayuk/main/yahayuk.lua",
     ["Mount Antartika"] = "https://raw.githubusercontent.com/exc2222/antartika/main/antartika.lua",
     ["Mount Fells"]     = "https://raw.githubusercontent.com/exc2222/fells/main/fells.lua",
-    ["Mount Bagendah"]  = "https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua"
+    ["Mount Bagendah"]  = "https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua",
+    ["Mount Luna"]      = "https://raw.githubusercontent.com/exc2222/luna/main/luna.lua"
 }
 
 --------------------------------------------------------------------------------
--- [2] AUTHENTICATION LOGIC (GOOGLE SYSTEM)
+-- [2] HELPER FUNCTIONS
 --------------------------------------------------------------------------------
-local UserKey = ""
 
-local function GetAuthKey()
-    -- Memberi notifikasi sedang mengecek database
-    local hint = Instance.new("Hint", Workspace)
-    hint.Text = "verifikasi..."
-    
-    local success, response = pcall(function()
-        -- Mengirim Nama Player ke Google untuk dicek (?username=Nama)
-        return game:HttpGet(AuthURL .. "?username=" .. LocalPlayer.Name)
-    end)
-    
-    hint:Destroy()
-
-    -- Jika Gagal Koneksi
-    if not success then
-        LocalPlayer:Kick("Error: Gagal menghubungi Server Google. Cek internetmu.")
-        return nil
+-- Fungsi untuk menyensor nama (hanya huruf depan dan belakang)
+local function CensorName(name)
+    if #name <= 2 then
+        return name
     end
-
-    -- Membersihkan spasi (Response cleaning)
-    response = string.gsub(response, "^%s*(.-)%s*$", "%1")
-
-    -- Logika Pengecekan
-    if response == "TOLAK" or response == "" or string.find(response, "MANA KEYNYA") then
-        LocalPlayer:Kick("Akses Ditolak: Username '" .. LocalPlayer.Name .. "' belum terdaftar di Google Database!")
-        return nil
-    else
-        -- Jika sukses, response adalah KEY user
-        UserKey = response
-        return UserKey
-    end
+    local firstChar = string.sub(name, 1, 1)
+    local lastChar = string.sub(name, -1)
+    local middleLength = #name - 2
+    local censored = string.rep("*", middleLength)
+    return firstChar .. censored .. lastChar
 end
 
--- Jalankan Auth
-local ValidKey = GetAuthKey()
-if not ValidKey then return end -- Stop script jika key salah
+-- Fungsi untuk sort A-Z
+local function GetSortedMountNames()
+    local names = {}
+    for name, _ in pairs(ScriptLinks) do
+        table.insert(names, name)
+    end
+    table.sort(names)
+    return names
+end
+
+-- Fungsi untuk mendapatkan list player yang BISA di-teleport (sudah spawn)
+local function GetSpawnedPlayerList()
+    local playerNames = {}
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer then
+            -- Hanya tampilkan player yang punya character dan HumanoidRootPart
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                table.insert(playerNames, player.Name)
+            end
+        end
+    end
+    table.sort(playerNames)
+    return playerNames
+end
 
 --------------------------------------------------------------------------------
 -- [3] RAYFIELD UI SETUP
@@ -85,8 +83,8 @@ if not ValidKey then return end -- Stop script jika key salah
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "EXC V1 | " .. LocalPlayer.DisplayName,
-    LoadingTitle = "Verifying Success...",
+    Name = "EXC FREEMIUM | " .. CensorName(LocalPlayer.DisplayName),
+    LoadingTitle = "Welcome to Freemium...",
     LoadingSubtitle = "Welcome to Exc Hub",
     ConfigurationSaving = {
         Enabled = true,
@@ -98,16 +96,7 @@ local Window = Rayfield:CreateWindow({
         Invite = "noinvitelink", 
         RememberJoins = true 
     },
-    KeySystem = true, 
-    KeySettings = {
-        Title = "Security System",
-        Subtitle = "Logged in as " .. LocalPlayer.Name,
-        Note = " message admin if you need key",
-        FileName = "ExcKeyAuth", 
-        SaveKey = true,
-        GrabKeyFromSite = false,
-        Key = { ValidKey } -- Key otomatis terisi dari hasil Google tadi
-    }
+    KeySystem = false -- Key system dinonaktifkan untuk freemium
 })
 
 Rayfield.Theme = "Amethyst" 
@@ -116,65 +105,44 @@ Rayfield.Theme = "Amethyst"
 -- [4] TABS & FEATURES
 --------------------------------------------------------------------------------
 
--- == DASHBOARD ==
-local TabDashboard = Window:CreateTab("Dashboard", 4483362458)
-TabDashboard:CreateSection("User Info")
-TabDashboard:CreateParagraph({Title = "Display Name", Content = LocalPlayer.DisplayName})
-TabDashboard:CreateParagraph({Title = "Username", Content = LocalPlayer.Name})
-TabDashboard:CreateParagraph({Title = "Key Used", Content = ValidKey}) -- Menampilkan Key yang dipakai
-TabDashboard:CreateParagraph({Title = "Status", Content = "Premium Active"})
-
--- == AUTO WALK ==
+-- == AUTO WALK (TAB PERTAMA) ==
 local TabMounts = Window:CreateTab("Auto Walk", 4483362458)
-TabMounts:CreateSection("Select Mount")
+TabMounts:CreateSection("Select Mount Location")
 
-local SelectedMount = "Mount Yahayuk" 
+local SortedMounts = GetSortedMountNames()
 
-TabMounts:CreateDropdown({
-    Name = "Mount Location",
-    Options = {
-        "Mount Funny", "Mount Ragon", "Mount Molti", "Mount Wasabi", 
-        "Mount Freestyle", "Mount Gemi", "Mount Aethria", "Mount Velora", 
-        "Mount Age", "Mount Runia", "Mount Tali",
-        "Mount Yahayuk", "Mount Antartika", "Mount Fells", "Mount Bagendah"
-    },
-    CurrentOption = {"Mount Yahayuk"},
-    MultipleOptions = false,
-    Flag = "MountSelect",
-    Callback = function(Option)
-        SelectedMount = Option[1]
-    end,
-})
-
-TabMounts:CreateButton({
-    Name = "Load Map",
-    Callback = function()
-        local targetURL = ScriptLinks[SelectedMount]
-        
-        if targetURL then
-            Rayfield:Notify({
-                Title = "Injecting...",
-                Content = "Loading " .. SelectedMount,
-                Duration = 2,
-                Image = 4483362458,
-            })
+-- Membuat button untuk setiap mount (A-Z sorted)
+for _, mountName in ipairs(SortedMounts) do
+    TabMounts:CreateButton({
+        Name = mountName,
+        Callback = function()
+            local targetURL = ScriptLinks[mountName]
             
-            task.wait(1) 
-            
-            local success, err = pcall(function()
-                loadstring(game:HttpGet(targetURL))()
-            end)
-            
-            if success then
-                Rayfield:Notify({Title = "Success", Content = "Script Loaded!", Duration = 3})
+            if targetURL then
+                Rayfield:Notify({
+                    Title = "Injecting...",
+                    Content = "Loading " .. mountName,
+                    Duration = 2,
+                    Image = 4483362458,
+                })
+                
+                task.wait(1) 
+                
+                local success, err = pcall(function()
+                    loadstring(game:HttpGet(targetURL))()
+                end)
+                
+                if success then
+                    Rayfield:Notify({Title = "Success", Content = "Script Loaded!", Duration = 3})
+                else
+                    Rayfield:Notify({Title = "Error", Content = "Script Not Found (404)", Duration = 3})
+                end
             else
-                Rayfield:Notify({Title = "Error", Content = "Script Not Found (404)", Duration = 3})
+                Rayfield:Notify({Title = "Error", Content = "Link Config Missing", Duration = 3})
             end
-        else
-            Rayfield:Notify({Title = "Error", Content = "Link Config Missing", Duration = 3})
-        end
-    end,
-})
+        end,
+    })
+end
 
 -- == PLAYER MENU ==
 local TabPlayer = Window:CreateTab("Player", 4483362458)
@@ -232,6 +200,57 @@ local function Optimize(Level)
 end
 TabPerf:CreateButton({Name = "Expert (White Mode)", Callback = function() Optimize(3) end})
 
+-- == DISCORD ==
+local TabDiscord = Window:CreateTab("Discord", 4483362458)
+TabDiscord:CreateSection("Join Our Community")
+TabDiscord:CreateParagraph({
+    Title = "Discord Server",
+    Content = "Click the button below to copy Discord invite link"
+})
+
+local DiscordInvite = "https://discord.gg/yourserver" -- Ganti dengan link Discord kamu
+
+TabDiscord:CreateButton({
+    Name = "Copy Discord Link",
+    Callback = function()
+        setclipboard(DiscordInvite)
+        Rayfield:Notify({
+            Title = "Success!",
+            Content = "Discord link copied to clipboard!",
+            Duration = 3,
+            Image = 4483362458,
+        })
+    end,
+})
+
+TabDiscord:CreateButton({
+    Name = "Join Discord (Browser)",
+    Callback = function()
+        local success = pcall(function()
+            -- Mencoba membuka browser dengan link Discord
+            game:GetService("GuiService"):OpenBrowserWindow(DiscordInvite)
+        end)
+        
+        if success then
+            Rayfield:Notify({
+                Title = "Opening...",
+                Content = "Opening Discord in browser",
+                Duration = 2,
+                Image = 4483362458,
+            })
+        else
+            -- Jika gagal, copy ke clipboard
+            setclipboard(DiscordInvite)
+            Rayfield:Notify({
+                Title = "Link Copied",
+                Content = "Discord link copied to clipboard!",
+                Duration = 3,
+                Image = 4483362458,
+            })
+        end
+    end,
+})
+
 -- == MISC ==
 local TabMisc = Window:CreateTab("Misc", 4483362458)
 TabMisc:CreateToggle({
@@ -251,10 +270,291 @@ TabMisc:CreateToggle({
 })
 TabMisc:CreateButton({Name = "Rejoin Server", Callback = function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end})
 
+-- Teleport to Player
+TabMisc:CreateSection("Teleport to Player")
+
+local SelectedPlayerName = ""
+
+-- Dropdown untuk pilih player (hanya yang spawned)
+local PlayerDropdown = TabMisc:CreateDropdown({
+    Name = "Select Player to Teleport",
+    Options = GetSpawnedPlayerList(),
+    CurrentOption = {},
+    MultipleOptions = false,
+    Flag = "TeleportPlayer",
+    Callback = function(Option)
+        if Option[1] then
+            SelectedPlayerName = Option[1]
+        end
+    end,
+})
+
+-- Button untuk teleport
+TabMisc:CreateButton({
+    Name = "Teleport to Selected Player",
+    Callback = function()
+        if SelectedPlayerName == "" then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Please select a player first!",
+                Duration = 2,
+                Image = 4483362458,
+            })
+            return
+        end
+        
+        local targetPlayer = Players:FindFirstChild(SelectedPlayerName)
+        
+        if not targetPlayer then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Player not found or left!",
+                Duration = 2,
+                Image = 4483362458,
+            })
+            return
+        end
+        
+        -- Check your character
+        if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "You have no character!",
+                Duration = 2,
+                Image = 4483362458,
+            })
+            return
+        end
+        
+        -- Check target character
+        if not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = SelectedPlayerName .. " is no longer spawned!",
+                Duration = 2,
+                Image = 4483362458,
+            })
+            return
+        end
+        
+        -- Teleport
+        local success = pcall(function()
+            local targetCFrame = targetPlayer.Character.HumanoidRootPart.CFrame
+            LocalPlayer.Character.HumanoidRootPart.CFrame = targetCFrame * CFrame.new(3, 1, 0)
+        end)
+        
+        if success then
+            Rayfield:Notify({
+                Title = "Teleported",
+                Content = "Teleported to " .. SelectedPlayerName,
+                Duration = 2,
+                Image = 4483362458,
+            })
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Failed to teleport!",
+                Duration = 2,
+                Image = 4483362458,
+            })
+        end
+    end,
+})
+
+-- Button untuk refresh list
+TabMisc:CreateButton({
+    Name = "Refresh Player List",
+    Callback = function()
+        local spawnedPlayers = GetSpawnedPlayerList()
+        
+        Rayfield:Notify({
+            Title = "Refreshed",
+            Content = "Found " .. #spawnedPlayers .. " spawned players. Reopen dropdown to see list.",
+            Duration = 3,
+            Image = 4483362458,
+        })
+    end,
+})
+
+-- == BOOMBOX MUSIC PLAYER ==
+TabMisc:CreateSection("🎵 Boombox Music Player")
+
+local CurrentSound = nil
+local BoomboxID = ""
+
+TabMisc:CreateInput({
+    Name = "Enter Boombox ID",
+    PlaceholderText = "Example: 1837849285",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        BoomboxID = Text
+    end,
+})
+
+TabMisc:CreateButton({
+    Name = "▶️ Play Music",
+    Callback = function()
+        if BoomboxID == "" or BoomboxID == nil then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Please enter a Boombox ID first!",
+                Duration = 2,
+                Image = 4483362458,
+            })
+            return
+        end
+        
+        -- Stop current sound if playing
+        if CurrentSound then
+            CurrentSound:Stop()
+            CurrentSound:Destroy()
+            CurrentSound = nil
+        end
+        
+        -- Create new sound
+        pcall(function()
+            CurrentSound = Instance.new("Sound")
+            CurrentSound.Parent = LocalPlayer.Character or Workspace
+            CurrentSound.SoundId = "rbxassetid://" .. BoomboxID
+            CurrentSound.Volume = 0.5
+            CurrentSound.Looped = true
+            CurrentSound:Play()
+            
+            Rayfield:Notify({
+                Title = "🎵 Music Playing",
+                Content = "Playing ID: " .. BoomboxID,
+                Duration = 3,
+                Image = 4483362458,
+            })
+        end)
+    end,
+})
+
+TabMisc:CreateButton({
+    Name = "⏸️ Stop Music",
+    Callback = function()
+        if CurrentSound then
+            CurrentSound:Stop()
+            CurrentSound:Destroy()
+            CurrentSound = nil
+            
+            Rayfield:Notify({
+                Title = "Music Stopped",
+                Content = "Music has been stopped",
+                Duration = 2,
+                Image = 4483362458,
+            })
+        else
+            Rayfield:Notify({
+                Title = "No Music",
+                Content = "No music is currently playing",
+                Duration = 2,
+                Image = 4483362458,
+            })
+        end
+    end,
+})
+
+TabMisc:CreateSlider({
+    Name = "🔊 Volume",
+    Range = {0, 1},
+    Increment = 0.1,
+    Suffix = "",
+    CurrentValue = 0.5,
+    Callback = function(Value)
+        if CurrentSound then
+            CurrentSound.Volume = Value
+        end
+    end,
+})
+
+TabMisc:CreateToggle({
+    Name = "🔁 Loop Music",
+    CurrentValue = true,
+    Callback = function(Value)
+        if CurrentSound then
+            CurrentSound.Looped = Value
+        end
+    end,
+})
+
+-- Preset Music IDs
+TabMisc:CreateSection("🎼 Popular Music IDs")
+
+local PopularSongs = {
+    {name = "Tor Monitor", id = "70633665224310"},
+    {name = "Hide A Seek But You", id = "106948989756646"},
+    {name = "Bintang 5", id = "134435445558993"},
+    {name = "DJ 1", id = "139825186779265"},
+    {name = "DJ 2", id = "96077163288111"},
+}
+
+for _, song in ipairs(PopularSongs) do
+    TabMisc:CreateButton({
+        Name = "🎵 " .. song.name,
+        Callback = function()
+            BoomboxID = song.id
+            
+            -- Stop current sound
+            if CurrentSound then
+                CurrentSound:Stop()
+                CurrentSound:Destroy()
+                CurrentSound = nil
+            end
+            
+            -- Play new sound
+            pcall(function()
+                CurrentSound = Instance.new("Sound")
+                CurrentSound.Parent = LocalPlayer.Character or Workspace
+                CurrentSound.SoundId = "rbxassetid://" .. song.id
+                CurrentSound.Volume = 0.5
+                CurrentSound.Looped = true
+                CurrentSound:Play()
+                
+                Rayfield:Notify({
+                    Title = "🎵 Now Playing",
+                    Content = song.name,
+                    Duration = 3,
+                    Image = 4483362458,
+                })
+            end)
+        end,
+    })
+end
+
+TabMisc:CreateSection("UI Control")
+TabMisc:CreateButton({
+    Name = "Destroy UI",
+    Callback = function()
+        -- Stop music before closing
+        if CurrentSound then
+            CurrentSound:Stop()
+            CurrentSound:Destroy()
+        end
+        
+        Rayfield:Notify({
+            Title = "Closing...",
+            Content = "UI will be destroyed in 2 seconds",
+            Duration = 2,
+            Image = 4483362458,
+        })
+        
+        task.wait(2)
+        Rayfield:Destroy()
+    end,
+})
+
 -- == ABOUT ==
 local TabAbout = Window:CreateTab("About", 4483362458)
-TabAbout:CreateLabel("Premium Script Exc")
-TabAbout:CreateParagraph({Title = "Credits", Content = "Developed by Exc"})
+TabAbout:CreateLabel("EXC FREEMIUM Script")
+TabAbout:CreateParagraph({Title = "Credits", Content = "Developed by Exc "})
+TabAbout:CreateParagraph({Title = "Version", Content = "Freemium V0.1"})
+
+-- == DASHBOARD (TAB TERAKHIR) ==
+local TabDashboard = Window:CreateTab("Dashboard", 4483362458)
+TabDashboard:CreateSection("User Info")
+TabDashboard:CreateParagraph({Title = "Display Name", Content = CensorName(LocalPlayer.DisplayName)})
+TabDashboard:CreateParagraph({Title = "Username", Content = CensorName(LocalPlayer.Name)})
+TabDashboard:CreateParagraph({Title = "Status", Content = "Freemium Active"})
 
 Rayfield:LoadConfiguration()
-
