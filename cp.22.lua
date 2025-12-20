@@ -14,33 +14,72 @@ local VirtualUser = game:GetService("VirtualUser")
 local LocalPlayer = Players.LocalPlayer
 
 --------------------------------------------------------------------------------
--- [1] CONFIGURATION
+-- [1] ANTI-DETECTION & SECURITY SYSTEM
+--------------------------------------------------------------------------------
+
+local function SecureURL(url)
+    local key = 69
+    local encoded = ""
+    for i = 1, #url do
+        local byte = string.byte(url, i)
+        encoded = encoded .. string.char(bit32.bxor(byte, key))
+    end
+    return encoded
+end
+
+local function DecodeURL(encoded)
+    local key = 69
+    local decoded = ""
+    for i = 1, #encoded do
+        local byte = string.byte(encoded, i)
+        decoded = decoded .. string.char(bit32.bxor(byte, key))
+    end
+    return decoded
+end
+
+local function SecureLoadScript(encodedURL)
+    local url = DecodeURL(encodedURL)
+    task.wait(math.random(100, 300) / 1000)
+    local success, result = pcall(function()
+        return game:HttpGet(url)
+    end)
+    if success then
+        local func, err = loadstring(result)
+        if func then
+            task.wait(math.random(50, 150) / 1000)
+            return pcall(func)
+        end
+    end
+    return false
+end
+
+--------------------------------------------------------------------------------
+-- [2] CONFIGURATION
 --------------------------------------------------------------------------------
 
 local ScriptLinks = {
-    ["Mount Funny"]     = "https://raw.githubusercontent.com/exc2222/funny/main/funny.lua",
-    ["Mount Ragon"]     = "https://raw.githubusercontent.com/exc2222/ragon/main/ragon.lua",
-    ["Mount Molti"]     = "https://raw.githubusercontent.com/exc2222/molti/main/molti.lua",
-    ["Mount Wasabi"]    = "https://raw.githubusercontent.com/exc2222/wasabi/main/wasabi.lua",
-    ["Mount Freestyle"] = "https://raw.githubusercontent.com/exc2222/freestyle/main/freestyle.lua",
-    ["Mount Gemi"]      = "https://raw.githubusercontent.com/exc2222/gemi/main/gemi.lua",
-    ["Mount Aethria"]   = "https://raw.githubusercontent.com/exc2222/aethria/main/aethria.lua",
-    ["Mount Velora"]    = "https://raw.githubusercontent.com/exc2222/velora/main/velora.lua",
-    ["Mount Age"]       = "https://raw.githubusercontent.com/exc2222/age/main/age.lua",
-    ["Mount Runia"]     = "https://raw.githubusercontent.com/exc2222/runia/main/runia.lua",
-    ["Mount Tali"]      = "https://raw.githubusercontent.com/exc2222/tali/main/tali.lua",
-    ["Mount Yahayuk"]   = "https://raw.githubusercontent.com/exc2222/yahayuk/main/yahayuk.lua",
-    ["Mount Antartika"] = "https://raw.githubusercontent.com/exc2222/antartika/main/antartika.lua",
-    ["Mount Fells"]     = "https://raw.githubusercontent.com/exc2222/fells/main/fells.lua",
-    ["Mount Bagendah"]  = "https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua",
-    ["Mount Luna"]      = "https://raw.githubusercontent.com/exc2222/luna/main/luna.lua"
+    ["Mount Funny"]     = SecureURL("https://raw.githubusercontent.com/exc2222/funny/main/funny.lua"),
+    ["Mount Ragon"]     = SecureURL("https://raw.githubusercontent.com/exc2222/ragon/main/ragon.lua"),
+    ["Mount Molti"]     = SecureURL("https://raw.githubusercontent.com/exc2222/molti/main/molti.lua"),
+    ["Mount Wasabi"]    = SecureURL("https://raw.githubusercontent.com/exc2222/wasabi/main/wasabi.lua"),
+    ["Mount Freestyle"] = SecureURL("https://raw.githubusercontent.com/exc2222/freestyle/main/freestyle.lua"),
+    ["Mount Gemi"]      = SecureURL("https://raw.githubusercontent.com/exc2222/gemi/main/gemi.lua"),
+    ["Mount Aethria"]   = SecureURL("https://raw.githubusercontent.com/exc2222/aethria/main/aethria.lua"),
+    ["Mount Velora"]    = SecureURL("https://raw.githubusercontent.com/exc2222/velora/main/velora.lua"),
+    ["Mount Age"]       = SecureURL("https://raw.githubusercontent.com/exc2222/age/main/age.lua"),
+    ["Mount Runia"]     = SecureURL("https://raw.githubusercontent.com/exc2222/runia/main/runia.lua"),
+    ["Mount Tali"]      = SecureURL("https://raw.githubusercontent.com/exc2222/tali/main/tali.lua"),
+    ["Mount Yahayuk"]   = SecureURL("https://raw.githubusercontent.com/exc2222/yahayuk/main/yahayuk.lua"),
+    ["Mount Antartika"] = SecureURL("https://raw.githubusercontent.com/exc2222/antartika/main/antartika.lua"),
+    ["Mount Fells"]     = SecureURL("https://raw.githubusercontent.com/exc2222/fells/main/fells.lua"),
+    ["Mount Bagendah"]  = SecureURL("https://raw.githubusercontent.com/exc2222/bagendah/main/bagendah.lua"),
+    ["Mount Luna"]      = SecureURL("https://raw.githubusercontent.com/exc2222/luna/main/luna.lua")
 }
 
 --------------------------------------------------------------------------------
--- [2] HELPER FUNCTIONS
+-- [3] HELPER FUNCTIONS
 --------------------------------------------------------------------------------
 
--- Fungsi untuk menyensor nama (hanya huruf depan dan belakang)
 local function CensorName(name)
     if #name <= 2 then
         return name
@@ -52,7 +91,10 @@ local function CensorName(name)
     return firstChar .. censored .. lastChar
 end
 
--- Fungsi untuk sort A-Z
+local function GetAccountAge()
+    return LocalPlayer.AccountAge .. " Days"
+end
+
 local function GetSortedMountNames()
     local names = {}
     for name, _ in pairs(ScriptLinks) do
@@ -62,12 +104,10 @@ local function GetSortedMountNames()
     return names
 end
 
--- Fungsi untuk mendapatkan list player yang BISA di-teleport (sudah spawn)
 local function GetSpawnedPlayerList()
     local playerNames = {}
     for _, player in pairs(Players:GetPlayers()) do
         if player ~= LocalPlayer then
-            -- Hanya tampilkan player yang punya character dan HumanoidRootPart
             if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                 table.insert(playerNames, player.Name)
             end
@@ -78,7 +118,7 @@ local function GetSpawnedPlayerList()
 end
 
 --------------------------------------------------------------------------------
--- [3] RAYFIELD UI SETUP
+-- [4] RAYFIELD UI SETUP
 --------------------------------------------------------------------------------
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
@@ -96,29 +136,27 @@ local Window = Rayfield:CreateWindow({
         Invite = "noinvitelink", 
         RememberJoins = true 
     },
-    KeySystem = false -- Key system dinonaktifkan untuk freemium
+    KeySystem = false
 })
 
 Rayfield.Theme = "Amethyst" 
 
 --------------------------------------------------------------------------------
--- [4] TABS & FEATURES
+-- [5] TABS & FEATURES
 --------------------------------------------------------------------------------
 
--- == AUTO WALK (TAB PERTAMA) ==
 local TabMounts = Window:CreateTab("Auto Walk", 4483362458)
 TabMounts:CreateSection("Select Mount Location")
 
 local SortedMounts = GetSortedMountNames()
 
--- Membuat button untuk setiap mount (A-Z sorted)
 for _, mountName in ipairs(SortedMounts) do
     TabMounts:CreateButton({
         Name = mountName,
         Callback = function()
-            local targetURL = ScriptLinks[mountName]
+            local encodedURL = ScriptLinks[mountName]
             
-            if targetURL then
+            if encodedURL then
                 Rayfield:Notify({
                     Title = "Injecting...",
                     Content = "Loading " .. mountName,
@@ -126,16 +164,14 @@ for _, mountName in ipairs(SortedMounts) do
                     Image = 4483362458,
                 })
                 
-                task.wait(1) 
+                task.wait(0.5) 
                 
-                local success, err = pcall(function()
-                    loadstring(game:HttpGet(targetURL))()
-                end)
+                local success = SecureLoadScript(encodedURL)
                 
                 if success then
                     Rayfield:Notify({Title = "Success", Content = "Script Loaded!", Duration = 3})
                 else
-                    Rayfield:Notify({Title = "Error", Content = "Script Not Found (404)", Duration = 3})
+                    Rayfield:Notify({Title = "Error", Content = "Failed to load script", Duration = 3})
                 end
             else
                 Rayfield:Notify({Title = "Error", Content = "Link Config Missing", Duration = 3})
@@ -144,7 +180,6 @@ for _, mountName in ipairs(SortedMounts) do
     })
 end
 
--- == PLAYER MENU ==
 local TabPlayer = Window:CreateTab("Player", 4483362458)
 TabPlayer:CreateSlider({
     Name = "WalkSpeed",
@@ -179,7 +214,6 @@ RunService.Stepped:Connect(function()
     end
 end)
 
--- == FPS BOOSTER ==
 local TabPerf = Window:CreateTab("Performance", 4483362458)
 local function Optimize(Level)
     for _, v in pairs(Workspace:GetDescendants()) do
@@ -198,60 +232,95 @@ local function Optimize(Level)
         end
     end
 end
-TabPerf:CreateButton({Name = "Expert (White Mode)", Callback = function() Optimize(3) end})
 
--- == DISCORD ==
-local TabDiscord = Window:CreateTab("Discord", 4483362458)
-TabDiscord:CreateSection("Join Our Community")
-TabDiscord:CreateParagraph({
-    Title = "Discord Server",
-    Content = "Click the button below to copy Discord invite link"
-})
-
-local DiscordInvite = "https://discord.gg/yourserver" -- Ganti dengan link Discord kamu
-
-TabDiscord:CreateButton({
-    Name = "Copy Discord Link",
-    Callback = function()
-        setclipboard(DiscordInvite)
-        Rayfield:Notify({
-            Title = "Success!",
-            Content = "Discord link copied to clipboard!",
-            Duration = 3,
-            Image = 4483362458,
-        })
-    end,
-})
-
-TabDiscord:CreateButton({
-    Name = "Join Discord (Browser)",
-    Callback = function()
-        local success = pcall(function()
-            -- Mencoba membuka browser dengan link Discord
-            game:GetService("GuiService"):OpenBrowserWindow(DiscordInvite)
-        end)
-        
-        if success then
-            Rayfield:Notify({
-                Title = "Opening...",
-                Content = "Opening Discord in browser",
-                Duration = 2,
-                Image = 4483362458,
-            })
-        else
-            -- Jika gagal, copy ke clipboard
-            setclipboard(DiscordInvite)
-            Rayfield:Notify({
-                Title = "Link Copied",
-                Content = "Discord link copied to clipboard!",
-                Duration = 3,
-                Image = 4483362458,
-            })
+local function KentangMode()
+    -- Hapus semua partikel dan efek visual
+    for _, v in pairs(Workspace:GetDescendants()) do
+        if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Beam") then
+            v.Enabled = false
+            v:Destroy()
         end
-    end,
+        if v:IsA("Fire") or v:IsA("Smoke") or v:IsA("Sparkles") then
+            v:Destroy()
+        end
+        if v:IsA("PointLight") or v:IsA("SpotLight") or v:IsA("SurfaceLight") then
+            v.Enabled = false
+        end
+        if v:IsA("Decal") or v:IsA("Texture") then
+            v:Destroy()
+        end
+        if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
+            v.Enabled = false
+        end
+        if v:IsA("BasePart") then
+            v.Material = Enum.Material.SmoothPlastic
+            v.Reflectance = 0
+            v.CastShadow = false
+        end
+    end
+    
+    -- Hapus semua aura dan efek di player characters
+    for _, player in pairs(Players:GetPlayers()) do
+        if player.Character then
+            for _, v in pairs(player.Character:GetDescendants()) do
+                if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Beam") then
+                    v.Enabled = false
+                    v:Destroy()
+                end
+                if v:IsA("Fire") or v:IsA("Smoke") or v:IsA("Sparkles") then
+                    v:Destroy()
+                end
+                if v:IsA("PointLight") or v:IsA("SpotLight") then
+                    v.Enabled = false
+                end
+                if v:IsA("BillboardGui") then
+                    v.Enabled = false
+                end
+            end
+        end
+    end
+    
+    -- Hide player name tags
+    for _, player in pairs(Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("Head") then
+            local head = player.Character.Head
+            for _, gui in pairs(head:GetChildren()) do
+                if gui:IsA("BillboardGui") then
+                    gui.Enabled = false
+                end
+            end
+        end
+    end
+    
+    -- Atur lighting untuk grafik terendah
+    Lighting.GlobalShadows = false
+    Lighting.FogEnd = 9e9
+    Lighting.Brightness = 0
+    settings().Rendering.QualityLevel = "Level01"
+    
+    -- Disable post effects
+    for _, effect in pairs(Lighting:GetChildren()) do
+        if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or effect:IsA("DepthOfFieldEffect") then
+            effect.Enabled = false
+        end
+    end
+    
+    Rayfield:Notify({
+        Title = "Kentang Mode Active",
+        Content = "Ultra low graphics applied!",
+        Duration = 3,
+        Image = 4483362458,
+    })
+end
+
+TabPerf:CreateButton({Name = "Expert (White Mode)", Callback = function() Optimize(3) end})
+TabPerf:CreateButton({
+    Name = "Kentang Mode 🥔", 
+    Callback = function() 
+        KentangMode() 
+    end
 })
 
--- == MISC ==
 local TabMisc = Window:CreateTab("Misc", 4483362458)
 TabMisc:CreateToggle({
     Name = "Anti-AFK",
@@ -270,12 +339,10 @@ TabMisc:CreateToggle({
 })
 TabMisc:CreateButton({Name = "Rejoin Server", Callback = function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end})
 
--- Teleport to Player
 TabMisc:CreateSection("Teleport to Player")
 
 local SelectedPlayerName = ""
 
--- Dropdown untuk pilih player (hanya yang spawned)
 local PlayerDropdown = TabMisc:CreateDropdown({
     Name = "Select Player to Teleport",
     Options = GetSpawnedPlayerList(),
@@ -289,7 +356,6 @@ local PlayerDropdown = TabMisc:CreateDropdown({
     end,
 })
 
--- Button untuk teleport
 TabMisc:CreateButton({
     Name = "Teleport to Selected Player",
     Callback = function()
@@ -315,7 +381,6 @@ TabMisc:CreateButton({
             return
         end
         
-        -- Check your character
         if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             Rayfield:Notify({
                 Title = "Error",
@@ -326,7 +391,6 @@ TabMisc:CreateButton({
             return
         end
         
-        -- Check target character
         if not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
             Rayfield:Notify({
                 Title = "Error",
@@ -337,7 +401,6 @@ TabMisc:CreateButton({
             return
         end
         
-        -- Teleport
         local success = pcall(function()
             local targetCFrame = targetPlayer.Character.HumanoidRootPart.CFrame
             LocalPlayer.Character.HumanoidRootPart.CFrame = targetCFrame * CFrame.new(3, 1, 0)
@@ -361,7 +424,6 @@ TabMisc:CreateButton({
     end,
 })
 
--- Button untuk refresh list
 TabMisc:CreateButton({
     Name = "Refresh Player List",
     Callback = function()
@@ -376,7 +438,6 @@ TabMisc:CreateButton({
     end,
 })
 
--- == BOOMBOX MUSIC PLAYER ==
 TabMisc:CreateSection("🎵 Boombox Music Player")
 
 local CurrentSound = nil
@@ -404,14 +465,12 @@ TabMisc:CreateButton({
             return
         end
         
-        -- Stop current sound if playing
         if CurrentSound then
             CurrentSound:Stop()
             CurrentSound:Destroy()
             CurrentSound = nil
         end
         
-        -- Create new sound
         pcall(function()
             CurrentSound = Instance.new("Sound")
             CurrentSound.Parent = LocalPlayer.Character or Workspace
@@ -478,7 +537,6 @@ TabMisc:CreateToggle({
     end,
 })
 
--- Preset Music IDs
 TabMisc:CreateSection("🎼 Popular Music IDs")
 
 local PopularSongs = {
@@ -495,14 +553,12 @@ for _, song in ipairs(PopularSongs) do
         Callback = function()
             BoomboxID = song.id
             
-            -- Stop current sound
             if CurrentSound then
                 CurrentSound:Stop()
                 CurrentSound:Destroy()
                 CurrentSound = nil
             end
             
-            -- Play new sound
             pcall(function()
                 CurrentSound = Instance.new("Sound")
                 CurrentSound.Parent = LocalPlayer.Character or Workspace
@@ -526,7 +582,6 @@ TabMisc:CreateSection("UI Control")
 TabMisc:CreateButton({
     Name = "Destroy UI",
     Callback = function()
-        -- Stop music before closing
         if CurrentSound then
             CurrentSound:Stop()
             CurrentSound:Destroy()
@@ -544,17 +599,63 @@ TabMisc:CreateButton({
     end,
 })
 
--- == ABOUT ==
 local TabAbout = Window:CreateTab("About", 4483362458)
 TabAbout:CreateLabel("EXC FREEMIUM Script")
-TabAbout:CreateParagraph({Title = "Credits", Content = "Developed by Exc "})
-TabAbout:CreateParagraph({Title = "Version", Content = "Freemium V0.1"})
+TabAbout:CreateParagraph({Title = "Credits", Content = "Developed by Exc"})
+TabAbout:CreateParagraph({Title = "Version", Content = "Freemium v3.5"})
 
--- == DASHBOARD (TAB TERAKHIR) ==
+TabAbout:CreateSection("Join Our Community")
+TabAbout:CreateParagraph({
+    Title = "Discord Server",
+    Content = "Click the button below to copy Discord invite link"
+})
+
+local DiscordInvite = "https://discord.gg/yourserver"
+
+TabAbout:CreateButton({
+    Name = "Copy Discord Link",
+    Callback = function()
+        setclipboard(DiscordInvite)
+        Rayfield:Notify({
+            Title = "Success!",
+            Content = "Discord link copied to clipboard!",
+            Duration = 3,
+            Image = 4483362458,
+        })
+    end,
+})
+
+TabAbout:CreateButton({
+    Name = "Join Discord (Browser)",
+    Callback = function()
+        local success = pcall(function()
+            game:GetService("GuiService"):OpenBrowserWindow(DiscordInvite)
+        end)
+        
+        if success then
+            Rayfield:Notify({
+                Title = "Opening...",
+                Content = "Opening Discord in browser",
+                Duration = 2,
+                Image = 4483362458,
+            })
+        else
+            setclipboard(DiscordInvite)
+            Rayfield:Notify({
+                Title = "Link Copied",
+                Content = "Discord link copied to clipboard!",
+                Duration = 3,
+                Image = 4483362458,
+            })
+        end
+    end,
+})
+
 local TabDashboard = Window:CreateTab("Dashboard", 4483362458)
 TabDashboard:CreateSection("User Info")
 TabDashboard:CreateParagraph({Title = "Display Name", Content = CensorName(LocalPlayer.DisplayName)})
 TabDashboard:CreateParagraph({Title = "Username", Content = CensorName(LocalPlayer.Name)})
+TabDashboard:CreateParagraph({Title = "Account Age", Content = GetAccountAge()})
 TabDashboard:CreateParagraph({Title = "Status", Content = "Freemium Active"})
 
 Rayfield:LoadConfiguration()
