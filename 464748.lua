@@ -1,23 +1,23 @@
-
---[[ SECURITY HEADER ]]
--- Password ini harus cocok dengan Loader Pastefy
-local SecretPass = "BTTLL_VIP_ACCESS_2026"
+--[[ SECURITY HEADER: AUTO KICK ]]
+local SecretPass = "BTTLL_VIP_ACCESS_2026" -- Password harus sama dengan Pastefy
 
 if getgenv().AuthKey ~= SecretPass then
-    warn("⛔ AKSES DITOLAK: Gunakan Loader Pastefy Resmi!")
-    game.StarterGui:SetCore("SendNotification", {
-        Title = "Access Denied",
-        Text = "Script hanya bisa dijalankan lewat Pastefy Loader.",
-        Duration = 10
-    })
-    return -- MATIKAN SCRIPT DISINI
+    -- 1. KIRIM PESAN PERINGATAN TERAKHIR (Opsional)
+    warn("⛔ SECURITY ALERT: ILLEGAL EXECUTION DETECTED.")
+    
+    -- 2. TENDANG PLAYER DARI GAME
+    game:GetService("Players").LocalPlayer:Kick("⛔ AKSES DITOLAK ⛔\nJangan coba-coba bypass Loader! Gunakan link resmi.")
+    
+    -- 3. BEKUKAN SCRIPT (Jaga-jaga kalau anti-kick aktif)
+    task.wait(0.5)
+    while true do end 
+    return
 end
 
--- Hapus kunci agar tidak bisa dicuri orang di ingame
+-- Hapus kunci & Lanjut normal
 getgenv().AuthKey = nil 
 
--- [[ DI BAWAH INI ADALAH SCRIPT ASLI KAMU ... ]]
-
+-- [[ DI BAWAH INI SCRIPT ASLI KAMU ... ]]
 
 
 if game.CoreGui:FindFirstChild("Cellestial_PhoneV33") then
