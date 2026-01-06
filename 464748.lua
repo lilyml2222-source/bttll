@@ -6,7 +6,7 @@ if getgenv().AuthKey ~= SecretPass then
     warn("⛔ SECURITY ALERT: ILLEGAL EXECUTION DETECTED.")
     
     -- 2. TENDANG PLAYER DARI GAME
-    game:GetService("Players").LocalPlayer:Kick("⛔ AKSES DITOLAK ⛔\nJangan coba-coba bypass Loader! Gunakan link resmi.")
+    game:GetService("Players").LocalPlayer:Kick("⛔ AKSES DITOLAK ⛔\nIZINNNNN.")
     
     -- 3. BEKUKAN SCRIPT (Jaga-jaga kalau anti-kick aktif)
     task.wait(0.5)
